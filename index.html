@@ -496,24 +496,16 @@ tbody tr:hover{background:#F8F5EF}
 </ol>
 <p style="margin: 0; font-size: 15px; color: #5A5850">Unlimited viewers and askers. No per-seat pricing.</p>
 </div>
-<form aria-label="Join the pilot" action="mailto:victoria@invarhq.com" onSubmit="{{submitPilot}}" style="flex: 1 1 380px; min-width: 0; align-self: flex-start; background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px; padding: 36px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 30px 60px -28px rgba(21,23,28,0.3)">
+<form aria-label="Join the pilot" onSubmit="{{submitPilot}}" style="flex: 1 1 380px; min-width: 0; align-self: flex-start; background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px; padding: 36px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 30px 60px -28px rgba(21,23,28,0.3)">
 <p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 28px; font-weight: 600">Join the pilot</p>
-<div style="display: flex; flex-direction: column; gap: 6px"><label for="tb-email" style="font-size: 14px; font-weight: 600">Work email</label><input id="tb-email" name="email" type="email" required autocomplete="email" placeholder="you@company.com" style="min-height: 52px; padding: 0 16px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"></div>
-<div style="display: flex; flex-direction: column; gap: 6px"><label for="tb-role" style="font-size: 14px; font-weight: 600">Your role</label><select id="tb-role" name="role" style="min-height: 52px; padding: 0 14px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"><option>Founder or CEO</option><option>Head of growth</option><option>Head of product</option><option>Customer Success or Support lead</option><option>Engineering lead</option><option>Other</option></select></div>
-<div style="display: flex; flex-direction: column; gap: 6px"><label for="tb-size" style="font-size: 14px; font-weight: 600">Company size</label><select id="tb-size" name="size" style="min-height: 52px; padding: 0 14px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"><option>Under 30 people</option><option selected>30 to 80 people</option><option>80 to 150 people</option><option>Over 150 people</option></select></div>
-<fieldset style="margin: 0; padding: 0; border: none; display: flex; flex-direction: column; gap: 8px"><legend style="font-size: 14px; font-weight: 600; padding: 0 0 6px">Tools you use today</legend>
-<p style="margin: -4px 0 2px; font-size: 13px; color: #5A5850">None of these are required. Tell us what you use so we can plan integrations.</p>
-<div style="display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 15px">
-<label style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px"><input type="checkbox" name="tools" value="PostHog" style="width: 18px; height: 18px; accent-color: #C2410C">PostHog</label>
-<label style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px"><input type="checkbox" name="tools" value="Stripe" style="width: 18px; height: 18px; accent-color: #C2410C">Stripe</label>
-<label style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px"><input type="checkbox" name="tools" value="HubSpot" style="width: 18px; height: 18px; accent-color: #C2410C">HubSpot</label>
-<label style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px"><input type="checkbox" name="tools" value="Slack" style="width: 18px; height: 18px; accent-color: #C2410C">Slack</label>
-<label style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px"><input type="checkbox" name="tools" value="None of these yet" style="width: 18px; height: 18px; accent-color: #C2410C">None of these yet</label>
+<div style="display: flex; flex-wrap: wrap; gap: 18px">
+<div style="flex: 1 1 140px; min-width: 0; display: flex; flex-direction: column; gap: 6px"><label for="tb-first" style="font-size: 14px; font-weight: 600">First name</label><input id="tb-first" name="first" type="text" required autocomplete="given-name" placeholder="Ada" style="min-height: 52px; padding: 0 16px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"></div>
+<div style="flex: 1 1 140px; min-width: 0; display: flex; flex-direction: column; gap: 6px"><label for="tb-last" style="font-size: 14px; font-weight: 600">Last name</label><input id="tb-last" name="last" type="text" required autocomplete="family-name" placeholder="Lovelace" style="min-height: 52px; padding: 0 16px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"></div>
 </div>
-<div style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px"><label for="tb-other" style="font-size: 14px; font-weight: 600">Other tools <span style="font-weight: 400; color: #5A5850">(optional)</span></label><input id="tb-other" name="other" type="text" placeholder="e.g. Mixpanel, Amplitude, Salesforce, Intercom, Teams" style="min-height: 52px; padding: 0 16px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"></div>
-</fieldset>
-<button type="submit" style="min-height: 56px; border-radius: 16px; border: none; background: #FF6A3D; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 17px; font-weight: 600; cursor: pointer">Join the pilot</button>
-<p style="margin: 0; font-size: 13px; color: #5A5850">This opens a pre-filled email. A founder replies within two working days.</p>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="tb-email" style="font-size: 14px; font-weight: 600">Work email</label><input id="tb-email" name="email" type="email" required autocomplete="email" placeholder="you@company.com" style="min-height: 52px; padding: 0 16px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="tb-company" style="font-size: 14px; font-weight: 600">Company</label><input id="tb-company" name="company" type="text" required autocomplete="organization" placeholder="Company name" style="min-height: 52px; padding: 0 16px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"></div>
+<button type="submit" style="min-height: 56px; border-radius: 16px; border: none; background: #FF6A3D; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 17px; font-weight: 600; cursor: pointer">Pick a time to talk</button>
+<p style="margin: 0; font-size: 13px; color: #5A5850">Next, you'll pick a time on Calendly to talk with a founder.</p>
 </form>
 </div>
 <div style="position: relative; height: 300px; margin-top: 56px">
@@ -550,6 +542,9 @@ tbody tr:hover{background:#F8F5EF}
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2600}}'>
+// Pilot form sends people here, with their name, email and company pre-filled.
+var CALENDLY_URL = 'https://calendly.com/victoria-n-nguyen05/chat-with-invar';
+
 class Component extends DCLogic {
   constructor(props) {
     super(props);
@@ -597,17 +592,16 @@ class Component extends DCLogic {
     var submitPilot = function (e) {
       e.preventDefault();
       var f = e.target.elements;
-      var tools = [];
-      var boxes = e.target.querySelectorAll('input[name="tools"]:checked');
-      for (var i = 0; i < boxes.length; i++) tools.push(boxes[i].value);
-      var body = [
-        'Work email: ' + f.namedItem('email').value,
-        'Role: ' + f.namedItem('role').value,
-        'Company size: ' + f.namedItem('size').value,
-        'Tools: ' + (tools.join(', ') || 'none selected'),
-        'Other tools: ' + (f.namedItem('other').value || '-')
-      ].join('\n');
-      window.location.href = 'mailto:victoria@invarhq.com?subject=' + encodeURIComponent('INVAR pilot: ' + f.namedItem('email').value) + '&body=' + encodeURIComponent(body);
+      var first = f.namedItem('first').value.trim();
+      var last = f.namedItem('last').value.trim();
+      var q = [
+        'name=' + encodeURIComponent(first + ' ' + last),
+        'first_name=' + encodeURIComponent(first),
+        'last_name=' + encodeURIComponent(last),
+        'email=' + encodeURIComponent(f.namedItem('email').value.trim()),
+        'a1=' + encodeURIComponent(f.namedItem('company').value.trim())
+      ].join('&');
+      window.location.href = CALENDLY_URL + '?' + q;
     };
     return {
       submitPilot: submitPilot,
