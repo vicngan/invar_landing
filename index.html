@@ -496,7 +496,7 @@ tbody tr:hover{background:#F8F5EF}
 </ol>
 <p style="margin: 0; font-size: 15px; color: #5A5850">Unlimited viewers and askers. No per-seat pricing.</p>
 </div>
-<form aria-label="Join the pilot" onSubmit="{{submitPilot}}" style="flex: 1 1 380px; min-width: 0; align-self: flex-start; background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px; padding: 36px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 30px 60px -28px rgba(21,23,28,0.3)">
+<sc-if value="{{notSent}}" hint-placeholder-val="{{true}}"><form aria-label="Join the pilot" onSubmit="{{submitPilot}}" style="flex: 1 1 380px; min-width: 0; align-self: flex-start; background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px; padding: 36px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 30px 60px -28px rgba(21,23,28,0.3)">
 <p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 28px; font-weight: 600">Join the pilot</p>
 <div style="display: flex; flex-wrap: wrap; gap: 18px">
 <div style="flex: 1 1 140px; min-width: 0; display: flex; flex-direction: column; gap: 6px"><label for="tb-first" style="font-size: 14px; font-weight: 600">First name</label><input id="tb-first" name="first" type="text" required autocomplete="given-name" placeholder="Ada" style="min-height: 52px; padding: 0 16px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"></div>
@@ -504,9 +504,12 @@ tbody tr:hover{background:#F8F5EF}
 </div>
 <div style="display: flex; flex-direction: column; gap: 6px"><label for="tb-email" style="font-size: 14px; font-weight: 600">Work email</label><input id="tb-email" name="email" type="email" required autocomplete="email" placeholder="you@company.com" style="min-height: 52px; padding: 0 16px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"></div>
 <div style="display: flex; flex-direction: column; gap: 6px"><label for="tb-company" style="font-size: 14px; font-weight: 600">Company</label><input id="tb-company" name="company" type="text" required autocomplete="organization" placeholder="Company name" style="min-height: 52px; padding: 0 16px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"></div>
-<button type="submit" style="min-height: 56px; border-radius: 16px; border: none; background: #FF6A3D; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 17px; font-weight: 600; cursor: pointer">Pick a time to talk</button>
-<p style="margin: 0; font-size: 13px; color: #5A5850">Next, you'll pick a time on Calendly to talk with a founder.</p>
-</form>
+<label style="display: flex; align-items: flex-start; gap: 10px; min-height: 36px; font-size: 15px; cursor: pointer"><input type="checkbox" name="emailOnly" onChange="{{toggleEmailOnly}}" style="flex: none; width: 18px; height: 18px; margin: 3px 0 0; accent-color: #C2410C">Skip the call, just email me</label>
+<button type="submit" style="min-height: 56px; border-radius: 16px; border: none; background: #FF6A3D; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 17px; font-weight: 600; cursor: pointer">{{submitLabel}}</button>
+<p style="margin: 0; font-size: 13px; color: #5A5850">{{submitNote}}</p>
+<sc-if value="{{sendError}}" hint-placeholder-val="{{false}}"><p role="alert" style="margin: 0; font-size: 14px; color: #B42318">That didn't send. Try again, or email victoria@invarhq.com.</p></sc-if>
+</form></sc-if>
+<sc-if value="{{sent}}" hint-placeholder-val="{{false}}"><div role="status" style="flex: 1 1 380px; min-width: 0; align-self: flex-start; background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px; padding: 36px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 30px 60px -28px rgba(21,23,28,0.3)"><p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 28px; font-weight: 600">Thanks, we got it.</p><p style="margin: 0; font-size: 16px; color: #3A3A40">A founder will email you within two working days.</p></div></sc-if>
 </div>
 <div style="position: relative; height: 300px; margin-top: 56px">
 <div class="tile" style="position: absolute; left:2%; top: 120px; width: 96px; height: 96px; border-radius: 24px; background: #FFFDF8; display: flex; align-items: center; justify-content: center; transform: rotate(-8deg); box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 24px 40px -16px rgba(21,23,28,0.3)"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#15171C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"></path></svg></div>
@@ -544,11 +547,13 @@ tbody tr:hover{background:#F8F5EF}
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2600}}'>
 // Pilot form sends people here, with their name, email and company pre-filled.
 var CALENDLY_URL = 'https://calendly.com/victoria-n-nguyen05/chat-with-invar';
+// "Skip the call, just email me" submissions go to the inbox via Formspree.
+var FORMSPREE_URL = 'https://formspree.io/f/mppqqryg';
 
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { tab: 'home', lens: 'growth' };
+    this.state = { tab: 'home', lens: 'growth', emailOnly: false, sending: false, sent: false, sendError: false };
   }
   renderVals() {
     var self = this;
@@ -594,6 +599,20 @@ class Component extends DCLogic {
       var f = e.target.elements;
       var first = f.namedItem('first').value.trim();
       var last = f.namedItem('last').value.trim();
+      if (self.state.emailOnly) {
+        if (self.state.sending) return;
+        var data = new FormData();
+        data.append('first_name', first);
+        data.append('last_name', last);
+        data.append('email', f.namedItem('email').value.trim());
+        data.append('company', f.namedItem('company').value.trim());
+        data.append('_subject', 'INVAR pilot (email only): ' + first + ' ' + last);
+        self.setState({ sending: true, sendError: false });
+        fetch(FORMSPREE_URL, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+          .then(function (r) { self.setState(r.ok ? { sending: false, sent: true } : { sending: false, sendError: true }); })
+          .catch(function () { self.setState({ sending: false, sendError: true }); });
+        return;
+      }
       var q = [
         'name=' + encodeURIComponent(first + ' ' + last),
         'first_name=' + encodeURIComponent(first),
@@ -603,8 +622,15 @@ class Component extends DCLogic {
       ].join('&');
       window.location.href = CALENDLY_URL + '?' + q;
     };
+    var st = this.state;
     return {
       submitPilot: submitPilot,
+      toggleEmailOnly: function (e) { self.setState({ emailOnly: e.target.checked, sendError: false }); },
+      submitLabel: st.sending ? 'Sending…' : st.emailOnly ? 'Email me' : 'Pick a time to talk',
+      submitNote: st.emailOnly ? 'A founder will email you within two working days.' : "Next, you'll pick a time on Calendly to talk with a founder.",
+      sent: st.sent,
+      notSent: !st.sent,
+      sendError: st.sendError,
       tabs: tabs,
       isHome: cur === 'home',
       isHow: cur === 'how',
