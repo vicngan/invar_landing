@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="INVAR: inside-out analytics for product-led companies.">
+<title>INVAR</title>
+<link rel="icon" type="image/svg+xml" href="./invar-mark.svg">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Caveat:wght@500&amp;display=swap">
+<style>
+body{margin:0;background:#F4F1EA}
+*{box-sizing:border-box}
+a{color:#15171C}a:hover{color:#C2410C}
+.dots{background-image:radial-gradient(rgba(21,23,28,0.10) 1px, transparent 1.2px);background-size:16px 16px}
+.float{position:absolute}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #C2410C;outline-offset:2px}
+.tabbar::-webkit-scrollbar{display:none}
+@media (max-width:1399px){.float{display:none}}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+.lift{transition:transform .28s cubic-bezier(.2,.7,.3,1),box-shadow .28s}
+.lift:hover{transform:translateY(-6px);box-shadow:0 2px 4px rgba(21,23,28,0.06),0 30px 50px -22px rgba(21,23,28,0.35) !important}
+.tilt{transition:transform .4s cubic-bezier(.2,.7,.3,1),box-shadow .4s}
+.tilt:hover{transform:rotate(0deg) translateY(-8px) scale(1.03) !important;z-index:3;box-shadow:0 2px 4px rgba(21,23,28,0.06),0 36px 60px -24px rgba(21,23,28,0.4) !important}
+.tile{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.tile:hover{transform:rotate(0deg) scale(1.12) !important}
+.explore svg{transition:transform .22s}
+.explore:hover svg{transform:translateX(6px)}
+.ti{transition:background .25s}
+.ti:hover{background:#1C1F25}
+.ti svg{transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.ti:hover svg{transform:scale(1.18) rotate(-8deg)}
+button:not([role=tab]){transition:transform .2s,box-shadow .2s,filter .2s}
+button:not([role=tab]):hover{transform:translateY(-2px);filter:brightness(1.03)}
+nav[aria-label=Footer] button:hover{transform:none;color:#C2410C !important}
+button[role=tab]{transition:background .2s,color .2s}
+button[role=tab][aria-selected=false]:hover{background:#E2DCCF !important;color:#15171C !important}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:#F8F5EF}
+}
+@media (max-width:760px){
+.hidecta{display:none !important}
+.h1{font-size:46px !important;letter-spacing:-1px !important}
+.h2{font-size:36px !important}
+.pad{padding-left:16px !important;padding-right:16px !important}
+.panel{padding:24px 16px 0 16px !important}
+.dark{padding:72px 20px !important}
+.card{padding:24px !important}
+}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 100vh; background: #F4F1EA; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 17px; line-height: 1.5; padding-bottom: 32px">
+
+<!-- HEADER + TABS -->
+<header style="position: sticky; top: 0; z-index: 10; background: rgba(244,241,234,0.94); border-bottom: 1px solid #E6E1D6">
+<div class="pad" style="max-width: 1376px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
+<button type="button" onClick="{{goHome}}" aria-label="INVAR overview" style="display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0; border: none; background: transparent; cursor: pointer; color: #15171C">
+<svg width="20" height="35" viewBox="0 0 158.34 278.43" aria-hidden="true"><path fill="#15171C" fill-rule="evenodd" d="M91.14 275.96 C77.51 273.16 65.80 262.88 57.10 246.07 C46.76 226.11 45.64 206.88 53.00 175.84 C54.61 169.08 57.19 160.22 58.28 157.77 C59.37 155.30 59.18 155.08 52.96 151.52 C40.86 144.58 29.56 139.98 15.52 136.26 C8.96 134.52 6.04 133.24 4.27 131.32 C0.00 126.68 1.52 119.42 7.33 116.71 C12.31 114.39 17.90 114.79 29.22 118.25 C47.14 123.73 65.64 133.23 78.27 143.44 C94.55 156.60 110.59 182.51 117.98 207.60 C122.67 223.52 122.91 251.26 118.47 262.81 C114.58 272.92 103.13 278.43 91.14 275.96 Z M99.27 255.01 C100.09 254.19 100.33 253.39 100.95 249.60 C101.67 245.16 101.59 230.50 100.82 225.17 C98.56 209.51 92.94 195.78 82.07 179.37 C77.22 172.05 77.27 172.05 75.56 178.97 C70.56 199.24 69.55 213.22 72.28 224.00 C75.32 235.97 84.58 250.06 92.20 254.28 C95.27 255.99 98.01 256.27 99.27 255.01 Z M81.48 143.34 C80.26 142.67 75.02 134.06 74.84 132.39 C74.66 130.84 75.35 130.16 80.59 126.68 C87.43 122.14 87.43 122.14 91.42 131.51 C93.57 136.56 93.56 136.61 88.35 140.40 C83.54 143.89 82.95 144.14 81.48 143.34 Z M113.64 141.52 C109.21 139.97 102.42 134.58 97.44 128.64 C93.21 123.60 90.55 119.67 82.40 106.47 C79.14 101.18 75.93 96.00 75.28 94.97 C64.88 78.45 57.70 56.00 57.66 39.84 C57.62 23.28 62.78 12.99 74.47 6.37 C84.48 0.70 98.53 0.00 114.27 4.38 C133.62 9.77 149.85 20.96 154.52 32.14 C158.34 41.25 156.69 51.81 149.56 63.97 C145.38 71.12 143.17 74.04 132.06 87.22 C123.76 97.05 121.84 99.18 120.56 100.00 C113.43 104.53 104.34 99.51 104.43 91.10 C104.47 86.96 104.41 87.05 114.83 75.13 C128.09 59.96 133.48 52.66 135.91 46.60 C136.90 44.13 136.95 40.60 136.03 39.10 C132.49 33.33 121.71 27.06 109.77 23.84 C96.11 20.16 88.32 20.75 82.77 25.88 C77.14 31.10 77.40 44.04 83.52 62.47 C87.02 73.00 88.32 75.60 100.65 96.72 C112.28 116.65 113.68 119.27 116.76 126.97 C120.49 136.27 120.76 138.71 118.30 140.78 C116.89 141.97 115.54 142.18 113.64 141.52 Z M84.78 136.56 C86.95 135.11 87.16 134.39 86.07 132.22 C85.27 130.62 84.54 130.36 83.20 131.19 C81.05 132.52 80.84 133.26 82.04 135.22 C83.14 137.00 83.70 137.28 84.78 136.56 Z"></path></svg>
+<span style="font-family: 'Space Grotesk', Arial, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 3px">INVAR</span>
+</button>
+<nav class="tabbar" role="tablist" aria-label="Sections" style="flex: 1 1 auto; min-width: 0; display: flex; justify-content: center; gap: 4px; overflow-x: auto; scrollbar-width: none">
+<div style="display: flex; gap: 4px; padding: 5px; background: #EFEBE3; border-radius: 999px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="6">
+<sc-if value="{{t.on}}" hint-placeholder-val="{{false}}"><button type="button" role="tab" aria-selected="true" onClick="{{t.pick}}" style="flex: none; min-height: 44px; padding: 0 18px; border-radius: 999px; border: none; cursor: pointer; white-space: nowrap; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 15px; font-weight: 600; background: #15171C; color: #F4F1EA">{{t.name}}</button></sc-if>
+<sc-if value="{{t.off}}" hint-placeholder-val="{{true}}"><button type="button" role="tab" aria-selected="false" onClick="{{t.pick}}" style="flex: none; min-height: 44px; padding: 0 18px; border-radius: 999px; border: none; cursor: pointer; white-space: nowrap; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 15px; font-weight: 500; background: transparent; color: #4A4A52">{{t.name}}</button></sc-if>
+</sc-for>
+</div>
+</nav>
+<button type="button" class="hidecta" onClick="{{goPilot}}" style="flex: none; min-height: 44px; padding: 0 22px; border-radius: 999px; border: none; cursor: pointer; background: #FF6A3D; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 15px; font-weight: 600">Join the pilot</button>
+</div>
+</header>
+
+<!-- ============ TAB: OVERVIEW ============ -->
+<sc-if value="{{isHome}}" hint-placeholder-val="{{true}}">
+<section class="dots" style="position: relative; max-width: 1376px; margin: 24px auto 0; border-radius: 36px; border: 1px solid #E6E1D6; background-color: #F8F5EF; min-height: 920px; padding: 140px 24px 280px; display: flex; flex-direction: column; align-items: center; text-align: center; overflow: hidden">
+
+<div class="float tilt" style="left: 64px; top: 64px; width: 290px; padding: 36px 28px 40px; background: #FFE2D3; border-radius: 6px; transform: rotate(-6deg); box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 24px 40px -16px rgba(21,23,28,0.25); text-align: left">
+<div style="position: absolute; top: -10px; left: 136px; width: 18px; height: 18px; border-radius: 50%; background: #FF6A3D; box-shadow: 0 3px 6px rgba(21,23,28,0.3)"></div>
+<p style="margin: 0; font-family: 'Caveat', cursive; font-size: 30px; line-height: 1.15; color: #15171C">Why did activation fall for campaign B?</p>
+</div>
+<div class="float tilt" style="left: 260px; top: 168px; width: 92px; height: 92px; border-radius: 24px; background: #FFFDF8; display: flex; align-items: center; justify-content: center; transform: rotate(-4deg); box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 22px 40px -14px rgba(21,23,28,0.28)">
+<div style="width: 52px; height: 52px; border-radius: 14px; background: #15171C; display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF6A3D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4.2-4.2"></path></svg></div>
+</div>
+
+<div class="float tilt" style="right: 48px; top: 40px; width: 300px; padding: 22px; background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 22px; transform: rotate(5deg); text-align: left; box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 24px 44px -16px rgba(21,23,28,0.22)">
+<div style="display: flex; justify-content: space-between; gap: 8px"><p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1.5px; color: #8A3A12">IN YOUR NUMBERS</p><span style="position: absolute; top: -12px; right: 18px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1px; padding: 4px 10px; border-radius: 999px; background: #15171C; color: #F4F1EA">EXAMPLE</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B675E">PostHog</span></div>
+<p style="margin: 12px 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5A5850">activation_rate · campaign B</p>
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-top: 4px">
+<p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 44px; font-weight: 600; line-height: 1">24.0%</p>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 4px 10px; border-radius: 999px; background: #FFE1D4; color: #8A3A12">▼ 41%</span>
+</div>
+<svg width="100%" height="48" viewBox="0 0 280 48" preserveAspectRatio="none" aria-hidden="true" style="margin-top: 14px; display: block"><path d="M0 12 L40 10 L80 14 L120 8 L160 16 L200 26 L240 34 L280 44" fill="none" stroke="#FF6A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<p style="margin: 10px 0 0; font-size: 13px; color: #5A5850">Most accounts stop at Salesforce setup.</p>
+</div>
+<div class="float tilt" style="right: 332px; top: 56px; width: 92px; height: 92px; border-radius: 24px; background: #FFFDF8; display: flex; align-items: center; justify-content: center; transform: rotate(-7deg); box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 22px 40px -14px rgba(21,23,28,0.28)">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"></path></svg>
+</div>
+
+<div class="float tilt" style="left: 64px; bottom: -28px; width: 410px; padding: 24px 22px 44px; background: #EFEBE3; border: 1px solid #E2DCCF; border-radius: 24px; text-align: left; transform: rotate(-1.5deg); box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 24px 44px -18px rgba(21,23,28,0.22)">
+<div style="display: flex; justify-content: space-between; gap: 8px; margin-bottom: 14px"><p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 20px; font-weight: 600">In your team's conversations</p><span style="position: absolute; top: -12px; right: 22px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1px; padding: 4px 10px; border-radius: 999px; background: #15171C; color: #F4F1EA">EXAMPLE</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B675E; padding-top: 4px">Slack</span></div>
+<div style="background: #FFFDF8; border-radius: 14px; padding: 14px; display: flex; gap: 10px">
+<span aria-hidden="true" style="flex: none; width: 34px; height: 34px; border-radius: 8px; background: #15171C; color: #F4F1EA; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600">JL</span>
+<div><p style="margin: 0; font-size: 13px"><b>Jo, Customer Success</b> <span style="color: #6B675E">#cs-escalations</span></p><p style="margin: 2px 0 0; font-size: 15px">Another customer stuck mapping Salesforce fields. Who knows this one?</p></div>
+</div>
+<div style="margin-top: 10px; background: #15171C; color: #F4F1EA; border-radius: 14px; padding: 12px 14px; display: flex; justify-content: space-between; gap: 10px; font-size: 14px"><span><b>40</b> Salesforce questions to Eng this month</span><span style="color: #FF8A63">1 person answers most</span></div>
+</div>
+
+<div class="float tilt" style="right: 64px; bottom: -28px; width: 390px; padding: 24px 22px 44px; background: #EFEBE3; border: 1px solid #E2DCCF; border-radius: 24px; text-align: left; transform: rotate(2deg); box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 24px 44px -18px rgba(21,23,28,0.22)">
+<span style="position: absolute; top: -12px; right: 22px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1px; padding: 4px 10px; border-radius: 999px; background: #15171C; color: #F4F1EA">EXAMPLE</span>
+<div style="background: #FFFDF8; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; gap: 8px; align-items: center"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: #8A3A12">TOP CHANGE THIS WEEK</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 4px 9px; border-radius: 999px; background: #FFE1D4; color: #8A3A12">Correlation</span></div>
+<p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 21px; font-weight: 600; line-height: 1.2">Same problem: Salesforce setup</p>
+<p style="margin: 0; font-size: 14px; color: #4A4A52">The accounts that stall at setup are the ones CS keeps escalating. Fix it once and both numbers should move.</p>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; padding-top: 4px"><span style="font-size: 13px; color: #6B675E">9 linked records</span><span style="font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 999px; background: #FF6A3D; color: #15171C">Investigate</span></div>
+</div>
+</div>
+
+<div style="width: 112px; height: 112px; border-radius: 30px; background: #FFFDF8; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 28px 48px -16px rgba(21,23,28,0.30)">
+<svg width="40" height="70" viewBox="0 0 158.34 278.43" aria-hidden="true"><path fill="#15171C" fill-rule="evenodd" d="M91.14 275.96 C77.51 273.16 65.80 262.88 57.10 246.07 C46.76 226.11 45.64 206.88 53.00 175.84 C54.61 169.08 57.19 160.22 58.28 157.77 C59.37 155.30 59.18 155.08 52.96 151.52 C40.86 144.58 29.56 139.98 15.52 136.26 C8.96 134.52 6.04 133.24 4.27 131.32 C0.00 126.68 1.52 119.42 7.33 116.71 C12.31 114.39 17.90 114.79 29.22 118.25 C47.14 123.73 65.64 133.23 78.27 143.44 C94.55 156.60 110.59 182.51 117.98 207.60 C122.67 223.52 122.91 251.26 118.47 262.81 C114.58 272.92 103.13 278.43 91.14 275.96 Z M99.27 255.01 C100.09 254.19 100.33 253.39 100.95 249.60 C101.67 245.16 101.59 230.50 100.82 225.17 C98.56 209.51 92.94 195.78 82.07 179.37 C77.22 172.05 77.27 172.05 75.56 178.97 C70.56 199.24 69.55 213.22 72.28 224.00 C75.32 235.97 84.58 250.06 92.20 254.28 C95.27 255.99 98.01 256.27 99.27 255.01 Z M81.48 143.34 C80.26 142.67 75.02 134.06 74.84 132.39 C74.66 130.84 75.35 130.16 80.59 126.68 C87.43 122.14 87.43 122.14 91.42 131.51 C93.57 136.56 93.56 136.61 88.35 140.40 C83.54 143.89 82.95 144.14 81.48 143.34 Z M113.64 141.52 C109.21 139.97 102.42 134.58 97.44 128.64 C93.21 123.60 90.55 119.67 82.40 106.47 C79.14 101.18 75.93 96.00 75.28 94.97 C64.88 78.45 57.70 56.00 57.66 39.84 C57.62 23.28 62.78 12.99 74.47 6.37 C84.48 0.70 98.53 0.00 114.27 4.38 C133.62 9.77 149.85 20.96 154.52 32.14 C158.34 41.25 156.69 51.81 149.56 63.97 C145.38 71.12 143.17 74.04 132.06 87.22 C123.76 97.05 121.84 99.18 120.56 100.00 C113.43 104.53 104.34 99.51 104.43 91.10 C104.47 86.96 104.41 87.05 114.83 75.13 C128.09 59.96 133.48 52.66 135.91 46.60 C136.90 44.13 136.95 40.60 136.03 39.10 C132.49 33.33 121.71 27.06 109.77 23.84 C96.11 20.16 88.32 20.75 82.77 25.88 C77.14 31.10 77.40 44.04 83.52 62.47 C87.02 73.00 88.32 75.60 100.65 96.72 C112.28 116.65 113.68 119.27 116.76 126.97 C120.49 136.27 120.76 138.71 118.30 140.78 C116.89 141.97 115.54 142.18 113.64 141.52 Z M84.78 136.56 C86.95 135.11 87.16 134.39 86.07 132.22 C85.27 130.62 84.54 130.36 83.20 131.19 C81.05 132.52 80.84 133.26 82.04 135.22 C83.14 137.00 83.70 137.28 84.78 136.56 Z"></path></svg>
+</div>
+<p style="margin: 36px 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1.5px; color: #8A3A12">INSIDE-OUT ANALYTICS FOR PRODUCT-LED COMPANIES</p>
+<h1 class="h1" style="margin: 18px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: clamp(44px, 5.6vw, 76px); font-weight: 600; line-height: 1.04; letter-spacing: -2px; max-width: 760px">Every problem shows up twice.<br><span style="color: #8A867D">INVAR catches both.</span></h1>
+<p style="margin: 30px 0 0; max-width: 640px; font-size: 20px; line-height: 1.5; color: #3A3A40">A confusing integration shows up as an activation drop in PostHog and as the same question hitting one engineer in Slack. INVAR connects the two, tells you what to fix, and proves whether the fix worked.</p>
+<div style="margin-top: 40px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px">
+<button type="button" onClick="{{goPilot}}" style="min-height: 56px; padding: 0 32px; border-radius: 16px; border: none; cursor: pointer; background: #FF6A3D; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 18px; font-weight: 600; box-shadow: 0 14px 28px -12px rgba(194,65,12,0.55)">Join the pilot</button>
+<button type="button" onClick="{{goHow}}" style="min-height: 56px; padding: 0 28px; border-radius: 16px; cursor: pointer; background: #FFFDF8; border: 1px solid #E2DCCF; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 18px; font-weight: 500">Walk through an example</button>
+</div>
+<p style="margin: 24px 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.5px; color: #5A5850">PostHog · Stripe · HubSpot · Slack. Connected in under 15 minutes. First finding within 24 hours.</p></section>
+
+<section class="pad" style="max-width: 1280px; margin: 0 auto; padding: 140px 32px 0; display: flex; flex-direction: column; align-items: center; text-align: center">
+<span style="display: inline-flex; padding: 10px 20px; border-radius: 999px; background: #FFFDF8; border: 1px solid #E6E1D6; box-shadow: 0 10px 24px -14px rgba(21,23,28,0.3); font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1.5px; color: #4A4A52">THE PROBLEM</span>
+<h2 class="h2" style="margin: 32px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 64px; font-weight: 500; line-height: 1.08; letter-spacing: -1.5px; max-width: 920px">Each tool sees half. Nobody is paid to join them.</h2>
+<p style="margin: 24px 0 0; max-width: 660px; font-size: 20px; color: #3A3A40">Teams dig by hand for weeks, the same expert keeps getting pulled in, and the fix lands on the symptom instead of the cause.</p>
+<div style="margin-top: 72px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); text-align: left; border-top: 1px solid #DDD7CB">
+<div style="position: relative; padding: 36px 32px 44px; border-left: 1px solid #DDD7CB"><div style="position: absolute; top: -8px; left: -8px; width: 15px; height: 15px; border-radius: 50%; background: #FFFDF8; border: 1px solid #DDD7CB"></div><p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1px; color: #8A3A12">POSTHOG</p><p style="margin: 14px 0 0; font-size: 20px; line-height: 1.45">knows users stall at setup.</p></div>
+<div style="position: relative; padding: 36px 32px 44px; border-left: 1px solid #DDD7CB"><div style="position: absolute; top: -8px; left: -8px; width: 15px; height: 15px; border-radius: 50%; background: #FFFDF8; border: 1px solid #DDD7CB"></div><p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1px; color: #8A3A12">STRIPE</p><p style="margin: 14px 0 0; font-size: 20px; line-height: 1.45">knows those accounts never upgraded.</p></div>
+<div style="position: relative; padding: 36px 32px 44px; border-left: 1px solid #DDD7CB"><div style="position: absolute; top: -8px; left: -8px; width: 15px; height: 15px; border-radius: 50%; background: #FFFDF8; border: 1px solid #DDD7CB"></div><p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1px; color: #8A3A12">HUBSPOT</p><p style="margin: 14px 0 0; font-size: 20px; line-height: 1.45">knows they came from one campaign.</p></div>
+<div style="position: relative; padding: 36px 32px 44px; border-left: 1px solid #DDD7CB; border-right: 1px solid #DDD7CB"><div style="position: absolute; top: -8px; left: -8px; width: 15px; height: 15px; border-radius: 50%; background: #FFFDF8; border: 1px solid #DDD7CB"></div><div style="position: absolute; top: -8px; right: -8px; width: 15px; height: 15px; border-radius: 50%; background: #FFFDF8; border: 1px solid #DDD7CB"></div><p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1px; color: #8A3A12">SLACK</p><p style="margin: 14px 0 0; font-size: 20px; line-height: 1.45">knows one engineer answers every question about it.</p></div>
+</div>
+<p style="margin: 56px 0 0; max-width: 720px; font-size: 22px; line-height: 1.5; color: #3A3A40"><b style="color: #15171C">INVAR knows it's one problem,</b> and which fix to try first.</p>
+
+<!-- explore cards -->
+<div style="margin-top: 96px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; text-align: left">
+<button type="button" onClick="{{goHow}}" class="lift explore" style="cursor: pointer; text-align: left; font-family: 'IBM Plex Sans', Arial, sans-serif; color: #15171C; background: #FF6A3D; border: none; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 10px; min-height: 220px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1.5px">HOW IT WORKS</span>
+<span style="font-family: 'Space Grotesk', Arial, sans-serif; font-size: 26px; font-weight: 600; line-height: 1.2">From a metric that moved to a fix that's proven</span>
+<span style="margin-top: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600">See the loop <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</button>
+<button type="button" onClick="{{goAsk}}" class="lift explore" style="cursor: pointer; text-align: left; font-family: 'IBM Plex Sans', Arial, sans-serif; color: #15171C; background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 10px; min-height: 220px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1.5px; color: #8A3A12">ASKRIGHT</span>
+<span style="font-family: 'Space Grotesk', Arial, sans-serif; font-size: 26px; font-weight: 600; line-height: 1.2">Ask once. Reach the person who knows.</span>
+<span style="margin-top: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600">Meet AskRight <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</button>
+<button type="button" onClick="{{goInsights}}" class="lift explore" style="cursor: pointer; text-align: left; font-family: 'IBM Plex Sans', Arial, sans-serif; color: #15171C; background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 10px; min-height: 220px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1.5px; color: #8A3A12">INSIGHTS</span>
+<span style="font-family: 'Space Grotesk', Arial, sans-serif; font-size: 26px; font-weight: 600; line-height: 1.2">Answers that need both sides of your company</span>
+<span style="margin-top: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600">What only INVAR sees <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</button>
+<button type="button" onClick="{{goTrust}}" class="lift explore" style="cursor: pointer; text-align: left; font-family: 'IBM Plex Sans', Arial, sans-serif; color: #F4F1EA; background: #15171C; border: none; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 10px; min-height: 220px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1.5px; color: #FF8A63">TRUST</span>
+<span style="font-family: 'Space Grotesk', Arial, sans-serif; font-size: 26px; font-weight: 600; line-height: 1.2">It sees a lot. It touches as little as possible.</span>
+<span style="margin-top: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600">How we handle data <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</button>
+</div>
+</section>
+</sc-if>
+
+<!-- ============ TAB: HOW IT WORKS ============ -->
+<sc-if value="{{isHow}}" hint-placeholder-val="{{false}}">
+<section class="pad" style="max-width: 1280px; margin: 0 auto; padding: 96px 32px 0; display: flex; flex-direction: column; align-items: center; text-align: center">
+<span style="display: inline-flex; padding: 10px 20px; border-radius: 999px; background: #FFFDF8; border: 1px solid #E6E1D6; box-shadow: 0 10px 24px -14px rgba(21,23,28,0.3); font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1.5px; color: #4A4A52">HOW IT WORKS</span>
+<h2 class="h2" style="margin: 32px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 64px; font-weight: 500; line-height: 1.08; letter-spacing: -1.5px; max-width: 920px">From a metric that moved to a fix that's proven</h2>
+<p style="margin: 24px 0 0; max-width: 660px; font-size: 20px; color: #3A3A40">One loop, start to finish. Every pass writes back what was tried and what worked, so the next investigation starts smarter.</p>
+<div style="margin-top: 64px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; text-align: left">
+<div class="lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 24px; padding: 24px 22px 28px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: center"><div style="width: 52px; height: 52px; border-radius: 16px; background: #F4F1EA; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#15171C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0V8zM12 18v4"></path></svg></div><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8A3A12">01</span></div>
+<p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 22px; font-weight: 600">Connect</p>
+<p style="margin: 0; font-size: 15px; color: #4A4A52">Read-only connections plus your goals and metric definitions.</p>
+<p style="margin: auto 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B675E">Under 15 minutes</p>
+</div>
+<div class="lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 24px; padding: 24px 22px 28px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: center"><div style="width: 52px; height: 52px; border-radius: 16px; background: #F4F1EA; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#15171C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4.2-4.2"></path></svg></div><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8A3A12">02</span></div>
+<p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 22px; font-weight: 600">Investigate</p>
+<p style="margin: 0; font-size: 15px; color: #4A4A52">Ask why in plain words. Causes ranked, every angle checked, every number linked to its query.</p>
+<p style="margin: auto 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B675E">Under 2 minutes</p>
+</div>
+<div class="lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 24px; padding: 24px 22px 28px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: center"><div style="width: 52px; height: 52px; border-radius: 16px; background: #F4F1EA; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#15171C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"></path></svg></div><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8A3A12">03</span></div>
+<p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 22px; font-weight: 600">Decide</p>
+<p style="margin: 0; font-size: 15px; color: #4A4A52">The owners of each angle weigh in next to the evidence. INVAR learns your context.</p>
+<p style="margin: auto 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B675E">Owner, target, baseline</p>
+</div>
+<div class="lift" style="background: #FF6A3D; border-radius: 24px; padding: 24px 22px 28px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: center"><div style="width: 52px; height: 52px; border-radius: 16px; background: #FFFDF8; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#15171C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg></div><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #15171C">04</span></div>
+<p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 22px; font-weight: 600">Act</p>
+<p style="margin: 0; font-size: 15px; color: #15171C">Approved in INVAR, shipped from Slack to Jira, Linear or GitHub Issues.</p>
+<p style="margin: auto 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #15171C">Nothing without approval</p>
+</div>
+<div class="lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 24px; padding: 24px 22px 28px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: center"><div style="width: 52px; height: 52px; border-radius: 16px; background: #F4F1EA; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#15171C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg></div><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8A3A12">05</span></div>
+<p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 22px; font-weight: 600">Prove</p>
+<p style="margin: 0; font-size: 15px; color: #4A4A52">The target metric and question load measured against baseline, with a recorded verdict.</p>
+<p style="margin: auto 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B675E">Both sides, measured</p>
+</div>
+</div>
+
+<!-- investigation panel -->
+<div class="panel" style="margin-top: 24px; width: 100%; background: #FF6A3D; border-radius: 36px; padding: 64px 64px 0; overflow: hidden; text-align: left">
+<p style="margin: 0 0 16px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1.5px; color: #15171C">EXAMPLE DATA</p>
+<div style="background: #FFFDF8; border-radius: 24px 24px 0 0; box-shadow: 0 -10px 40px -10px rgba(21,23,28,0.25); display: flex; flex-wrap: wrap; overflow: hidden">
+<div style="flex: 1 1 220px; max-width: 260px; padding: 24px 18px; border-right: 1px solid #ECE7DD; display: flex; flex-direction: column; gap: 6px; font-size: 15px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px 18px"><svg width="16" height="28" viewBox="0 0 158.34 278.43" aria-hidden="true"><path fill="#15171C" fill-rule="evenodd" d="M91.14 275.96 C77.51 273.16 65.80 262.88 57.10 246.07 C46.76 226.11 45.64 206.88 53.00 175.84 C54.61 169.08 57.19 160.22 58.28 157.77 C59.37 155.30 59.18 155.08 52.96 151.52 C40.86 144.58 29.56 139.98 15.52 136.26 C8.96 134.52 6.04 133.24 4.27 131.32 C0.00 126.68 1.52 119.42 7.33 116.71 C12.31 114.39 17.90 114.79 29.22 118.25 C47.14 123.73 65.64 133.23 78.27 143.44 C94.55 156.60 110.59 182.51 117.98 207.60 C122.67 223.52 122.91 251.26 118.47 262.81 C114.58 272.92 103.13 278.43 91.14 275.96 Z M99.27 255.01 C100.09 254.19 100.33 253.39 100.95 249.60 C101.67 245.16 101.59 230.50 100.82 225.17 C98.56 209.51 92.94 195.78 82.07 179.37 C77.22 172.05 77.27 172.05 75.56 178.97 C70.56 199.24 69.55 213.22 72.28 224.00 C75.32 235.97 84.58 250.06 92.20 254.28 C95.27 255.99 98.01 256.27 99.27 255.01 Z M81.48 143.34 C80.26 142.67 75.02 134.06 74.84 132.39 C74.66 130.84 75.35 130.16 80.59 126.68 C87.43 122.14 87.43 122.14 91.42 131.51 C93.57 136.56 93.56 136.61 88.35 140.40 C83.54 143.89 82.95 144.14 81.48 143.34 Z M113.64 141.52 C109.21 139.97 102.42 134.58 97.44 128.64 C93.21 123.60 90.55 119.67 82.40 106.47 C79.14 101.18 75.93 96.00 75.28 94.97 C64.88 78.45 57.70 56.00 57.66 39.84 C57.62 23.28 62.78 12.99 74.47 6.37 C84.48 0.70 98.53 0.00 114.27 4.38 C133.62 9.77 149.85 20.96 154.52 32.14 C158.34 41.25 156.69 51.81 149.56 63.97 C145.38 71.12 143.17 74.04 132.06 87.22 C123.76 97.05 121.84 99.18 120.56 100.00 C113.43 104.53 104.34 99.51 104.43 91.10 C104.47 86.96 104.41 87.05 114.83 75.13 C128.09 59.96 133.48 52.66 135.91 46.60 C136.90 44.13 136.95 40.60 136.03 39.10 C132.49 33.33 121.71 27.06 109.77 23.84 C96.11 20.16 88.32 20.75 82.77 25.88 C77.14 31.10 77.40 44.04 83.52 62.47 C87.02 73.00 88.32 75.60 100.65 96.72 C112.28 116.65 113.68 119.27 116.76 126.97 C120.49 136.27 120.76 138.71 118.30 140.78 C116.89 141.97 115.54 142.18 113.64 141.52 Z M84.78 136.56 C86.95 135.11 87.16 134.39 86.07 132.22 C85.27 130.62 84.54 130.36 83.20 131.19 C81.05 132.52 80.84 133.26 82.04 135.22 C83.14 137.00 83.70 137.28 84.78 136.56 Z"></path></svg><span style="font-family: 'Space Grotesk', Arial, sans-serif; font-size: 19px; font-weight: 700; letter-spacing: 2px">INVAR</span></div>
+<p style="margin: 4px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: #6B675E">EXAMPLE CO.</p>
+<div style="padding: 9px 12px">Top changes</div>
+<div style="padding: 9px 12px; border-radius: 10px; background: #EFEBE3; font-weight: 500; display: flex; justify-content: space-between">Investigations<span style="color: #6B675E">3</span></div>
+<div style="padding: 9px 12px; display: flex; justify-content: space-between">Recommendations<span style="color: #6B675E">2</span></div>
+<div style="padding: 9px 12px; display: flex; justify-content: space-between">Outcomes<span style="color: #6B675E">2</span></div>
+<p style="margin: 14px 12px 4px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: #6B675E">LENSES</p>
+<div style="padding: 9px 12px">Growth</div>
+<div style="padding: 9px 12px">Product</div>
+<div style="padding: 9px 12px">CS and Support</div>
+<div style="padding: 9px 12px">Engineering</div>
+</div>
+<div style="flex: 999 1 560px; min-width: 0; padding: 28px 28px 40px; background: #FBF9F4; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #FFFDF8; border: 1px solid #D3CCBD; border-radius: 14px; font-size: 16px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A5850" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4.2-4.2"></path></svg>Why did activation fall for campaign B?</div>
+<p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 26px; font-weight: 500; line-height: 1.25; letter-spacing: -0.5px">Activation fell 41% for campaign B accounts. <span style="color: #8A867D">Most of the drop is associated with one step: Salesforce setup.</span></p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px">
+<div style="background: #FFFDF8; border: 1px solid #ECE7DD; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: #8A3A12">LIKELY CAUSES, RANKED</p>
+<div style="border: 2px solid #FF6A3D; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; gap: 10px; align-items: flex-start"><p style="margin: 0; font-size: 15px; font-weight: 500"><span style="font-family: 'IBM Plex Mono', monospace; color: #8A3A12">1</span>&#160;&#160;Campaign B accounts stall at Salesforce setup</p><span style="flex: none; font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 3px 8px; border-radius: 999px; background: #FFE1D4; color: #8A3A12">Correlation</span></div>
+<div style="height: 8px; border-radius: 99px; background: #EFEBE3"><div style="width: 71%; height: 8px; border-radius: 99px; background: #FF6A3D"></div></div>
+<p style="margin: 0; font-size: 12px; color: #6B675E">71% of the drop · passed seasonality, cohort size and plan mix · 212 accounts</p>
+</div>
+<div style="border: 1px solid #ECE7DD; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; gap: 10px; align-items: flex-start"><p style="margin: 0; font-size: 15px"><span style="font-family: 'IBM Plex Mono', monospace; color: #6B675E">2</span>&#160;&#160;Fewer accounts on the Growth plan</p><span style="flex: none; font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 3px 8px; border-radius: 999px; background: #15171C; color: #F4F1EA">Fact</span></div>
+<div style="height: 8px; border-radius: 99px; background: #EFEBE3"><div style="width: 18%; height: 8px; border-radius: 99px; background: #15171C"></div></div>
+<p style="margin: 0; font-size: 12px; color: #6B675E">18% · plan mix shifted 6 points</p>
+</div>
+<div style="border: 1px solid #ECE7DD; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; gap: 10px; align-items: flex-start"><p style="margin: 0; font-size: 15px"><span style="font-family: 'IBM Plex Mono', monospace; color: #6B675E">3</span>&#160;&#160;Release 4.2 navigation change</p><span style="flex: none; font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 3px 8px; border-radius: 999px; border: 1px dashed #8A867D; color: #4A4A52">Hypothesis</span></div>
+<div style="height: 8px; border-radius: 99px; background: #EFEBE3"><div style="width: 4%; height: 8px; border-radius: 99px; background: #B9B4A8"></div></div>
+<p style="margin: 0; font-size: 12px; color: #6B675E">4% · too small to separate from noise</p>
+</div>
+</div>
+<div style="background: #15171C; color: #F4F1EA; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 4px">
+<p style="margin: 0 0 10px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: #FF8A63">EVERY ANGLE CHECKED</p>
+<div style="display: grid; grid-template-columns: 14px 104px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #2C2F37; font-size: 14px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #FF6A3D"></span><span style="font-weight: 600">Usage</span><span style="color: #C9C6BE">68% of campaign B accounts stop at field mapping</span></div>
+<div style="display: grid; grid-template-columns: 14px 104px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #2C2F37; font-size: 14px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #FF6A3D"></span><span style="font-weight: 600">Revenue</span><span style="color: #C9C6BE">Accounts that finish setup convert 2.3x more often</span></div>
+<div style="display: grid; grid-template-columns: 14px 104px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #2C2F37; font-size: 14px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #FF6A3D"></span><span style="font-weight: 600">Acquisition</span><span style="color: #C9C6BE">Concentrated in LinkedIn campaign B</span></div>
+<div style="display: grid; grid-template-columns: 14px 104px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #2C2F37; font-size: 14px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #FF6A3D"></span><span style="font-weight: 600">Team load</span><span style="color: #C9C6BE">40 Salesforce questions to Eng; 1 person answers most</span></div>
+<div style="display: grid; grid-template-columns: 14px 104px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #2C2F37; font-size: 14px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #FF6A3D"></span><span style="font-weight: 600">Knowledge</span><span style="color: #C9C6BE">Setup guide is 7 months old</span></div>
+<div style="display: grid; grid-template-columns: 14px 104px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #2C2F37; font-size: 14px"><span style="width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid #8C909B"></span><span style="font-weight: 600">Cost</span><span style="color: #8C909B">Nothing unusual</span></div>
+<div style="display: grid; grid-template-columns: 14px 104px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #2C2F37; font-size: 14px"><span style="width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid #8C909B"></span><span style="font-weight: 600">Sales context</span><span style="color: #8C909B">Nothing unusual</span></div>
+<div style="display: grid; grid-template-columns: 14px 104px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 0; font-size: 14px"><span style="width: 9px; height: 9px; border-radius: 50%; border: 1.5px dashed #8C909B"></span><span style="font-weight: 600">Goals</span><span style="color: #8C909B">Add your goals doc to check this angle</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- detail bento -->
+<div style="margin-top: 24px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; text-align: left">
+<div class="card lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 32px; padding: 40px; display: flex; flex-direction: column; gap: 32px">
+<div style="background: #F4F1EA; border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; margin-bottom: 4px"><p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1.5px; color: #6B675E">CONNECTIONS</p><span style="font-size: 13px; color: #6B675E">11 of 15 min</span></div>
+<div style="background: #FFFDF8; border-radius: 14px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; box-shadow: 0 8px 18px -12px rgba(21,23,28,0.25)"><div><p style="margin: 0; font-size: 15px; font-weight: 600">PostHog</p><p style="margin: 0; font-size: 13px; color: #6B675E">Events, persons, feature flags</p></div><span style="font-size: 13px; font-weight: 600; color: #1E6B43">Connected</span></div>
+<div style="background: #FFFDF8; border-radius: 14px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; box-shadow: 0 8px 18px -12px rgba(21,23,28,0.25)"><div><p style="margin: 0; font-size: 15px; font-weight: 600">Stripe</p><p style="margin: 0; font-size: 13px; color: #6B675E">Subscriptions and invoices</p></div><span style="font-size: 13px; font-weight: 600; color: #1E6B43">Connected</span></div>
+<div style="background: #FFFDF8; border-radius: 14px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; box-shadow: 0 8px 18px -12px rgba(21,23,28,0.25)"><div><p style="margin: 0; font-size: 15px; font-weight: 600">HubSpot</p><p style="margin: 0; font-size: 13px; color: #6B675E">Deals, campaigns, owners</p></div><span style="font-size: 13px; font-weight: 600; color: #1E6B43">Connected</span></div>
+<div style="background: #FFFDF8; border-radius: 14px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; box-shadow: 0 8px 18px -12px rgba(21,23,28,0.25)"><div><p style="margin: 0; font-size: 15px; font-weight: 600">Slack</p><p style="margin: 0; font-size: 13px; color: #6B675E">Question metadata only; text stays in Slack</p></div><span style="font-size: 13px; font-weight: 600; color: #1E6B43">Installed</span></div>
+<div style="background: #15171C; color: #F4F1EA; border-radius: 14px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px"><div><p style="margin: 0; font-size: 15px; font-weight: 600">Company context</p><p style="margin: 0; font-size: 13px; color: #B9BCC6">Goals 2026, metric definitions, pricing</p></div><span style="font-size: 13px; font-weight: 600; color: #FF8A63">3 docs</span></div>
+</div>
+<div style="text-align: center">
+<h3 style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 32px; font-weight: 500">Plug in what you already use</h3>
+<p style="margin: 10px auto 0; max-width: 440px; font-size: 18px; color: #4A4A52">Your goals and metric definitions go in too, so every answer uses your numbers, not a generic formula. No migration, no tracking plan rewrite.</p>
+</div>
+</div>
+<div class="card lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 32px; padding: 40px; display: flex; flex-direction: column; gap: 32px">
+<div style="background: #F4F1EA; border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1.5px; color: #6B675E">RECOMMENDATION</p><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 4px 9px; border-radius: 999px; background: #FFE1D4; color: #8A3A12">Correlation</span></div>
+<p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 20px; font-weight: 600; line-height: 1.25">Simplify Salesforce setup and publish one field-mapping guide</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 14px"><span><span style="color: #6B675E">Owner</span> <b>Product</b></span><span><span style="color: #6B675E">Target</span> <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">activation_rate 24.0% → 32.0%</span></span></div>
+<div style="background: #FFFDF8; border-radius: 14px; padding: 12px 14px; font-size: 14px"><b>CS lead</b> <span style="color: #6B675E">· 2h</span><br>Half of these accounts came from the LinkedIn webinar. They expect setup to be done for them.</div>
+<div style="background: #FFFDF8; border-radius: 14px; padding: 12px 14px; font-size: 14px"><b>Engineering</b> <span style="color: #6B675E">· 1h</span><br>The field-mapping screen hasn't changed since v3. Happy to pair on the guide.</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><span style="font-size: 13px; font-weight: 600; padding: 7px 16px; border-radius: 999px; background: #FF6A3D">Approve</span><span style="font-size: 13px; font-weight: 500; padding: 7px 16px; border-radius: 999px; background: #FFFDF8; border: 1px solid #E2DCCF">Change</span><span style="font-size: 13px; font-weight: 500; padding: 7px 12px; color: #4A4A52">Defer</span></div>
+</div>
+<div style="text-align: center">
+<h3 style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 32px; font-weight: 500">The right people weigh in</h3>
+<p style="margin: 10px auto 0; max-width: 440px; font-size: 18px; color: #4A4A52">Each recommendation opens a short thread with its owner. When someone says "that spike was a one-time migration," INVAR learns it for your company.</p>
+</div>
+</div>
+</div>
+
+<div style="margin-top: 24px; width: 100%; display: flex; flex-wrap: wrap; gap: 24px; text-align: left">
+<div class="card lift" style="flex: 2 1 600px; min-width: 0; background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 32px; padding: 48px; display: flex; flex-wrap: wrap; gap: 40px; align-items: stretch">
+<div style="flex: 1 1 240px; display: flex; flex-direction: column; justify-content: space-between; gap: 32px">
+<div style="width: 76px; height: 76px; border-radius: 22px; background: #FFFDF8; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 18px 34px -14px rgba(21,23,28,0.3)"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg></div>
+<div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 36px; font-weight: 500; line-height: 1.12">Approved in INVAR, shipped from Slack</h3>
+<p style="margin: 14px 0 0; font-size: 18px; color: #4A4A52">INVAR drafts the ticket and posts it to the owner with the evidence, a suggested assignee and the target metric. Nothing is created without a person's approval.</p>
+</div>
+</div>
+<div style="flex: 1 1 320px; background: #F4F1EA; border-radius: 22px; padding: 22px; display: flex; gap: 12px; align-items: flex-start">
+<span style="flex: none; width: 36px; height: 36px; border-radius: 9px; background: #15171C; display: flex; align-items: center; justify-content: center"><svg width="14" height="24" viewBox="0 0 158.34 278.43" aria-hidden="true"><path fill="#F4F1EA" fill-rule="evenodd" d="M91.14 275.96 C77.51 273.16 65.80 262.88 57.10 246.07 C46.76 226.11 45.64 206.88 53.00 175.84 C54.61 169.08 57.19 160.22 58.28 157.77 C59.37 155.30 59.18 155.08 52.96 151.52 C40.86 144.58 29.56 139.98 15.52 136.26 C8.96 134.52 6.04 133.24 4.27 131.32 C0.00 126.68 1.52 119.42 7.33 116.71 C12.31 114.39 17.90 114.79 29.22 118.25 C47.14 123.73 65.64 133.23 78.27 143.44 C94.55 156.60 110.59 182.51 117.98 207.60 C122.67 223.52 122.91 251.26 118.47 262.81 C114.58 272.92 103.13 278.43 91.14 275.96 Z M99.27 255.01 C100.09 254.19 100.33 253.39 100.95 249.60 C101.67 245.16 101.59 230.50 100.82 225.17 C98.56 209.51 92.94 195.78 82.07 179.37 C77.22 172.05 77.27 172.05 75.56 178.97 C70.56 199.24 69.55 213.22 72.28 224.00 C75.32 235.97 84.58 250.06 92.20 254.28 C95.27 255.99 98.01 256.27 99.27 255.01 Z M81.48 143.34 C80.26 142.67 75.02 134.06 74.84 132.39 C74.66 130.84 75.35 130.16 80.59 126.68 C87.43 122.14 87.43 122.14 91.42 131.51 C93.57 136.56 93.56 136.61 88.35 140.40 C83.54 143.89 82.95 144.14 81.48 143.34 Z M113.64 141.52 C109.21 139.97 102.42 134.58 97.44 128.64 C93.21 123.60 90.55 119.67 82.40 106.47 C79.14 101.18 75.93 96.00 75.28 94.97 C64.88 78.45 57.70 56.00 57.66 39.84 C57.62 23.28 62.78 12.99 74.47 6.37 C84.48 0.70 98.53 0.00 114.27 4.38 C133.62 9.77 149.85 20.96 154.52 32.14 C158.34 41.25 156.69 51.81 149.56 63.97 C145.38 71.12 143.17 74.04 132.06 87.22 C123.76 97.05 121.84 99.18 120.56 100.00 C113.43 104.53 104.34 99.51 104.43 91.10 C104.47 86.96 104.41 87.05 114.83 75.13 C128.09 59.96 133.48 52.66 135.91 46.60 C136.90 44.13 136.95 40.60 136.03 39.10 C132.49 33.33 121.71 27.06 109.77 23.84 C96.11 20.16 88.32 20.75 82.77 25.88 C77.14 31.10 77.40 44.04 83.52 62.47 C87.02 73.00 88.32 75.60 100.65 96.72 C112.28 116.65 113.68 119.27 116.76 126.97 C120.49 136.27 120.76 138.71 118.30 140.78 C116.89 141.97 115.54 142.18 113.64 141.52 Z M84.78 136.56 C86.95 135.11 87.16 134.39 86.07 132.22 C85.27 130.62 84.54 130.36 83.20 131.19 C81.05 132.52 80.84 133.26 82.04 135.22 C83.14 137.00 83.70 137.28 84.78 136.56 Z"></path></svg></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 14px"><b>INVAR</b> <span style="font-size: 11px; padding: 1px 6px; border-radius: 4px; background: #E2DCCF; color: #4A4A52">APP</span> <span style="color: #6B675E">10:42</span></p>
+<p style="margin: 0; font-size: 15px">Drafted a ticket from the approved recommendation. Review it, then create.</p>
+<div style="background: #FFFDF8; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px; border-left: 3px solid #FF6A3D">
+<p style="margin: 0; font-weight: 600; font-size: 15px">Simplify Salesforce field mapping in setup</p>
+<p style="margin: 0; font-size: 13px; color: #5A5850">Campaign B accounts stall at field mapping; 40 related questions reached Engineering this month.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: #4A4A52"><span>Integrations team</span><span style="font-family: 'IBM Plex Mono', monospace">activation_rate → 32.0%</span><span>9 linked records</span></div>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><span style="font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 999px; background: #FF6A3D">Create in Linear</span><span style="font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 999px; background: #FFFDF8; border: 1px solid #E2DCCF">Edit first</span></div>
+</div>
+</div>
+</div>
+<div class="lift" style="flex: 1 1 340px; border: 2px dashed #D3CCBD; border-radius: 32px; padding: 40px 32px; display: flex; flex-direction: column; justify-content: space-between; gap: 28px; position: relative">
+<span style="position: absolute; top: -12px; right: 28px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1px; padding: 4px 10px; border-radius: 999px; background: #15171C; color: #F4F1EA">EXAMPLE</span>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 18px; padding: 16px 18px; transform: rotate(-1.5deg)">
+<div style="display: flex; justify-content: space-between; gap: 8px; align-items: center"><p style="margin: 0; font-weight: 600; font-size: 15px">Simplify Salesforce setup</p><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 3px 8px; border-radius: 999px; background: #EFEBE3; color: #4A4A52">Watching</span></div>
+<p style="margin: 6px 0 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5A5850">24.0% → 29.5% · target 32.0%</p>
+<div style="height: 8px; border-radius: 99px; background: #EFEBE3"><div style="width: 69%; height: 8px; border-radius: 99px; background: #15171C"></div></div>
+<p style="margin: 8px 0 0; font-size: 12px; color: #6B675E">Day 18 of 30 · Salesforce questions 40 → 22 a month</p>
+</div>
+<div style="background: #FF6A3D; border-radius: 18px; padding: 16px 18px; transform: rotate(1.5deg)">
+<div style="display: flex; justify-content: space-between; gap: 8px; align-items: center"><p style="margin: 0; font-weight: 600; font-size: 15px">Write the field-mapping guide</p><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 3px 8px; border-radius: 999px; background: #15171C; color: #F4F1EA">Hit</span></div>
+<p style="margin: 6px 0 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px">40 → 14 questions / mo · target 20</p>
+<div style="height: 8px; border-radius: 99px; background: #FFB79E"><div style="width: 100%; height: 8px; border-radius: 99px; background: #15171C"></div></div>
+<p style="margin: 8px 0 0; font-size: 12px">Closed Sep 30 · before and after, no holdout</p>
+</div>
+</div>
+<div style="text-align: center">
+<h3 style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 30px; font-weight: 500; line-height: 1.15">Know whether it worked, on both sides</h3>
+<p style="margin: 12px 0 0; font-size: 17px; color: #4A4A52">That history of what you tried and what worked stays with your company.</p>
+</div>
+</div>
+</div>
+<button type="button" onClick="{{goAsk}}" style="margin-top: 56px; min-height: 52px; padding: 0 28px; border-radius: 999px; cursor: pointer; background: #FFFDF8; border: 1px solid #E2DCCF; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; font-weight: 600; display: inline-flex; align-items: center; gap: 10px">Next: AskRight <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</section>
+</sc-if>
+
+<!-- ============ TAB: ASKRIGHT ============ -->
+<sc-if value="{{isAsk}}" hint-placeholder-val="{{false}}">
+<section class="pad" style="max-width: 1280px; margin: 0 auto; padding: 96px 32px 0; display: flex; flex-direction: column; align-items: center">
+<span style="display: inline-flex; padding: 10px 20px; border-radius: 999px; background: #FFFDF8; border: 1px solid #E6E1D6; box-shadow: 0 10px 24px -14px rgba(21,23,28,0.3); font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1.5px; color: #4A4A52">ASKRIGHT · FOR YOUR TEAM</span>
+<h2 class="h2" style="margin: 32px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 64px; font-weight: 500; line-height: 1.08; letter-spacing: -1.5px; text-align: center; max-width: 900px">Ask once. Reach the person who knows.</h2>
+<p style="margin: 24px 0 0; max-width: 620px; font-size: 20px; color: #3A3A40; text-align: center">AskRight is INVAR's Slack app. DM it or mention it in a channel.</p>
+<div style="margin-top: 64px; width: 100%; display: flex; flex-wrap: wrap; gap: 24px">
+<div class="card lift" style="flex: 3 1 560px; min-width: 0; background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 32px; padding: 32px">
+<div style="background: #F4F1EA; border-radius: 22px; overflow: hidden">
+<div style="padding: 12px 20px; border-bottom: 1px solid #E2DCCF; display: flex; justify-content: space-between; font-size: 14px"><b># cs-team</b><span style="color: #6B675E">Slack</span></div>
+<div style="padding: 22px 20px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; gap: 12px"><span aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 9px; background: #C9C2B3; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600">SM</span><div><p style="margin: 0; font-size: 14px"><b>Sam</b> <span style="color: #6B675E">10:02</span></p><p style="margin: 2px 0 0; font-size: 15px">@AskRight does the Salesforce sync support custom objects?</p></div></div>
+<div style="display: flex; gap: 12px"><span style="flex: none; width: 36px; height: 36px; border-radius: 9px; background: #15171C; display: flex; align-items: center; justify-content: center"><svg width="14" height="24" viewBox="0 0 158.34 278.43" aria-hidden="true"><path fill="#F4F1EA" fill-rule="evenodd" d="M91.14 275.96 C77.51 273.16 65.80 262.88 57.10 246.07 C46.76 226.11 45.64 206.88 53.00 175.84 C54.61 169.08 57.19 160.22 58.28 157.77 C59.37 155.30 59.18 155.08 52.96 151.52 C40.86 144.58 29.56 139.98 15.52 136.26 C8.96 134.52 6.04 133.24 4.27 131.32 C0.00 126.68 1.52 119.42 7.33 116.71 C12.31 114.39 17.90 114.79 29.22 118.25 C47.14 123.73 65.64 133.23 78.27 143.44 C94.55 156.60 110.59 182.51 117.98 207.60 C122.67 223.52 122.91 251.26 118.47 262.81 C114.58 272.92 103.13 278.43 91.14 275.96 Z M99.27 255.01 C100.09 254.19 100.33 253.39 100.95 249.60 C101.67 245.16 101.59 230.50 100.82 225.17 C98.56 209.51 92.94 195.78 82.07 179.37 C77.22 172.05 77.27 172.05 75.56 178.97 C70.56 199.24 69.55 213.22 72.28 224.00 C75.32 235.97 84.58 250.06 92.20 254.28 C95.27 255.99 98.01 256.27 99.27 255.01 Z M81.48 143.34 C80.26 142.67 75.02 134.06 74.84 132.39 C74.66 130.84 75.35 130.16 80.59 126.68 C87.43 122.14 87.43 122.14 91.42 131.51 C93.57 136.56 93.56 136.61 88.35 140.40 C83.54 143.89 82.95 144.14 81.48 143.34 Z M113.64 141.52 C109.21 139.97 102.42 134.58 97.44 128.64 C93.21 123.60 90.55 119.67 82.40 106.47 C79.14 101.18 75.93 96.00 75.28 94.97 C64.88 78.45 57.70 56.00 57.66 39.84 C57.62 23.28 62.78 12.99 74.47 6.37 C84.48 0.70 98.53 0.00 114.27 4.38 C133.62 9.77 149.85 20.96 154.52 32.14 C158.34 41.25 156.69 51.81 149.56 63.97 C145.38 71.12 143.17 74.04 132.06 87.22 C123.76 97.05 121.84 99.18 120.56 100.00 C113.43 104.53 104.34 99.51 104.43 91.10 C104.47 86.96 104.41 87.05 114.83 75.13 C128.09 59.96 133.48 52.66 135.91 46.60 C136.90 44.13 136.95 40.60 136.03 39.10 C132.49 33.33 121.71 27.06 109.77 23.84 C96.11 20.16 88.32 20.75 82.77 25.88 C77.14 31.10 77.40 44.04 83.52 62.47 C87.02 73.00 88.32 75.60 100.65 96.72 C112.28 116.65 113.68 119.27 116.76 126.97 C120.49 136.27 120.76 138.71 118.30 140.78 C116.89 141.97 115.54 142.18 113.64 141.52 Z M84.78 136.56 C86.95 135.11 87.16 134.39 86.07 132.22 C85.27 130.62 84.54 130.36 83.20 131.19 C81.05 132.52 80.84 133.26 82.04 135.22 C83.14 137.00 83.70 137.28 84.78 136.56 Z"></path></svg></span><div style="min-width: 0; display: flex; flex-direction: column; gap: 8px"><p style="margin: 0; font-size: 14px"><b>AskRight</b> <span style="color: #6B675E">10:02</span></p><p style="margin: 0; font-size: 15px">Yes, from version 4.1. Custom objects need the "Advanced sync" toggle in Settings.</p><div style="display: flex; gap: 6px; flex-wrap: wrap"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 4px 10px; border-radius: 999px; background: #FFFDF8; color: #4A4A52">Salesforce setup guide · Sep 30</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 4px 10px; border-radius: 999px; background: #FFFDF8; color: #4A4A52">#eng-integrations thread</span></div></div></div>
+<div style="height: 1px; background: #E2DCCF"></div>
+<div style="display: flex; gap: 12px"><span aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 9px; background: #15171C; color: #F4F1EA; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600">JL</span><div><p style="margin: 0; font-size: 14px"><b>Jo</b> <span style="color: #6B675E">10:15</span></p><p style="margin: 2px 0 0; font-size: 15px">@AskRight Halden Co. sees duplicate contacts after a re-sync. Known issue?</p></div></div>
+<div style="display: flex; gap: 12px"><span style="flex: none; width: 36px; height: 36px; border-radius: 9px; background: #15171C; display: flex; align-items: center; justify-content: center"><svg width="14" height="24" viewBox="0 0 158.34 278.43" aria-hidden="true"><path fill="#F4F1EA" fill-rule="evenodd" d="M91.14 275.96 C77.51 273.16 65.80 262.88 57.10 246.07 C46.76 226.11 45.64 206.88 53.00 175.84 C54.61 169.08 57.19 160.22 58.28 157.77 C59.37 155.30 59.18 155.08 52.96 151.52 C40.86 144.58 29.56 139.98 15.52 136.26 C8.96 134.52 6.04 133.24 4.27 131.32 C0.00 126.68 1.52 119.42 7.33 116.71 C12.31 114.39 17.90 114.79 29.22 118.25 C47.14 123.73 65.64 133.23 78.27 143.44 C94.55 156.60 110.59 182.51 117.98 207.60 C122.67 223.52 122.91 251.26 118.47 262.81 C114.58 272.92 103.13 278.43 91.14 275.96 Z M99.27 255.01 C100.09 254.19 100.33 253.39 100.95 249.60 C101.67 245.16 101.59 230.50 100.82 225.17 C98.56 209.51 92.94 195.78 82.07 179.37 C77.22 172.05 77.27 172.05 75.56 178.97 C70.56 199.24 69.55 213.22 72.28 224.00 C75.32 235.97 84.58 250.06 92.20 254.28 C95.27 255.99 98.01 256.27 99.27 255.01 Z M81.48 143.34 C80.26 142.67 75.02 134.06 74.84 132.39 C74.66 130.84 75.35 130.16 80.59 126.68 C87.43 122.14 87.43 122.14 91.42 131.51 C93.57 136.56 93.56 136.61 88.35 140.40 C83.54 143.89 82.95 144.14 81.48 143.34 Z M113.64 141.52 C109.21 139.97 102.42 134.58 97.44 128.64 C93.21 123.60 90.55 119.67 82.40 106.47 C79.14 101.18 75.93 96.00 75.28 94.97 C64.88 78.45 57.70 56.00 57.66 39.84 C57.62 23.28 62.78 12.99 74.47 6.37 C84.48 0.70 98.53 0.00 114.27 4.38 C133.62 9.77 149.85 20.96 154.52 32.14 C158.34 41.25 156.69 51.81 149.56 63.97 C145.38 71.12 143.17 74.04 132.06 87.22 C123.76 97.05 121.84 99.18 120.56 100.00 C113.43 104.53 104.34 99.51 104.43 91.10 C104.47 86.96 104.41 87.05 114.83 75.13 C128.09 59.96 133.48 52.66 135.91 46.60 C136.90 44.13 136.95 40.60 136.03 39.10 C132.49 33.33 121.71 27.06 109.77 23.84 C96.11 20.16 88.32 20.75 82.77 25.88 C77.14 31.10 77.40 44.04 83.52 62.47 C87.02 73.00 88.32 75.60 100.65 96.72 C112.28 116.65 113.68 119.27 116.76 126.97 C120.49 136.27 120.76 138.71 118.30 140.78 C116.89 141.97 115.54 142.18 113.64 141.52 Z M84.78 136.56 C86.95 135.11 87.16 134.39 86.07 132.22 C85.27 130.62 84.54 130.36 83.20 131.19 C81.05 132.52 80.84 133.26 82.04 135.22 C83.14 137.00 83.70 137.28 84.78 136.56 Z"></path></svg></span><div style="min-width: 0; display: flex; flex-direction: column; gap: 8px"><p style="margin: 0; font-size: 14px"><b>AskRight</b> <span style="color: #6B675E">10:15</span></p><p style="margin: 0; font-size: 15px">No documented answer yet. Routing to <b>Priya</b> on Integrations, who has answered 12 sync questions this month. Fallback: the Integrations team.</p><div style="display: flex; gap: 6px; flex-wrap: wrap"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 4px 10px; border-radius: 999px; background: #FFE1D4; color: #8A3A12">Salesforce integration</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 4px 10px; border-radius: 999px; background: #FFE1D4; color: #8A3A12">Halden Co.</span></div></div></div>
+</div>
+</div>
+</div>
+<div style="flex: 2 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<div class="card lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 32px; padding: 32px; display: flex; flex-direction: column; gap: 22px">
+<div style="display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px"><span style="width: 44px; height: 44px; border-radius: 14px; background: #F4F1EA; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><div><p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 20px; font-weight: 600">Repeat questions, answered</p><p style="margin: 4px 0 0; font-size: 15px; color: #4A4A52">From your approved docs and past answers, with sources.</p></div></div>
+<div style="display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px"><span style="width: 44px; height: 44px; border-radius: 14px; background: #F4F1EA; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span><div><p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 20px; font-weight: 600">New ones go to the right person</p><p style="margin: 4px 0 0; font-size: 15px; color: #4A4A52">With a fallback owner per topic, and load spread so one expert isn't buried.</p></div></div>
+<div style="display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px"><span style="width: 44px; height: 44px; border-radius: 14px; background: #F4F1EA; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14ZM20 17v4H6.5"></path></svg></span><div><p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 20px; font-weight: 600">Gaps turn into docs</p><p style="margin: 4px 0 0; font-size: 15px; color: #4A4A52">Topics with no doc or a single answerer show up in a weekly gap report.</p></div></div>
+</div>
+<div style="background: #15171C; color: #F4F1EA; border-radius: 32px; padding: 28px 32px; display: flex; gap: 16px; align-items: flex-start">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF8A63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a16 16 0 0 1-2.7 3.3M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6c1.6 0 3-.4 4.3-1.1"></path></svg>
+<p style="margin: 0; font-size: 16px; color: #D9D6CE">Reports show teams and topics, never individual scores. An expert is named only to route a question to them.</p>
+</div>
+</div>
+</div>
+<button type="button" onClick="{{goInsights}}" style="margin-top: 56px; min-height: 52px; padding: 0 28px; border-radius: 999px; cursor: pointer; background: #FFFDF8; border: 1px solid #E2DCCF; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; font-weight: 600; display: inline-flex; align-items: center; gap: 10px">Next: Insights <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</section>
+</sc-if>
+
+<!-- ============ TAB: INSIGHTS ============ -->
+<sc-if value="{{isInsights}}" hint-placeholder-val="{{false}}">
+<section class="pad" style="max-width: 1280px; margin: 0 auto; padding: 96px 32px 0; display: flex; flex-direction: column; align-items: center">
+<span style="display: inline-flex; padding: 10px 20px; border-radius: 999px; background: #FFFDF8; border: 1px solid #E6E1D6; box-shadow: 0 10px 24px -14px rgba(21,23,28,0.3); font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1.5px; color: #4A4A52">WHAT ONLY INVAR SEES</span>
+<h2 class="h2" style="margin: 32px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 64px; font-weight: 500; line-height: 1.08; letter-spacing: -1.5px; text-align: center; max-width: 920px">Answers that need both sides of your company</h2>
+<p style="margin: 24px 0 0; max-width: 680px; font-size: 20px; color: #3A3A40; text-align: center">Any analytics tool reports activation and churn. These need customer data and team conversations joined at the account and feature level.</p>
+<div style="margin-top: 64px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px">
+<div class="lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 12px"><div style="width: 52px; height: 52px; border-radius: 16px; background: #F4F1EA; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"></path></svg></div><p style="margin: 8px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 24px; font-weight: 600">True cost to serve</p><p style="margin: 0; font-size: 16px; color: #4A4A52">Plans that look profitable but quietly consume support and engineering time.</p><p style="margin: auto 0 0; padding-top: 14px; border-top: 1px solid #ECE7DD; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B675E">Stripe + AskRight</p></div>
+<div class="lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 12px"><div style="width: 52px; height: 52px; border-radius: 16px; background: #F4F1EA; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></div><p style="margin: 8px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 24px; font-weight: 600">Revenue at knowledge risk</p><p style="margin: 0; font-size: 16px; color: #4A4A52">Paying accounts whose issues only one person knows how to solve.</p><p style="margin: auto 0 0; padding-top: 14px; border-top: 1px solid #ECE7DD; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B675E">Stripe + AskRight routing</p></div>
+<div class="lift" style="background: #15171C; color: #F4F1EA; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 12px"><div style="width: 52px; height: 52px; border-radius: 16px; background: #22252C; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF8A63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"></path></svg></div><p style="margin: 8px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 24px; font-weight: 600">Silent regressions</p><p style="margin: 0; font-size: 16px; color: #C9C6BE">Releases that left product metrics flat but spiked internal questions.</p><p style="margin: auto 0 0; padding-top: 14px; border-top: 1px solid #33363E; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #B9BCC6">PostHog releases + AskRight</p></div>
+<div class="lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 12px"><div style="width: 52px; height: 52px; border-radius: 16px; background: #F4F1EA; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17h.01"></path></svg></div><p style="margin: 8px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 24px; font-weight: 600">Confusion or failure</p><p style="margin: 0; font-size: 16px; color: #4A4A52">Whether users can't find a feature, or find it and get stuck.</p><p style="margin: auto 0 0; padding-top: 14px; border-top: 1px solid #ECE7DD; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B675E">PostHog usage + question topics</p></div>
+<div class="lift" style="background: #FF6A3D; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 12px"><div style="width: 52px; height: 52px; border-radius: 16px; background: #FFFDF8; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#15171C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-6 4 4 6-6M14 9h6v6"></path></svg></div><p style="margin: 8px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 24px; font-weight: 600">Expansion hidden in questions</p><p style="margin: 0; font-size: 16px; color: #15171C">Accounts outgrowing their plan before they ever ask Sales.</p><p style="margin: auto 0 0; padding-top: 14px; border-top: 1px solid rgba(21,23,28,0.25); font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #15171C">AskRight + PostHog limits + Stripe</p></div>
+<div class="lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 12px"><div style="width: 52px; height: 52px; border-radius: 16px; background: #F4F1EA; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></div><p style="margin: 8px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 24px; font-weight: 600">Slow answers that cost revenue</p><p style="margin: 0; font-size: 16px; color: #4A4A52">Accounts whose escalations took longest before they shrank or left.</p><p style="margin: auto 0 0; padding-top: 14px; border-top: 1px solid #ECE7DD; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B675E">AskRight response time + Stripe</p></div>
+</div>
+
+<!-- lenses -->
+<div class="dots card" style="margin-top: 24px; width: 100%; background-color: #F8F5EF; border: 1px solid #E6E1D6; border-radius: 36px; padding: 64px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 28px">
+<div style="max-width: 600px">
+<p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1.5px; color: #8A3A12">ONE BRAIN, A LENS PER TEAM</p>
+<h3 class="h2" style="margin: 16px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 44px; font-weight: 500; line-height: 1.1; letter-spacing: -1px">Every team starts from its own question</h3>
+<p style="margin: 14px 0 0; font-size: 18px; color: #3A3A40">Lenses are entry points, not walls. Each gets saved questions and a weekly digest, and every investigation still checks every angle.</p>
+</div>
+<div role="tablist" aria-label="Team lenses" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; background: #EFEBE3; border-radius: 999px">
+<sc-for list="{{lensTabs}}" as="t" hint-placeholder-count="4">
+<sc-if value="{{t.on}}" hint-placeholder-val="{{false}}"><button type="button" role="tab" aria-selected="true" onClick="{{t.pick}}" style="min-height: 44px; padding: 0 20px; border-radius: 999px; border: none; cursor: pointer; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 15px; font-weight: 600; background: #FF6A3D; color: #15171C">{{t.name}}</button></sc-if>
+<sc-if value="{{t.off}}" hint-placeholder-val="{{true}}"><button type="button" role="tab" aria-selected="false" onClick="{{t.pick}}" style="min-height: 44px; padding: 0 20px; border-radius: 999px; border: none; cursor: pointer; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 15px; font-weight: 500; background: transparent; color: #4A4A52">{{t.name}}</button></sc-if>
+</sc-for>
+</div>
+</div>
+<div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px">
+<div class="lift" style="background: #FFFDF8; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 24px 44px -20px rgba(21,23,28,0.25)">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1.5px; color: #8A3A12">TOP CHANGE THIS WEEK</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 4px 9px; border-radius: 999px; background: {{lens.chipBg}}; color: {{lens.chipFg}}">{{lens.claimName}}</span></div>
+<p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 26px; font-weight: 600; line-height: 1.2">{{lens.top}}</p>
+<p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B675E">{{lens.sources}}</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div><p style="margin: 0 0 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1.5px; color: #6B675E">SAVED QUESTION</p><p style="margin: 0; padding: 14px 18px; background: #FFFDF8; border: 1px solid #D3CCBD; border-radius: 14px; font-size: 16px">{{lens.question}}</p></div>
+<div><p style="margin: 0 0 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1.5px; color: #6B675E">WHAT INVAR ADDS</p><p style="margin: 0; font-size: 17px">{{lens.adds}}</p></div>
+</div>
+</div>
+<p style="margin: 28px 0 0; font-size: 14px; color: #5A5850">People Ops lens, for new-hire questions in the first 30 days, joins during the pilot.</p>
+</div>
+<button type="button" onClick="{{goTrust}}" style="margin-top: 56px; min-height: 52px; padding: 0 28px; border-radius: 999px; cursor: pointer; background: #FFFDF8; border: 1px solid #E2DCCF; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; font-weight: 600; display: inline-flex; align-items: center; gap: 10px">Next: Trust <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</section>
+</sc-if>
+
+<!-- ============ TAB: TRUST ============ -->
+<sc-if value="{{isTrust}}" hint-placeholder-val="{{false}}">
+<section class="pad" style="max-width: 1376px; margin: 0 auto; padding: 32px 32px 0">
+<div class="dark" style="background: #15171C; color: #F4F1EA; border-radius: 36px; padding: 104px 72px; display: flex; flex-direction: column; align-items: center; text-align: center">
+<span style="display: inline-flex; padding: 10px 20px; border-radius: 999px; background: #22252C; border: 1px solid #33363E; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1.5px; color: #B9BCC6">TRUST AND PRIVACY</span>
+<h2 class="h2" style="margin: 32px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 64px; font-weight: 500; line-height: 1.08; letter-spacing: -1.5px; max-width: 960px">It sees a lot of your company. So it touches as little as possible.</h2>
+<div style="margin-top: 64px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); text-align: left; border-top: 1px solid #33363E">
+<div class="ti" style="padding: 36px 32px 40px; border-bottom: 1px solid #33363E; display: flex; flex-direction: column; gap: 14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF8A63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"></path></svg><p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 22px; font-weight: 600">Slack stays in Slack</p><p style="margin: 0; font-size: 16px; color: #C9C6BE">Message text is fetched to answer a question, then discarded. INVAR stores only metadata.</p></div>
+<div class="ti" style="padding: 36px 32px 40px; border-bottom: 1px solid #33363E; display: flex; flex-direction: column; gap: 14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF8A63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"></circle><path d="m11 12 9-9M17 6l3 3M15 8l2 2"></path></svg><p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 22px; font-weight: 600">Your own key</p><p style="margin: 0; font-size: 16px; color: #C9C6BE">A separate warehouse and encryption key for each company. Delete it and the data is unreadable, with a signed certificate.</p></div>
+<div class="ti" style="padding: 36px 32px 40px; border-bottom: 1px solid #33363E; display: flex; flex-direction: column; gap: 14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF8A63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M5.6 5.6l12.8 12.8"></path></svg><p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 22px; font-weight: 600">Kept inside your company</p><p style="margin: 0; font-size: 16px; color: #C9C6BE">Chat content, context and everything INVAR learns stay in your company's own space. Nothing crosses to another customer or trains a model.</p></div>
+<div class="ti" style="padding: 36px 32px 40px; border-bottom: 1px solid #33363E; display: flex; flex-direction: column; gap: 14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF8A63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 22px; font-weight: 600">Your permissions, kept</p><p style="margin: 0; font-size: 16px; color: #C9C6BE">Every answer respects what the asker can already see. Private channels stay private.</p></div>
+<div class="ti" style="padding: 36px 32px 40px; border-bottom: 1px solid #33363E; display: flex; flex-direction: column; gap: 14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF8A63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a16 16 0 0 1-2.7 3.3M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6c1.6 0 3-.4 4.3-1.1"></path></svg><p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 22px; font-weight: 600">Not a monitoring tool</p><p style="margin: 0; font-size: 16px; color: #C9C6BE">INVAR doesn't track individual messages or report on anyone's performance. No scores, no rankings. Reports show teams and topics, and an expert is named only to route a question to them.</p></div>
+<div class="ti" style="padding: 36px 32px 40px; border-bottom: 1px solid #33363E; display: flex; flex-direction: column; gap: 14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF8A63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"></path></svg><p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 22px; font-weight: 600">Approval and audit</p><p style="margin: 0; font-size: 16px; color: #C9C6BE">Nothing is written to another tool without a person's approval, and every action is logged.</p></div>
+</div>
+<p style="margin: 40px 0 0; font-size: 16px; color: #C9C6BE">Security questions: <a href="mailto:security@invarhq.com" style="color: #FF8A63">security@invarhq.com</a></p>
+</div>
+</section>
+
+<section class="pad" style="max-width: 1280px; margin: 0 auto; padding: 120px 32px 0; display: flex; flex-direction: column; align-items: center">
+<span style="display: inline-flex; padding: 10px 20px; border-radius: 999px; background: #FFFDF8; border: 1px solid #E6E1D6; box-shadow: 0 10px 24px -14px rgba(21,23,28,0.3); font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1.5px; color: #4A4A52">HONEST BY DEFAULT</span>
+<h2 class="h2" style="margin: 32px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 56px; font-weight: 500; line-height: 1.08; letter-spacing: -1.5px; text-align: center; max-width: 920px">INVAR only says "caused" when a test backs it</h2>
+<p style="margin: 24px 0 0; max-width: 660px; font-size: 20px; color: #3A3A40; text-align: center">Numbers come from queries on your data, never from the model. Every claim carries one of four labels, so you know how much weight it can bear.</p>
+<div style="margin-top: 56px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px">
+<div class="lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px"><span style="align-self: flex-start; font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 7px 14px; border-radius: 999px; background: #15171C; color: #F4F1EA">Fact</span><p style="margin: 0; font-size: 17px">Seen directly in your data.</p></div>
+<div class="lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px"><span style="align-self: flex-start; font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 7px 14px; border-radius: 999px; background: #FFE1D4; color: #8A3A12">Correlation</span><p style="margin: 0; font-size: 17px">Moves together. Not proven to be the cause.</p></div>
+<div class="lift" style="background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px"><span style="align-self: flex-start; font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 7px 14px; border-radius: 999px; border: 1px dashed #8A867D; color: #4A4A52">Hypothesis</span><p style="margin: 0; font-size: 17px">Plausible. Needs more evidence before you act on it.</p></div>
+<div class="lift" style="background: #FF6A3D; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px"><span style="align-self: flex-start; font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 7px 14px; border-radius: 999px; background: #15171C; color: #F4F1EA">Tested</span><p style="margin: 0; font-size: 17px">Backed by a holdout or experiment. The only label that says "caused".</p></div>
+</div>
+</section>
+
+<section class="pad" style="max-width: 1280px; margin: 0 auto; padding: 120px 32px 0; display: flex; flex-direction: column; align-items: center">
+<span style="display: inline-flex; padding: 10px 20px; border-radius: 999px; background: #FFFDF8; border: 1px solid #E6E1D6; box-shadow: 0 10px 24px -14px rgba(21,23,28,0.3); font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1.5px; color: #4A4A52">WHERE INVAR FITS</span>
+<h2 class="h2" style="margin: 32px 0 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 56px; font-weight: 500; line-height: 1.08; letter-spacing: -1.5px; text-align: center; max-width: 920px">Keep your tools. INVAR does the part between them.</h2>
+<div style="margin-top: 56px; width: 100%; overflow-x: auto; background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px">
+<table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 15px; text-align: left">
+<thead><tr><th scope="col" style="padding: 20px 24px; font-weight: 600">&#160;</th><th scope="col" style="padding: 20px 24px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1px; font-weight: 500; color: #5A5850">SEES CUSTOMERS AND REVENUE</th><th scope="col" style="padding: 20px 24px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1px; font-weight: 500; color: #5A5850">SEES TEAM QUESTIONS AND ROUTING</th><th scope="col" style="padding: 20px 24px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1px; font-weight: 500; color: #5A5850">RECOMMENDS AND MEASURES OUTCOMES</th></tr></thead>
+<tbody>
+<tr style="border-top: 1px solid #ECE7DD"><th scope="row" style="padding: 18px 24px; font-weight: 600">Slack AI, Gemini, Copilot, Notion AI</th><td style="padding: 18px 24px; color: #5A5850">No</td><td style="padding: 18px 24px; color: #5A5850">Answers from docs only</td><td style="padding: 18px 24px; color: #5A5850">No</td></tr>
+<tr style="border-top: 1px solid #ECE7DD"><th scope="row" style="padding: 18px 24px; font-weight: 600">Dust</th><td style="padding: 18px 24px; color: #5A5850">No</td><td style="padding: 18px 24px; color: #5A5850">Yes, as knowledge agents</td><td style="padding: 18px 24px; color: #5A5850">No</td></tr>
+<tr style="border-top: 1px solid #ECE7DD"><th scope="row" style="padding: 18px 24px; font-weight: 600">Glean</th><td style="padding: 18px 24px; color: #5A5850">No</td><td style="padding: 18px 24px; color: #5A5850">Finds documents; priced for larger companies</td><td style="padding: 18px 24px; color: #5A5850">No</td></tr>
+<tr style="border-top: 1px solid #ECE7DD"><th scope="row" style="padding: 18px 24px; font-weight: 600">PostHog AI</th><td style="padding: 18px 24px; color: #5A5850">Yes</td><td style="padding: 18px 24px; color: #5A5850">No</td><td style="padding: 18px 24px; color: #5A5850">No</td></tr>
+<tr style="border-top: 1px solid #ECE7DD"><th scope="row" style="padding: 18px 24px; font-weight: 600">Hex, Equals, Amplitude agents</th><td style="padding: 18px 24px; color: #5A5850">Yes</td><td style="padding: 18px 24px; color: #5A5850">No</td><td style="padding: 18px 24px; color: #5A5850">Analysis, without tracked outcomes</td></tr>
+<tr style="background: #15171C; color: #F4F1EA"><th scope="row" style="padding: 22px 24px; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 2px">INVAR</th><td style="padding: 22px 24px; font-weight: 600; color: #FF8A63">Yes</td><td style="padding: 22px 24px; font-weight: 600; color: #FF8A63">Yes, routing and gap detection</td><td style="padding: 22px 24px; font-weight: 600; color: #FF8A63">Yes, with a measured verdict</td></tr>
+</tbody>
+</table>
+</div>
+<p style="margin: 18px 0 0; font-size: 15px; color: #5A5850">Built to work alongside your analytics tools, not replace them.</p>
+<button type="button" onClick="{{goPilot}}" style="margin-top: 56px; min-height: 52px; padding: 0 28px; border-radius: 999px; border: none; cursor: pointer; background: #FF6A3D; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; font-weight: 600; display: inline-flex; align-items: center; gap: 10px">Next: Join the pilot <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</section>
+</sc-if>
+
+<!-- ============ TAB: PILOT ============ -->
+<sc-if value="{{isPilot}}" hint-placeholder-val="{{false}}">
+<section class="pad" style="max-width: 1376px; margin: 0 auto; padding: 32px 32px 0">
+<div class="dots" style="position: relative; overflow: hidden; background-color: #F8F5EF; border: 1px solid #E6E1D6; border-radius: 36px; padding: 88px 7% 40px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 56px">
+<div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<span style="align-self: flex-start; display: inline-flex; padding: 10px 20px; border-radius: 999px; background: #FFFDF8; border: 1px solid #E6E1D6; box-shadow: 0 10px 24px -14px rgba(21,23,28,0.3); font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1.5px; color: #4A4A52">DESIGN PARTNER PILOT</span>
+<h2 class="h2" style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 56px; font-weight: 500; line-height: 1.08; letter-spacing: -1.5px; max-width: 620px">First finding in a day. A verdict in 60.</h2>
+<p style="margin: 0; font-size: 18px; color: #3A3A40; max-width: 560px">For product-led companies of 30 to 150 people. Best fit today is teams on PostHog, Stripe, HubSpot and Slack. On a different stack? Reach out anyway. We're choosing the next integrations based on what pilot teams use. We're taking 10 to 12 teams.</p>
+<ol style="margin: 8px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; max-width: 560px">
+<li style="display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; padding: 14px 18px; background: #FFFDF8; border-radius: 16px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8A3A12; padding-top: 2px">Day 1</span><span>Connect your tools and install AskRight in Slack.</span></li>
+<li style="display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; padding: 14px 18px; background: #FFFDF8; border-radius: 16px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8A3A12; padding-top: 2px">Day 2</span><span>Your first finding, with the evidence behind it.</span></li>
+<li style="display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; padding: 14px 18px; background: #FFFDF8; border-radius: 16px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8A3A12; padding-top: 2px">Week 2</span><span>We agree one target metric and set its baseline.</span></li>
+<li style="display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; padding: 14px 18px; background: #FFFDF8; border-radius: 16px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8A3A12; padding-top: 2px">Weekly</span><span>A digest with what changed and what to try next.</span></li>
+<li style="display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; padding: 14px 18px; background: #FFE2D3; border-radius: 16px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8A3A12; padding-top: 2px">Day 30</span><span>Checkpoint. Keep going or stop, either side can call it.</span></li>
+<li style="display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; padding: 14px 18px; background: #15171C; color: #F4F1EA; border-radius: 16px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #FF8A63; padding-top: 2px">Day 60</span><span>Review the target together, then decide on conversion. Still measuring a fix? We extend that one outcome, not the whole pilot.</span></li>
+</ol>
+<p style="margin: 0; font-size: 15px; color: #5A5850">Unlimited viewers and askers. No per-seat pricing.</p>
+</div>
+<form aria-label="Join the pilot" action="mailto:victoria@invarhq.com" onSubmit="{{submitPilot}}" style="flex: 1 1 380px; min-width: 0; align-self: flex-start; background: #FFFDF8; border: 1px solid #E6E1D6; border-radius: 28px; padding: 36px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 30px 60px -28px rgba(21,23,28,0.3)">
+<p style="margin: 0; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 28px; font-weight: 600">Join the pilot</p>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="tb-email" style="font-size: 14px; font-weight: 600">Work email</label><input id="tb-email" name="email" type="email" required autocomplete="email" placeholder="you@company.com" style="min-height: 52px; padding: 0 16px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="tb-role" style="font-size: 14px; font-weight: 600">Your role</label><select id="tb-role" name="role" style="min-height: 52px; padding: 0 14px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"><option>Founder or CEO</option><option>Head of growth</option><option>Head of product</option><option>Customer Success or Support lead</option><option>Engineering lead</option><option>Other</option></select></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="tb-size" style="font-size: 14px; font-weight: 600">Company size</label><select id="tb-size" name="size" style="min-height: 52px; padding: 0 14px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"><option>Under 30 people</option><option selected>30 to 80 people</option><option>80 to 150 people</option><option>Over 150 people</option></select></div>
+<fieldset style="margin: 0; padding: 0; border: none; display: flex; flex-direction: column; gap: 8px"><legend style="font-size: 14px; font-weight: 600; padding: 0 0 6px">Tools you use today</legend>
+<p style="margin: -4px 0 2px; font-size: 13px; color: #5A5850">None of these are required. Tell us what you use so we can plan integrations.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 15px">
+<label style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px"><input type="checkbox" name="tools" value="PostHog" style="width: 18px; height: 18px; accent-color: #C2410C">PostHog</label>
+<label style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px"><input type="checkbox" name="tools" value="Stripe" style="width: 18px; height: 18px; accent-color: #C2410C">Stripe</label>
+<label style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px"><input type="checkbox" name="tools" value="HubSpot" style="width: 18px; height: 18px; accent-color: #C2410C">HubSpot</label>
+<label style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px"><input type="checkbox" name="tools" value="Slack" style="width: 18px; height: 18px; accent-color: #C2410C">Slack</label>
+<label style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px"><input type="checkbox" name="tools" value="None of these yet" style="width: 18px; height: 18px; accent-color: #C2410C">None of these yet</label>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px"><label for="tb-other" style="font-size: 14px; font-weight: 600">Other tools <span style="font-weight: 400; color: #5A5850">(optional)</span></label><input id="tb-other" name="other" type="text" placeholder="e.g. Mixpanel, Amplitude, Salesforce, Intercom, Teams" style="min-height: 52px; padding: 0 16px; border-radius: 14px; border: 1px solid #D3CCBD; background: #FFFDF8; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C"></div>
+</fieldset>
+<button type="submit" style="min-height: 56px; border-radius: 16px; border: none; background: #FF6A3D; color: #15171C; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 17px; font-weight: 600; cursor: pointer">Join the pilot</button>
+<p style="margin: 0; font-size: 13px; color: #5A5850">This opens a pre-filled email. A founder replies within two working days.</p>
+</form>
+</div>
+<div style="position: relative; height: 300px; margin-top: 56px">
+<div class="tile" style="position: absolute; left:2%; top: 120px; width: 96px; height: 96px; border-radius: 24px; background: #FFFDF8; display: flex; align-items: center; justify-content: center; transform: rotate(-8deg); box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 24px 40px -16px rgba(21,23,28,0.3)"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#15171C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"></path></svg></div>
+<div class="tile" style="position: absolute; left:18%; top: 20px; width: 96px; height: 96px; border-radius: 24px; background: #FFFDF8; display: flex; align-items: center; justify-content: center; transform: rotate(10deg); box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 24px 40px -16px rgba(21,23,28,0.3)"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"></path></svg></div>
+<div class="tile" style="position: absolute; left:31%; top: 170px; width: 96px; height: 96px; border-radius: 24px; background: #15171C; display: flex; align-items: center; justify-content: center; transform: rotate(-12deg); box-shadow: 0 24px 40px -16px rgba(21,23,28,0.45)"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#FF6A3D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg></div>
+<div class="tile" style="position: absolute; left:45%; top: 50px; width: 96px; height: 96px; border-radius: 24px; background: #FFFDF8; display: flex; align-items: center; justify-content: center; transform: rotate(3deg); box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 24px 40px -16px rgba(21,23,28,0.3)"><svg width="30" height="52" viewBox="0 0 158.34 278.43" aria-hidden="true"><path fill="#15171C" fill-rule="evenodd" d="M91.14 275.96 C77.51 273.16 65.80 262.88 57.10 246.07 C46.76 226.11 45.64 206.88 53.00 175.84 C54.61 169.08 57.19 160.22 58.28 157.77 C59.37 155.30 59.18 155.08 52.96 151.52 C40.86 144.58 29.56 139.98 15.52 136.26 C8.96 134.52 6.04 133.24 4.27 131.32 C0.00 126.68 1.52 119.42 7.33 116.71 C12.31 114.39 17.90 114.79 29.22 118.25 C47.14 123.73 65.64 133.23 78.27 143.44 C94.55 156.60 110.59 182.51 117.98 207.60 C122.67 223.52 122.91 251.26 118.47 262.81 C114.58 272.92 103.13 278.43 91.14 275.96 Z M99.27 255.01 C100.09 254.19 100.33 253.39 100.95 249.60 C101.67 245.16 101.59 230.50 100.82 225.17 C98.56 209.51 92.94 195.78 82.07 179.37 C77.22 172.05 77.27 172.05 75.56 178.97 C70.56 199.24 69.55 213.22 72.28 224.00 C75.32 235.97 84.58 250.06 92.20 254.28 C95.27 255.99 98.01 256.27 99.27 255.01 Z M81.48 143.34 C80.26 142.67 75.02 134.06 74.84 132.39 C74.66 130.84 75.35 130.16 80.59 126.68 C87.43 122.14 87.43 122.14 91.42 131.51 C93.57 136.56 93.56 136.61 88.35 140.40 C83.54 143.89 82.95 144.14 81.48 143.34 Z M113.64 141.52 C109.21 139.97 102.42 134.58 97.44 128.64 C93.21 123.60 90.55 119.67 82.40 106.47 C79.14 101.18 75.93 96.00 75.28 94.97 C64.88 78.45 57.70 56.00 57.66 39.84 C57.62 23.28 62.78 12.99 74.47 6.37 C84.48 0.70 98.53 0.00 114.27 4.38 C133.62 9.77 149.85 20.96 154.52 32.14 C158.34 41.25 156.69 51.81 149.56 63.97 C145.38 71.12 143.17 74.04 132.06 87.22 C123.76 97.05 121.84 99.18 120.56 100.00 C113.43 104.53 104.34 99.51 104.43 91.10 C104.47 86.96 104.41 87.05 114.83 75.13 C128.09 59.96 133.48 52.66 135.91 46.60 C136.90 44.13 136.95 40.60 136.03 39.10 C132.49 33.33 121.71 27.06 109.77 23.84 C96.11 20.16 88.32 20.75 82.77 25.88 C77.14 31.10 77.40 44.04 83.52 62.47 C87.02 73.00 88.32 75.60 100.65 96.72 C112.28 116.65 113.68 119.27 116.76 126.97 C120.49 136.27 120.76 138.71 118.30 140.78 C116.89 141.97 115.54 142.18 113.64 141.52 Z M84.78 136.56 C86.95 135.11 87.16 134.39 86.07 132.22 C85.27 130.62 84.54 130.36 83.20 131.19 C81.05 132.52 80.84 133.26 82.04 135.22 C83.14 137.00 83.70 137.28 84.78 136.56 Z"></path></svg></div>
+<div class="tile" style="position: absolute; left:58%; top: 180px; width: 96px; height: 96px; border-radius: 24px; background: #FFFDF8; display: flex; align-items: center; justify-content: center; transform: rotate(-6deg); box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 24px 40px -16px rgba(21,23,28,0.3)"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#15171C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg></div>
+<div class="tile" style="position: absolute; left:70%; top: 30px; width: 96px; height: 96px; border-radius: 24px; background: #FF6A3D; display: flex; align-items: center; justify-content: center; transform: rotate(-9deg); box-shadow: 0 24px 40px -16px rgba(194,65,12,0.55)"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#15171C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4.2-4.2"></path></svg></div>
+<div class="tile" style="position: absolute; left:83%; top: 150px; width: 96px; height: 96px; border-radius: 24px; background: #FFFDF8; display: flex; align-items: center; justify-content: center; transform: rotate(7deg); box-shadow: 0 1px 2px rgba(21,23,28,0.06), 0 24px 40px -16px rgba(21,23,28,0.3)"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#15171C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></div>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- FOOTER (every tab) -->
+<footer class="pad" style="max-width: 1376px; margin: 0 auto; padding: 72px 32px 8px">
+<div style="padding-top: 20px; border-top: 1px solid #DDD7CB; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 40px">
+<div style="flex: 1 1 0; min-width: 160px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px"><svg width="18" height="31" viewBox="0 0 158.34 278.43" aria-hidden="true"><path fill="#15171C" fill-rule="evenodd" d="M91.14 275.96 C77.51 273.16 65.80 262.88 57.10 246.07 C46.76 226.11 45.64 206.88 53.00 175.84 C54.61 169.08 57.19 160.22 58.28 157.77 C59.37 155.30 59.18 155.08 52.96 151.52 C40.86 144.58 29.56 139.98 15.52 136.26 C8.96 134.52 6.04 133.24 4.27 131.32 C0.00 126.68 1.52 119.42 7.33 116.71 C12.31 114.39 17.90 114.79 29.22 118.25 C47.14 123.73 65.64 133.23 78.27 143.44 C94.55 156.60 110.59 182.51 117.98 207.60 C122.67 223.52 122.91 251.26 118.47 262.81 C114.58 272.92 103.13 278.43 91.14 275.96 Z M99.27 255.01 C100.09 254.19 100.33 253.39 100.95 249.60 C101.67 245.16 101.59 230.50 100.82 225.17 C98.56 209.51 92.94 195.78 82.07 179.37 C77.22 172.05 77.27 172.05 75.56 178.97 C70.56 199.24 69.55 213.22 72.28 224.00 C75.32 235.97 84.58 250.06 92.20 254.28 C95.27 255.99 98.01 256.27 99.27 255.01 Z M81.48 143.34 C80.26 142.67 75.02 134.06 74.84 132.39 C74.66 130.84 75.35 130.16 80.59 126.68 C87.43 122.14 87.43 122.14 91.42 131.51 C93.57 136.56 93.56 136.61 88.35 140.40 C83.54 143.89 82.95 144.14 81.48 143.34 Z M113.64 141.52 C109.21 139.97 102.42 134.58 97.44 128.64 C93.21 123.60 90.55 119.67 82.40 106.47 C79.14 101.18 75.93 96.00 75.28 94.97 C64.88 78.45 57.70 56.00 57.66 39.84 C57.62 23.28 62.78 12.99 74.47 6.37 C84.48 0.70 98.53 0.00 114.27 4.38 C133.62 9.77 149.85 20.96 154.52 32.14 C158.34 41.25 156.69 51.81 149.56 63.97 C145.38 71.12 143.17 74.04 132.06 87.22 C123.76 97.05 121.84 99.18 120.56 100.00 C113.43 104.53 104.34 99.51 104.43 91.10 C104.47 86.96 104.41 87.05 114.83 75.13 C128.09 59.96 133.48 52.66 135.91 46.60 C136.90 44.13 136.95 40.60 136.03 39.10 C132.49 33.33 121.71 27.06 109.77 23.84 C96.11 20.16 88.32 20.75 82.77 25.88 C77.14 31.10 77.40 44.04 83.52 62.47 C87.02 73.00 88.32 75.60 100.65 96.72 C112.28 116.65 113.68 119.27 116.76 126.97 C120.49 136.27 120.76 138.71 118.30 140.78 C116.89 141.97 115.54 142.18 113.64 141.52 Z M84.78 136.56 C86.95 135.11 87.16 134.39 86.07 132.22 C85.27 130.62 84.54 130.36 83.20 131.19 C81.05 132.52 80.84 133.26 82.04 135.22 C83.14 137.00 83.70 137.28 84.78 136.56 Z"></path></svg><span style="font-family: 'Space Grotesk', Arial, sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 3px">INVAR</span></div>
+</div>
+<nav aria-label="Footer" style="flex: 0 1 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 32px; font-size: 16px">
+<button type="button" onClick="{{goHow}}" style="min-height: 44px; padding: 0; border: none; background: transparent; cursor: pointer; text-align: left; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C">How it works</button>
+<button type="button" onClick="{{goTrust}}" style="min-height: 44px; padding: 0; border: none; background: transparent; cursor: pointer; text-align: left; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C">Trust</button>
+<button type="button" onClick="{{goAsk}}" style="min-height: 44px; padding: 0; border: none; background: transparent; cursor: pointer; text-align: left; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C">AskRight</button>
+<a href="mailto:security@invarhq.com" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none">Security</a>
+<button type="button" onClick="{{goPilot}}" style="min-height: 44px; padding: 0; border: none; background: transparent; cursor: pointer; text-align: left; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C">Pilot</button>
+<a href="mailto:victoria@invarhq.com" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none">Contact</a>
+</nav>
+<div style="flex: 1 1 0; min-width: 160px; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 4px 20px; font-size: 14px; color: #5A5850"><span>© 2026 INVAR</span><a href="#" style="text-decoration: none; color: #5A5850">Privacy</a><a href="#" style="text-decoration: none; color: #5A5850">Terms</a></div>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2600}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'home', lens: 'growth' };
+  }
+  renderVals() {
+    var self = this;
+    var go = function (id) {
+      return function () {
+        self.setState({ tab: id });
+        try { window.scrollTo(0, 0); } catch (e) {}
+      };
+    };
+    var tabDefs = [
+      { id: 'home', name: 'Overview' },
+      { id: 'how', name: 'How it works' },
+      { id: 'ask', name: 'AskRight' },
+      { id: 'insights', name: 'Insights' },
+      { id: 'trust', name: 'Trust' },
+      { id: 'pilot', name: 'Pilot' }
+    ];
+    var cur = this.state.tab;
+    var tabs = tabDefs.map(function (t) {
+      var on = t.id === cur;
+      return { name: t.name, on: on, off: !on, pick: go(t.id) };
+    });
+    var chips = {
+      fact: { claimName: 'Fact', chipBg: '#15171C', chipFg: '#F4F1EA' },
+      correlation: { claimName: 'Correlation', chipBg: '#FFE1D4', chipFg: '#8A3A12' }
+    };
+    var lenses = {
+      growth: { name: 'Growth', claim: 'fact', top: 'LinkedIn campaign B brought 2.1x the signups and half the day-90 revenue', sources: 'HubSpot · PostHog · Stripe · AskRight', question: 'Which sources bring customers still paying at day 90?', adds: 'Campaign quality that counts support load per dollar, not just signups and retention.' },
+      product: { name: 'Product', claim: 'correlation', top: 'Users find the reports export, then get stuck at the format step', sources: 'PostHog · AskRight', question: 'Is low adoption of reports confusion or failure?', adds: 'Silent regressions: releases that left product metrics flat but spiked internal questions.' },
+      cs: { name: 'CS and Support', claim: 'fact', top: '6 accounts asking about SSO are already at their seat limit', sources: 'AskRight · PostHog · Stripe', question: 'Which accounts are outgrowing their plan?', adds: 'Expansion hidden in questions, and slow answers that came before a downgrade.' },
+      eng: { name: 'Engineering', claim: 'fact', top: 'Salesforce setup: 40 questions this month, 1 person answers most', sources: 'AskRight · PostHog releases', question: 'Which topics pull engineers off the roadmap?', adds: 'Revenue at knowledge risk: paying accounts whose issues depend on one person.' }
+    };
+    var order = ['growth', 'product', 'cs', 'eng'];
+    var curLens = this.state.lens;
+    var lensTabs = order.map(function (id) {
+      var on = id === curLens;
+      return { name: lenses[id].name, on: on, off: !on, pick: function () { self.setState({ lens: id }); } };
+    });
+    var l = lenses[curLens];
+    var c = chips[l.claim];
+    var submitPilot = function (e) {
+      e.preventDefault();
+      var f = e.target.elements;
+      var tools = [];
+      var boxes = e.target.querySelectorAll('input[name="tools"]:checked');
+      for (var i = 0; i < boxes.length; i++) tools.push(boxes[i].value);
+      var body = [
+        'Work email: ' + f.namedItem('email').value,
+        'Role: ' + f.namedItem('role').value,
+        'Company size: ' + f.namedItem('size').value,
+        'Tools: ' + (tools.join(', ') || 'none selected'),
+        'Other tools: ' + (f.namedItem('other').value || '-')
+      ].join('\n');
+      window.location.href = 'mailto:victoria@invarhq.com?subject=' + encodeURIComponent('INVAR pilot: ' + f.namedItem('email').value) + '&body=' + encodeURIComponent(body);
+    };
+    return {
+      submitPilot: submitPilot,
+      tabs: tabs,
+      isHome: cur === 'home',
+      isHow: cur === 'how',
+      isAsk: cur === 'ask',
+      isInsights: cur === 'insights',
+      isTrust: cur === 'trust',
+      isPilot: cur === 'pilot',
+      goHome: go('home'),
+      goHow: go('how'),
+      goAsk: go('ask'),
+      goInsights: go('insights'),
+      goTrust: go('trust'),
+      goPilot: go('pilot'),
+      lensTabs: lensTabs,
+      lens: { top: l.top, sources: l.sources, question: l.question, adds: l.adds, claimName: c.claimName, chipBg: c.chipBg, chipFg: c.chipFg }
+    };
+  }
+}
+</script>
+</body>
+</html>
