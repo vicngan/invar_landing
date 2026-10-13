@@ -345,13 +345,13 @@ nav[aria-label=Footer] a:hover{color:#C2410C}
       <p class="eyebrow" style="color:var(--faint)">PLAIN CLAUDE</p>
       <span class="big"><span class="count" data-to="2">2</span> <span style="font-size:28px;color:var(--faint)">of 5</span></span>
       <span>planted problems found</span>
-      <span class="small">Took 2 of 5 red herrings as problems. 9 findings in all.</span>
+      <span class="small">9 findings: 3 on the 2 problems it found, 2 red herrings, 4 others. <a href="#full">See how each one counts</a></span>
     </div>
     <div class="card dark rise" style="--d:.55s">
       <p class="eyebrow" style="color:#FF8A63">INVAR</p>
       <span class="big"><span class="count" data-to="5">5</span> <span style="font-size:28px;color:#C9C4B8">of 5</span></span>
       <span>planted problems found</span>
-      <span class="small">Took 0 of 5 red herrings. 7 findings in all, 0 false.</span>
+      <span class="small">7 findings: the 5 planted problems, plus 2 smaller real ones it flagged for review. 0 false, 0 red herrings. <a href="#full" style="color:#C9C4B8">See all 7</a></span>
     </div>
   </div>
 
@@ -367,9 +367,9 @@ nav[aria-label=Footer] a:hover{color:#C2410C}
   </div>
   <div id="cases" style="margin-top:24px;display:grid;gap:18px"><p class="loading">Loading the run…</p></div>
 
-  <div style="margin-top:56px">
+  <div style="margin-top:56px" id="full">
     <h3 style="font-size:28px">Read both answers in full</h3>
-    <p class="small" style="margin:8px 0 20px">Every finding, in the order each side ranked them.</p>
+    <p class="small" style="margin:8px 0 20px;max-width:760px">Every finding, in the order each side ranked them, labelled by how it counts. Five problems were planted, but both sides were free to report anything else they saw. INVAR's two extras are real patterns in the data that nobody planted, which it marked "needs review" at low confidence. Plain Claude's other findings describe the data rather than name a problem the answer key can check.</p>
     <details><summary id="claudeSum">Plain Claude's full answer</summary><div class="full" id="claudeFull"></div></details>
     <details><summary id="invarSum">INVAR's full report</summary><div class="full" id="invarFull"></div></details>
   </div>
@@ -790,16 +790,29 @@ nav[aria-label=Footer] a:hover{color:#C2410C}
       cases.appendChild(box);
     });
 
+    // How each of plain Claude's findings counts, read by hand against the answer key.
+    var CLAUDE_AS = [
+      ['ok', 'PLANTED · P1 SALESFORCE'], ['soft', 'NOT PLANTED · DESCRIBES THE DATA'], ['ok', 'PLANTED · P4 WORKFLOW EDITOR'],
+      ['bad', 'RED HERRING · CSV IMPORT V2'], ['ok', 'PLANTED · P1 SALESFORCE'], ['half', 'CLOSE TO P5 · COUNTED AS A MISS'],
+      ['soft', 'NOT PLANTED · DESCRIBES THE DATA'], ['bad', 'RED HERRING · AUGUST SIGNUP DIP'], ['soft', 'NOT PLANTED · ASKS FOR A JOINED VIEW']
+    ];
     var cfull = document.getElementById('claudeFull');
-    cf.forEach(function (f, i) { cfull.appendChild(el('article', {}, claudeBlock(f, i).replace('class="ft"', 'class="ft" style="margin-bottom:4px"'))); });
-    document.getElementById('claudeSum').firstChild.nodeValue = 'Plain Claude\'s full answer: ' + cf.length + ' findings';
+    cf.forEach(function (f, i) {
+      var as = CLAUDE_AS[i] || ['soft', 'NOT PLANTED'];
+      cfull.appendChild(el('article', {}, '<div style="display:flex;justify-content:flex-end;margin-bottom:6px">' + tag(as[0], as[1]) + '</div>' +
+        claudeBlock(f, i).replace('class="ft"', 'class="ft" style="margin-bottom:4px"')));
+    });
+    document.getElementById('claudeSum').firstChild.nodeValue = 'Plain Claude\'s full answer: ' + cf.length + ' findings (2 of 5 planted problems)';
 
     var ifull = document.getElementById('invarFull');
     inv.forEach(function (f, i) {
       var tier = f.tier === 'auto' ? tag('ok', 'CONFIDENCE ' + Math.round(f.confidence * 100) + '%') : tag('half', 'NEEDS REVIEW · ' + Math.round(f.confidence * 100) + '%');
-      ifull.appendChild(el('article', {}, '<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><span class="mono small">' + (i + 1) + '</span>' + tier + '</div>' + invarBlock(f)));
+      var plant = Object.keys(byPlant).filter(function (k) { return byPlant[k] === f; })[0];
+      var NAMES = { P1: 'SALESFORCE', P2: 'WEBINAR CAMPAIGN', P3: 'GROWTH PLAN', P4: 'WORKFLOW EDITOR', P5: 'PRICING DOC' };
+      var as = plant ? tag('ok', 'PLANTED · ' + plant + ' ' + NAMES[plant]) : tag('soft', 'NOT PLANTED · TRUE IN THE DATA');
+      ifull.appendChild(el('article', {}, '<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><span class="mono small">' + (i + 1) + '</span><span style="display:flex;gap:6px;flex-wrap:wrap">' + as + tier + '</span></div>' + invarBlock(f)));
     });
-    document.getElementById('invarSum').firstChild.nodeValue = 'INVAR\'s full report: ' + inv.length + ' findings';
+    document.getElementById('invarSum').firstChild.nodeValue = 'INVAR\'s full report: ' + inv.length + ' findings (5 planted + 2 smaller real ones)';
   }).catch(function () {
     document.getElementById('cases').innerHTML = '<p class="loading">Couldn\'t load the run file. <a href="' + BASE + 'run.json">Open it directly</a>.</p>';
   });
