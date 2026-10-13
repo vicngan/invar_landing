@@ -147,6 +147,39 @@ details[open] summary::after{content:"–"}
 .fine .card p{margin:8px 0 0;font-size:15px;color:var(--body)}
 .fine ul{margin:8px 0 0;padding-left:18px;font-size:15px;color:var(--body)}
 pre.prompt{white-space:pre-wrap;font-family:var(--mono);font-size:12.5px;background:var(--sunk);border-radius:12px;padding:14px;margin:10px 0 0;color:var(--body)}
+/* exhibit viewer */
+dialog.viewer{width:min(1040px,calc(100vw - 32px));max-height:calc(100vh - 48px);padding:0;border:none;border-radius:24px;background:var(--surface);color:var(--ink);box-shadow:0 40px 80px -30px rgba(21,23,28,.55);overflow:hidden}
+dialog.viewer[open]{display:flex;flex-direction:column}
+dialog.viewer::backdrop{background:rgba(21,23,28,.55);backdrop-filter:blur(3px)}
+@media (prefers-reduced-motion:no-preference){dialog.viewer[open]{animation:pop .28s cubic-bezier(.2,.9,.3,1.2)}dialog.viewer[open]::backdrop{animation:fade .25s ease}}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.97)}}
+.v-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:22px 24px 18px;border-bottom:1px solid var(--line);background:var(--panel)}
+.v-head h3{margin-top:6px}
+.v-head .meta{margin:6px 0 0;font-family:var(--mono);font-size:12px;color:var(--faint)}
+.v-x{flex:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line2);background:var(--surface);cursor:pointer;font-size:22px;line-height:1;color:var(--ink)}
+.v-body{flex:1 1 auto;overflow:auto;min-height:120px}
+.v-body table{border-collapse:collapse;width:100%;font-size:14px}
+.v-body th{position:sticky;top:0;background:var(--surface);text-align:left;font-family:var(--mono);font-size:12px;letter-spacing:.5px;color:var(--accent-ink);font-weight:500;padding:12px 16px;border-bottom:1px solid var(--line2);white-space:nowrap}
+.v-body td{padding:9px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
+.v-body td.num{text-align:right;font-family:var(--mono);font-size:13px}
+.v-body tbody tr:hover{background:var(--panel)}
+.v-doc{padding:28px 32px 32px;max-width:760px}
+.v-doc h1{font-size:30px;letter-spacing:-.8px;margin:0 0 14px}
+.v-doc h2{font-size:21px;letter-spacing:-.3px;margin:26px 0 8px}
+.v-doc p,.v-doc li{font-size:16px;color:var(--body)}
+.v-doc p{margin:10px 0}
+.v-doc ol,.v-doc ul{padding-left:22px}
+.v-doc code{font-family:var(--mono);font-size:13.5px;background:var(--sunk);padding:1px 6px;border-radius:6px}
+.v-scroll{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:12px}
+.v-doc table{border:none}
+.v-doc td{white-space:normal}
+.v-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 20px;border-top:1px solid var(--line);background:var(--panel)}
+.v-nav{display:flex;gap:8px}
+.v-nav button{min-height:44px;padding:0 16px;border-radius:12px;border:1px solid var(--line2);background:var(--surface);font-family:var(--sans);font-size:14.5px;font-weight:500;color:var(--ink);cursor:pointer}
+.v-nav button:disabled{opacity:.4;cursor:default}
+.v-foot .btn{min-height:44px;font-size:15px}
+@media (max-width:760px){.v-doc{padding:20px}.v-head{padding:18px 16px 14px}.v-foot .btn{flex:1;justify-content:center}}
+
 /* sealed answers + reveal */
 body.locked #reveal, body.locked #method{display:none}
 body:not(.locked) #sealed{display:none}
@@ -194,6 +227,17 @@ footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
 </style>
 </head>
 <body class="locked">
+<dialog class="viewer" id="viewer" aria-labelledby="vTitle">
+  <div class="v-head">
+    <div><p class="eyebrow" id="vLabel"></p><h3 id="vTitle"></h3><p class="meta" id="vMeta"></p></div>
+    <button class="v-x" type="button" id="vClose" aria-label="Close">×</button>
+  </div>
+  <div class="v-body" id="vBody"></div>
+  <div class="v-foot">
+    <div class="v-nav"><button type="button" id="vPrev">← Previous</button><button type="button" id="vNext">Next →</button></div>
+    <a class="btn ghost" id="vDownload" href="#" download>Download this file</a>
+  </div>
+</dialog>
 <div class="curtain" id="curtain" aria-hidden="true"><span class="stamp">CASE CLOSED</span><p>OPENING THE FILE…</p></div>
 
 <header>
@@ -243,7 +287,7 @@ footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
     <div>
       <h2>What Fernwell is trying to do</h2>
       <p class="lede" style="margin-top:18px">Fernwell sells onboarding software to customer success teams: 1,239 customers and $637K in monthly recurring revenue. Its leadership wrote down four goals for the year. A problem matters if it stands in the way of one of them.</p>
-      <p class="small" style="margin-top:16px">From Fernwell's own doc, <a href="case/fernwell-2026-10-13/clues/doc-fernwell-mission-and-fy2026-goals.md">Mission and FY2026 goals</a>. The data covers April to September 2026.</p>
+      <p class="small" style="margin-top:16px">From Fernwell's own doc, <a href="case/fernwell-2026-10-13/clues/doc-fernwell-mission-and-fy2026-goals.md" data-exhibit="6">Mission and FY2026 goals</a>. The data covers April to September 2026.</p>
     </div>
     <div class="card">
       <div class="goal"><span class="n">01</span><div><b>Activation.</b> Raise new-account activation to 65% by the end of Q4.</div></div>
@@ -465,9 +509,118 @@ footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
   // Evidence locker
   var locker = document.getElementById('locker');
   EXHIBITS.forEach(function (x, i) {
-    locker.appendChild(el('a', { 'class': 'exhibit', href: BASE + 'clues/' + x[2], download: '' },
+    locker.appendChild(el('a', { 'class': 'exhibit', href: BASE + 'clues/' + x[2], 'data-exhibit': i },
       '<span class="src">EXHIBIT ' + String.fromCharCode(65 + i) + ' · ' + esc(x[0]) + '</span>' +
       '<span class="t">' + esc(x[1]) + '</span><span class="f">' + esc(x[2]) + '</span>'));
+  });
+
+  // Exhibit viewer: opens a file in a pop-up instead of downloading it.
+  function parseCSV(text) {
+    var rows = [], row = [], cell = '', q = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (q) {
+        if (ch === '"' && text[i + 1] === '"') { cell += '"'; i++; }
+        else if (ch === '"') q = false;
+        else cell += ch;
+      } else if (ch === '"') q = true;
+      else if (ch === ',') { row.push(cell); cell = ''; }
+      else if (ch === '\n') { row.push(cell); rows.push(row); row = []; cell = ''; }
+      else if (ch !== '\r') cell += ch;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+  function isNum(v) { return v !== '' && !isNaN(+v); }
+  function tableHTML(rows) {
+    var head = rows[0], body = rows.slice(1);
+    return '<table><thead><tr>' + head.map(function (h) { return '<th scope="col">' + esc(h) + '</th>'; }).join('') +
+      '</tr></thead><tbody>' + body.map(function (r) {
+        return '<tr>' + r.map(function (c) { return '<td' + (isNum(c) ? ' class="num"' : '') + '>' + inline(c) + '</td>'; }).join('') + '</tr>';
+      }).join('') + '</tbody></table>';
+  }
+  function inline(t) {
+    return esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/`(.+?)`/g, '<code>$1</code>')
+      .replace(/(^|\s)_(.+?)_(?=\s|$|[.,])/g, '$1<em>$2</em>');
+  }
+  function mdHTML(md) {
+    var out = [], lines = md.split('\n'), i = 0, para = [];
+    function flush() { if (para.length) { out.push('<p>' + inline(para.join(' ')) + '</p>'); para = []; } }
+    while (i < lines.length) {
+      var l = lines[i];
+      if (!l.trim()) { flush(); i++; continue; }
+      var h = /^(#{1,3}) (.*)/.exec(l);
+      if (h && h[1].length === 1 && !out.length) { i++; continue; }  // the viewer header already shows the title
+      if (h) { flush(); out.push(h[1].length === 1 ? '<h1>' + inline(h[2]) + '</h1>' : '<h2>' + inline(h[2]) + '</h2>'); i++; continue; }
+      if (/^\|/.test(l)) {
+        flush();
+        var t = [];
+        while (i < lines.length && /^\|/.test(lines[i])) {
+          if (!/^\|[\s|:-]+\|$/.test(lines[i])) t.push(lines[i].replace(/^\||\|$/g, '').split('|').map(function (c) { return c.trim(); }));
+          i++;
+        }
+        out.push('<div class="v-scroll">' + tableHTML(t) + '</div>'); continue;
+      }
+      if (/^\d+\. /.test(l)) {
+        flush();
+        var items = [];
+        while (i < lines.length && /^\d+\. /.test(lines[i])) { items.push('<li>' + inline(lines[i].replace(/^\d+\. /, '')) + '</li>'); i++; }
+        out.push('<ol>' + items.join('') + '</ol>'); continue;
+      }
+      if (/^[-*] /.test(l)) {
+        flush();
+        var li = [];
+        while (i < lines.length && /^[-*] /.test(lines[i])) { li.push('<li>' + inline(lines[i].slice(2)) + '</li>'); i++; }
+        out.push('<ul>' + li.join('') + '</ul>'); continue;
+      }
+      para.push(l.trim()); i++;
+    }
+    flush();
+    return '<div class="v-doc">' + out.join('') + '</div>';
+  }
+
+  var viewer = document.getElementById('viewer'), vBody = document.getElementById('vBody'), cur = 0, opener = null;
+  function show(i) {
+    cur = i;
+    var x = EXHIBITS[i], url = BASE + 'clues/' + x[2];
+    document.getElementById('vLabel').textContent = 'EXHIBIT ' + String.fromCharCode(65 + i) + ' · ' + x[0];
+    document.getElementById('vTitle').textContent = x[1];
+    document.getElementById('vMeta').textContent = x[2];
+    document.getElementById('vDownload').setAttribute('href', url);
+    document.getElementById('vPrev').disabled = i === 0;
+    document.getElementById('vNext').disabled = i === EXHIBITS.length - 1;
+    vBody.innerHTML = '<p class="loading" style="padding:24px">Opening the exhibit…</p>';
+    vBody.scrollTop = 0;
+    fetch(url).then(function (r) { return r.text(); }).then(function (text) {
+      if (cur !== i) return;
+      if (/\.csv$/.test(x[2])) {
+        var rows = parseCSV(text.trim());
+        document.getElementById('vMeta').textContent = x[2] + ' · ' + (rows.length - 1) + ' rows';
+        vBody.innerHTML = tableHTML(rows);
+      } else {
+        vBody.innerHTML = mdHTML(text);
+      }
+    }).catch(function () {
+      vBody.innerHTML = '<p class="loading" style="padding:24px">Couldn\'t open it here. <a href="' + url + '">Open the file directly</a>.</p>';
+    });
+  }
+  document.querySelectorAll('[data-exhibit]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (!viewer.showModal) return;          // very old browsers: follow the link
+      e.preventDefault();
+      opener = a;
+      show(+a.getAttribute('data-exhibit'));
+      viewer.showModal();
+    });
+  });
+  document.getElementById('vClose').addEventListener('click', function () { viewer.close(); });
+  document.getElementById('vPrev').addEventListener('click', function () { if (cur > 0) show(cur - 1); });
+  document.getElementById('vNext').addEventListener('click', function () { if (cur < EXHIBITS.length - 1) show(cur + 1); });
+  viewer.addEventListener('click', function (e) { if (e.target === viewer) viewer.close(); });  // backdrop
+  viewer.addEventListener('close', function () { if (opener) opener.focus(); });
+  viewer.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft' && cur > 0) show(cur - 1);
+    if (e.key === 'ArrowRight' && cur < EXHIBITS.length - 1) show(cur + 1);
   });
 
   // Leads
