@@ -118,6 +118,17 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
 .quote cite{display:block;margin-top:12px;font-family:var(--mono);font-size:12.5px;font-style:normal;color:var(--faint);letter-spacing:.5px}
 .case{border:1px solid var(--line);border-radius:24px;background:var(--surface);overflow:hidden}
 .case-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;padding:22px 26px;border-bottom:1px solid var(--line);background:var(--panel)}
+.case{display:block}
+details.case + details.case{margin-top:0}
+details.case > summary.case-head{padding:22px 26px;font-weight:inherit;font-size:inherit;align-items:center;flex-wrap:nowrap}
+details.case > summary.case-head::after{content:none}
+details.case:not([open]) > summary.case-head{border-bottom:none}
+details.case > summary.case-head:hover{background:var(--sunk)}
+.case-score{flex:none;display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.case-score .k{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--faint)}
+.chev{flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line2);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;color:var(--accent-ink);transition:transform .25s}
+details.case[open] .chev{transform:rotate(180deg)}
+@media (max-width:760px){details.case > summary.case-head{flex-wrap:wrap;padding:18px}.case-score{flex:1 1 100%;justify-content:flex-start}.case-score .chev{margin-left:auto}}
 .case-head .why{margin:6px 0 0;font-size:15px;color:var(--muted);max-width:720px}
 .sides{display:grid;grid-template-columns:1fr 1fr}
 .side{padding:22px 26px 26px;display:flex;flex-direction:column;gap:10px}
@@ -363,7 +374,7 @@ nav[aria-label=Footer] a:hover{color:#C2410C}
 
   <div style="margin-top:56px">
     <h3 style="font-size:28px">Problem by problem</h3>
-    <p class="small" style="margin-top:8px">Both sides are quoted word for word from the run file. Nothing is edited.</p>
+    <p class="small" style="margin-top:8px">Both sides are quoted word for word from the run file. Nothing is edited. Open a problem to compare the answers.</p>
   </div>
   <div id="cases" style="margin-top:24px;display:grid;gap:18px"><p class="loading">Loading the run…</p></div>
 
@@ -779,10 +790,13 @@ nav[aria-label=Footer] a:hover{color:#C2410C}
         : '<p class="st">' + esc(c.claudeNote) + '</p>';
       if (c.claude.length && c.claudeNote) left += '<p class="rec">' + esc(c.claudeNote) + '</p>';
       var f = byPlant[c.invar];
-      var box = el('article', { 'class': 'case' });
+      var box = el('details', { 'class': 'case' });
+      if (CASES.indexOf(c) === 0) box.open = true;   // first one open, so people see what's inside
       box.innerHTML =
-        '<div class="case-head"><div><p class="eyebrow">' + esc(c.id) + ' · NEEDS ' + esc(c.joins.toUpperCase()) + '</p>' +
-        '<h3 style="margin-top:6px">' + esc(c.name) + '</h3></div></div>' +
+        '<summary class="case-head"><div style="flex:1 1 auto;min-width:0"><p class="eyebrow">' + esc(c.id) + ' · NEEDS ' + esc(c.joins.toUpperCase()) + '</p>' +
+        '<h3 style="margin-top:6px">' + esc(c.name) + '</h3></div>' +
+        '<span class="case-score"><span class="k">CLAUDE</span>' + tag(c.claudeTag[0], c.claudeTag[1]) + '<span class="k" style="margin-left:6px">INVAR</span>' + tag('ok', 'FOUND') +
+        '<span class="chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"></path></svg></span></span></summary>' +
         '<div class="sides">' +
           '<div class="side' + (c.claude.length ? '' : ' empty') + '"><div class="who-h"><b>PLAIN CLAUDE</b>' + tag(c.claudeTag[0], c.claudeTag[1]) + '</div>' + left + '</div>' +
           '<div class="side"><div class="who-h"><b>INVAR</b>' + tag('ok', 'FOUND') + '</div>' + (f ? invarBlock(f) : '') + '</div>' +
