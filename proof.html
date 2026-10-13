@@ -49,19 +49,24 @@ header{position:sticky;top:0;z-index:10;background:rgba(244,241,234,.94);border-
 header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:12px;max-width:1376px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);min-height:44px}
 .brand span{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:3px}
-.hdr-links{display:flex;align-items:center;gap:8px}
-.hdr-links a.plain{font-size:15px;padding:10px 14px;text-decoration:none;color:#4A4A52}
-.hdr-links .btn{min-height:44px;border-radius:999px;font-size:15px;padding:0 20px}
+.brand{flex:none}
+.tabbar{flex:1 1 auto;min-width:0;display:flex;overflow-x:auto;scrollbar-width:none}
+.tabbar::-webkit-scrollbar{display:none}
+.tabs{display:flex;gap:4px;margin:0 auto;padding:5px;background:var(--sunk);border-radius:999px}
+.tabs a{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;white-space:nowrap;text-decoration:none;font-size:15px;font-weight:500;color:#4A4A52;transition:background .2s,color .2s}
+.tabs a:hover{background:#E2DCCF;color:var(--ink)}
+.tabs a[aria-current=page]{background:var(--ink);color:var(--bg);font-weight:600}
+.back{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;text-decoration:none;color:#4A4A52}
 
 /* hero */
 .hero{position:relative;max-width:1376px;margin:24px auto 0;border-radius:36px;border:1px solid var(--line);background-color:var(--panel);padding:96px 32px 88px;overflow:hidden}
 .hero-inner{max-width:880px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center}
 .stamp{display:inline-block;border:2px solid var(--accent-ink);color:var(--accent-ink);font-family:var(--mono);font-size:13px;letter-spacing:3px;padding:6px 14px;border-radius:6px;transform:rotate(-3deg)}
-.sticky{position:absolute;width:250px;padding:26px 22px 30px;background:var(--note);border-radius:6px;box-shadow:0 1px 2px rgba(21,23,28,.06),0 24px 40px -16px rgba(21,23,28,.3);font-family:'Caveat',cursive;font-size:26px;line-height:1.15;text-align:left}
+.sticky{position:absolute;width:196px;padding:22px 18px 24px;background:var(--note);border-radius:6px;box-shadow:0 1px 2px rgba(21,23,28,.06),0 24px 40px -16px rgba(21,23,28,.3);font-family:'Caveat',cursive;font-size:23px;line-height:1.15;text-align:left}
 .sticky::before{content:"";position:absolute;top:-9px;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:var(--accent);box-shadow:0 3px 6px rgba(21,23,28,.3)}
-.sticky.l{left:56px;top:72px;transform:rotate(-5deg)}
-.sticky.r{right:56px;bottom:64px;transform:rotate(4deg);background:var(--surface);border:1px solid var(--line)}
-@media (max-width:1279px){.sticky{display:none}}
+.sticky.l{left:36px;top:64px;transform:rotate(-5deg)}
+.sticky.r{right:36px;bottom:56px;transform:rotate(4deg);background:var(--surface);border:1px solid var(--line)}
+@media (max-width:1399px){.sticky{display:none}}
 .facts{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:36px}
 
 /* brief */
@@ -156,7 +161,7 @@ footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
   .wrap{padding:0 16px}
   .hero{padding:72px 16px 64px;border-radius:24px;margin:12px 8px 0}
   section{padding-top:80px}
-  .hdr-links a.plain{display:none}
+  .hidecta{display:none !important}
   .leads{grid-template-columns:1fr}
   .quote{font-size:20px;padding:22px}
   .cta{border-radius:24px;margin:80px 8px 0;padding:64px 20px}
@@ -173,17 +178,24 @@ footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
     <img src="./invar-mark.svg" width="20" height="35" alt="">
     <span>INVAR</span>
   </a>
-  <nav class="hdr-links" aria-label="Page">
-    <a class="plain" href="#evidence">Evidence</a>
-    <a class="plain" href="#leads">Your call</a>
-    <a class="plain" href="#reveal">Reveal</a>
-    <a class="btn" href="./#pilot">Join the pilot</a>
+  <nav class="tabbar" aria-label="Site">
+    <div class="tabs">
+      <a href="./">Overview</a>
+      <a href="./#how">How it works</a>
+      <a href="./#ask">AskRight</a>
+      <a href="./#insights">Insights</a>
+      <a href="./#trust">Trust</a>
+      <a href="./#pilot">Pilot</a>
+      <a href="./proof.html" aria-current="page">Case file</a>
+    </div>
   </nav>
+  <a class="btn hidecta" href="./#pilot" style="min-height:44px;border-radius:999px;font-size:15px;padding:0 20px;flex:none">Join the pilot</a>
 </div>
 </header>
 
 <main>
-<div class="hero dots">
+<div class="wrap" style="max-width:1376px;padding-top:18px"><a class="back" href="./"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Back to overview</a></div>
+<div class="hero dots" style="margin-top:14px">
   <div class="sticky l">Same model on both sides. The only difference is INVAR.</div>
   <div class="sticky r">Fernwell isn't real. Its problems are, and so are the red herrings.</div>
   <div class="hero-inner">
@@ -318,10 +330,14 @@ footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
 </div>
 </main>
 
-<footer>© 2026 INVAR · Fernwell is a fictional company. Its people, customers and numbers are generated.</footer>
+<footer><a class="back" href="./"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Back to the INVAR overview</a><br><br>© 2026 INVAR · Fernwell is a fictional company. Its people, customers and numbers are generated.</footer>
 
 <script>
 (function () {
+  // On narrow screens, scroll the tab bar so the current page's tab is visible.
+  var nav = document.querySelector('.tabbar'), cur = document.querySelector('.tabs a[aria-current=page]');
+  if (nav && cur && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = cur.offsetLeft;
+
   var BASE = 'case/fernwell-2026-10-13/';
 
   var EXHIBITS = [
