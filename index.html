@@ -557,6 +557,7 @@ tbody tr:hover{background:#F8F5EF}
 <button type="button" onClick="{{goHow}}" style="min-height: 44px; padding: 0; border: none; background: transparent; cursor: pointer; text-align: left; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C">How it works</button>
 <button type="button" onClick="{{goTrust}}" style="min-height: 44px; padding: 0; border: none; background: transparent; cursor: pointer; text-align: left; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C">Trust</button>
 <button type="button" onClick="{{goAsk}}" style="min-height: 44px; padding: 0; border: none; background: transparent; cursor: pointer; text-align: left; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C">AskRight</button>
+<a href="./proof.html" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none">Case file</a>
 <a href="mailto:security@invarhq.com" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none">Security</a>
 <button type="button" onClick="{{goPilot}}" style="min-height: 44px; padding: 0; border: none; background: transparent; cursor: pointer; text-align: left; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 16px; color: #15171C">Pilot</button>
 <a href="mailto:victoria@invarhq.com" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none">Contact</a>
@@ -593,12 +594,12 @@ class Component extends DCLogic {
       { id: 'ask', name: 'AskRight' },
       { id: 'insights', name: 'Insights' },
       { id: 'trust', name: 'Trust' },
-      { id: 'pilot', name: 'Pilot' }
+      { id: 'case', name: 'Case file', href: './proof.html' }
     ];
     var cur = this.state.tab;
     var tabs = tabDefs.map(function (t) {
       var on = t.id === cur;
-      return { name: t.name, on: on, off: !on, pick: go(t.id) };
+      return { name: t.name, on: on, off: !on, pick: t.href ? function () { window.location.href = t.href; } : go(t.id) };
     });
     var chips = {
       fact: { claimName: 'Fact', chipBg: '#15171C', chipFg: '#F4F1EA' },
