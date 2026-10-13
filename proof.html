@@ -32,7 +32,7 @@ h3{font-size:22px;font-weight:600;line-height:1.25;letter-spacing:-.3px}
 .btn.ghost{background:var(--surface);border:1px solid var(--line2)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .dots{background-image:radial-gradient(rgba(21,23,28,0.10) 1px,transparent 1.2px);background-size:16px 16px}
-section{padding-top:112px}
+section,section.wrap{padding-top:120px}
 .step{display:flex;align-items:center;gap:14px;margin-bottom:20px}
 .step b{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:14px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px}
@@ -147,6 +147,29 @@ details[open] summary::after{content:"–"}
 .fine .card p{margin:8px 0 0;font-size:15px;color:var(--body)}
 .fine ul{margin:8px 0 0;padding-left:18px;font-size:15px;color:var(--body)}
 pre.prompt{white-space:pre-wrap;font-family:var(--mono);font-size:12.5px;background:var(--sunk);border-radius:12px;padding:14px;margin:10px 0 0;color:var(--body)}
+/* sealed answers + reveal */
+body.locked #reveal, body.locked #method{display:none}
+body:not(.locked) #sealed{display:none}
+.envelope{position:relative;max-width:760px;margin:0 auto;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:64px 32px 56px;overflow:hidden;box-shadow:0 40px 70px -46px rgba(21,23,28,.45)}
+.envelope::before{content:"";position:absolute;inset:0 0 auto 0;height:120px;background:linear-gradient(160deg,var(--sunk) 50%,transparent 50.4%),linear-gradient(200deg,var(--sunk) 50%,transparent 50.4%);background-size:50% 100%,50% 100%;background-position:left top,right top;background-repeat:no-repeat;opacity:.9}
+.seal{position:relative;width:96px;height:96px;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FF8A63,var(--accent) 45%,#C2410C);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -8px rgba(194,65,12,.7),inset 0 -4px 8px rgba(0,0,0,.18)}
+.seal img{width:26px;height:46px;filter:brightness(0) invert(1);opacity:.9}
+.envelope h2{margin-top:28px}
+.envelope p{margin:16px auto 0;max-width:520px;color:var(--body);font-size:18px}
+@media (prefers-reduced-motion:no-preference){.seal{animation:pulse 2.4s ease-in-out infinite}}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.curtain{position:fixed;inset:0;z-index:50;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;pointer-events:none;transition:opacity .45s ease}
+.curtain.on{opacity:1;pointer-events:auto}
+.curtain .stamp{border-color:var(--accent);color:var(--accent);font-size:clamp(28px,6vw,64px);letter-spacing:8px;padding:14px 30px;border-width:5px;border-radius:12px;opacity:0;transform:scale(2.6) rotate(-14deg)}
+.curtain.on .stamp{animation:slam .5s cubic-bezier(.2,1.4,.4,1) .35s forwards}
+.curtain p{margin:0;font-family:var(--mono);font-size:14px;letter-spacing:2px;color:#C9C4B8;opacity:0}
+.curtain.on p{animation:fade .5s ease .95s forwards}
+@keyframes slam{to{opacity:1;transform:scale(1) rotate(-6deg)}}
+@keyframes fade{to{opacity:1}}
+.play .rise{opacity:0;transform:translateY(28px);animation:rise .7s cubic-bezier(.2,.7,.3,1) forwards;animation-delay:var(--d,0s)}
+@keyframes rise{to{opacity:1;transform:none}}
+.revealed .verdict{animation:fade .5s ease both;animation-delay:var(--d,0s);opacity:0}
+@media (prefers-reduced-motion:reduce){.play .rise,.revealed .verdict{animation:none;opacity:1;transform:none}}
 .cta{margin:120px auto 0;max-width:1376px;border-radius:36px;background:var(--ink);color:var(--bg);padding:88px 32px;text-align:center}
 .cta p{color:#C9C4B8}
 footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
@@ -160,7 +183,7 @@ footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
 @media (max-width:760px){
   .wrap{padding:0 16px}
   .hero{padding:72px 16px 64px;border-radius:24px;margin:12px 8px 0}
-  section{padding-top:80px}
+  section,section.wrap{padding-top:88px}
   .hidecta{display:none !important}
   .leads{grid-template-columns:1fr}
   .quote{font-size:20px;padding:22px}
@@ -170,7 +193,8 @@ footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.exhibit{transition:none}}
 </style>
 </head>
-<body>
+<body class="locked">
+<div class="curtain" id="curtain" aria-hidden="true"><span class="stamp">CASE CLOSED</span><p>OPENING THE FILE…</p></div>
 
 <header>
 <div class="wrap">
@@ -204,7 +228,7 @@ footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
     <p class="lede" style="margin:26px 0 0">Fernwell is a fictional B2B software company we built. We planted five real problems in its data, plus five red herrings that look like problems but aren't. Then we gave the same data to plain Claude and to INVAR. Try it yourself first.</p>
     <div style="margin-top:36px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px">
       <a class="btn" href="#evidence">Open the evidence</a>
-      <a class="btn ghost" href="#reveal">Skip to the reveal</a>
+      <a class="btn ghost" href="#reveal" data-reveal>Skip to the reveal</a>
     </div>
     <div class="facts">
       <span class="pill">5 PLANTED PROBLEMS</span>
@@ -250,34 +274,45 @@ footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
   <div class="bar" role="region" aria-label="Progress">
     <span id="progress" aria-live="polite">0 of 10 leads marked</span>
     <span style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-      <a href="#reveal" id="skipLink">Skip to the reveal</a>
-      <button class="btn" id="revealBtn" type="button">Reveal the answers</button>
+      <a href="#reveal" id="skipLink" data-reveal>Skip to the reveal</a>
+      <button class="btn" id="revealBtn" type="button" data-reveal>Reveal the answers</button>
     </span>
+  </div>
+</section>
+
+<!-- 4 (sealed). Shown until the reveal -->
+<section class="wrap" id="sealed">
+  <div class="envelope">
+    <div class="seal"><img src="./invar-mark.svg" alt=""></div>
+    <p class="eyebrow" style="margin-top:28px">EVIDENCE BAG · SEALED</p>
+    <h2>Two investigators worked this case.</h2>
+    <p>Plain Claude and INVAR each filed their findings. Make your calls on the leads, then break the seal to see who solved it.</p>
+    <button class="btn" type="button" data-reveal style="margin-top:32px">Break the seal</button>
   </div>
 </section>
 
 <!-- 4. REVEAL -->
 <section class="wrap" id="reveal">
-  <div class="step"><b>4</b><p class="eyebrow">THE REVEAL</p></div>
-  <h2>Same data. Same model. Two answers.</h2>
-  <p class="lede" style="margin-top:18px">Both sides ran on Claude Opus 5.5. Plain Claude got the reports above and was asked for the most important problems and what to do. INVAR read the same company's data and joined the records across tools first.</p>
-  <div id="yourScore" style="margin-top:24px"></div>
+  <div class="step rise"><b>4</b><p class="eyebrow">THE REVEAL</p></div>
+  <h2 class="rise" style="--d:.08s">Same data. Same model. Two answers.</h2>
+  <p class="lede rise" style="margin-top:18px;--d:.16s">Both sides ran on Claude Opus 5.5. Plain Claude got the reports above and was asked for the most important problems and what to do. INVAR read the same company's data and joined the records across tools first.</p>
+  <div id="yourScore" class="rise" style="margin-top:24px;--d:.24s"></div>
   <div class="score" style="margin-top:28px">
-    <div class="card">
+    <div class="card rise" style="--d:.4s">
       <p class="eyebrow" style="color:var(--faint)">PLAIN CLAUDE</p>
-      <span class="big">2 <span style="font-size:28px;color:var(--faint)">of 5</span></span>
+      <span class="big"><span class="count" data-to="2">2</span> <span style="font-size:28px;color:var(--faint)">of 5</span></span>
       <span>planted problems found</span>
       <span class="small">Took 2 of 5 red herrings as problems. 9 findings in all.</span>
     </div>
-    <div class="card dark">
+    <div class="card dark rise" style="--d:.55s">
       <p class="eyebrow" style="color:#FF8A63">INVAR</p>
-      <span class="big">5 <span style="font-size:28px;color:#C9C4B8">of 5</span></span>
+      <span class="big"><span class="count" data-to="5">5</span> <span style="font-size:28px;color:#C9C4B8">of 5</span></span>
       <span>planted problems found</span>
       <span class="small">Took 0 of 5 red herrings. 7 findings in all, 0 false.</span>
     </div>
   </div>
 
-  <div style="margin-top:56px;display:grid;gap:22px">
+  <div class="rise" style="margin-top:56px;display:grid;gap:22px;--d:.8s">
     <h3 style="font-size:28px">Plain Claude is good at what one tool can show.</h3>
     <p class="lede" style="margin:0">It caught the Salesforce sync trouble and the workflow editor rollout, because each shows up in a single export. It missed the three that only appear when records are joined: which plan the busy accounts are on, which campaign brought them, what the billing system actually charges. It said as much itself:</p>
     <blockquote class="quote">“That cannot measure activation by signup cohort or by acquisition source.”<cite>PLAIN CLAUDE, FINDING 9 · RECOMMENDING SOMEONE BUILD THE JOINED VIEW INVAR STARTS FROM</cite></blockquote>
@@ -474,12 +509,40 @@ footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
     progress.textContent = revealed ? 'Answers revealed' : n + ' of 10 leads marked';
   }
 
-  document.getElementById('revealBtn').addEventListener('click', function () {
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function countUp() {
+    document.querySelectorAll('.count').forEach(function (c, i) {
+      var to = +c.getAttribute('data-to');
+      if (calm) { c.textContent = to; return; }
+      c.textContent = '0';
+      var n = 0, t = setInterval(function () {
+        c.textContent = String(++n);
+        if (n >= to) clearInterval(t);
+      }, 160);
+    });
+  }
+
+  function showReveal() {
+    var sec = document.getElementById('reveal');
+    sec.classList.add('play');
+    // problem-by-problem cards rise one after another as the reveal opens
+    document.querySelectorAll('#cases .case').forEach(function (c, i) {
+      c.classList.add('rise'); c.style.setProperty('--d', (1 + i * 0.15) + 's');
+    });
+    window.scrollTo({ top: sec.offsetTop - 70, behavior: 'auto' });
+    setTimeout(countUp, calm ? 0 : 500);
+  }
+
+  function reveal(e) {
+    if (e) e.preventDefault();
+    if (revealed) { window.scrollTo({ top: document.getElementById('reveal').offsetTop - 70, behavior: calm ? 'auto' : 'smooth' }); return; }
     revealed = true;
     var right = 0, marked = 0;
     LEADS.forEach(function (l) {
       var card = document.getElementById('lead-' + l.id);
       card.classList.add('revealed');
+      card.querySelector('.verdict').style.setProperty('--d', (LEADS.indexOf(l) * 0.08) + 's');
       if (picks[l.id]) {
         marked++;
         var ok = (picks[l.id] === 'real') === l.real;
@@ -488,18 +551,23 @@ footer{padding:40px 32px;text-align:center;font-size:14px;color:var(--faint)}
       }
       card.querySelectorAll('.choice button').forEach(function (b) { b.disabled = true; });
     });
-    this.disabled = true;
-    this.textContent = 'Revealed';
-    document.querySelector('.bar').style.position = 'static';
-    document.getElementById('skipLink').textContent = 'See the full comparison';
+    document.querySelector('.bar').style.display = 'none';
     update();
     var ys = document.getElementById('yourScore');
     ys.innerHTML = marked
-      ? '<div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span><b>You: ' + right + ' of ' + marked + '</b> leads called right.</span><span class="small">Plain Claude called 5 of 10 right. INVAR called 10 of 10.</span></div>'
+      ? '<div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span><b>You: ' + right + ' of ' + marked + '</b> leads called right.</span><span class="small">Plain Claude called 5 of 10 right. INVAR called 10 of 10. <a href="#leads">See each lead\'s verdict</a></span></div>'
       : '';
-    var first = document.getElementById('lead-' + LEADS[0].id);
-    if (first) first.scrollIntoView({ block: 'start' });
-  });
+
+    document.body.classList.remove('locked');
+    if (calm) { showReveal(); return; }
+    var curtain = document.getElementById('curtain');
+    curtain.classList.add('on');
+    setTimeout(function () {
+      showReveal();                       // behind the curtain
+      curtain.classList.remove('on');    // then lift it
+    }, 1900);
+  }
+  document.querySelectorAll('[data-reveal]').forEach(function (b) { b.addEventListener('click', reveal); });
 
   // The frozen run, quoted word for word.
   fetch(BASE + 'run.json').then(function (r) { return r.json(); }).then(function (run) {
