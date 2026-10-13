@@ -1,0 +1,1475 @@
+{
+  "run_at": "2026-10-13T10:20:10",
+  "commit": "64b9553",
+  "world": {
+    "name": "default",
+    "noise": "medium",
+    "seed": 42,
+    "note": "The world INVAR was developed on: not a blind test."
+  },
+  "clues": [
+    {
+      "title": "Stripe: MRR and customers by plan, now",
+      "file": "clues/stripe-mrr-and-customers-by-plan-now.csv"
+    },
+    {
+      "title": "HubSpot: new signups by campaign and month",
+      "file": "clues/hubspot-new-signups-by-campaign-and-month.csv"
+    },
+    {
+      "title": "AskRight: internal questions by topic and week",
+      "file": "clues/askright-internal-questions-by-topic-and-week.csv"
+    },
+    {
+      "title": "AskRight: handling time and answerers by topic",
+      "file": "clues/askright-handling-time-and-answerers-by-topic.csv"
+    },
+    {
+      "title": "PostHog: feature events by week",
+      "file": "clues/posthog-feature-events-by-week.csv"
+    },
+    {
+      "title": "PostHog: releases and flag rollouts",
+      "file": "clues/posthog-releases-and-flag-rollouts.csv"
+    },
+    {
+      "title": "Doc: Metric definitions",
+      "file": "clues/doc-metric-definitions.md"
+    },
+    {
+      "title": "Doc: Fernwell mission and FY2026 goals",
+      "file": "clues/doc-fernwell-mission-and-fy2026-goals.md"
+    },
+    {
+      "title": "Doc: Pricing and packaging",
+      "file": "clues/doc-pricing-and-packaging.md"
+    },
+    {
+      "title": "Doc: Salesforce sync setup guide",
+      "file": "clues/doc-salesforce-sync-setup-guide.md"
+    },
+    {
+      "title": "Doc: Team ownership",
+      "file": "clues/doc-team-ownership.md"
+    }
+  ],
+  "claude_alone": {
+    "model": "claude-opus-5-5",
+    "report": {
+      "findings": [
+        {
+          "title": "Salesforce sync v2 broke integration setup: connect rate fell from 69% to 52% and questions spiked",
+          "kind": "other",
+          "entity": "salesforce_sync",
+          "claim": "In PostHog, integration setups that finished (integration_connected / integration_setup_started) were 547/789 = 69% in the weeks of 2026-04-06 to 2026-07-13. After the Salesforce sync v2 release on 2026-07-14, the rate fell to 256/497 = 52% (weeks of 2026-07-20 to 2026-09-21). AskRight salesforce_sync questions went from 0 before July to 40, peaking at 9 in the week of 2026-08-03 and 7 in the week of 2026-08-10. They cost 1,364 minutes, about 34 minutes per question. The only setup guide still says it 'applies to the original Salesforce sync connector'. This works against FY2026 goal 4: CRM sync set up in under 15 minutes.",
+          "recommendation": "Engineering (owner) should find where v2 setups drop off between setup_started and connected and fix it. Instrument time-to-connect to track the 15-minute goal. Rewrite the Salesforce sync setup guide for v2 within the next sprint. Hold any further connector changes until the connect rate is back to about 69%.",
+          "drivers": [
+            "salesforce_sync"
+          ],
+          "blames_change": "Released Salesforce sync v2"
+        },
+        {
+          "title": "Support questions are growing faster than active users, against the efficient-growth goal",
+          "kind": "other",
+          "entity": "AskRight questions per account",
+          "claim": "AskRight questions averaged 16.75 per week in April (67 over the 4 weeks from 2026-04-06) and 30.8 per week in August (154 over the 5 weeks from 2026-08-03), up 84%. Weekly active users (users with task_completed) rose only about 42% over the same period, from about 2,109 to about 2,999. So questions per active user rose about 30%. Goal 3 requires questions per account to stay flat or fall. By total handling time, the largest topics are csv_import (2,973 min), custom_fields (1,835), salesforce_sync (1,364), workflow_editor (1,233) and billing_invoices (961).",
+          "recommendation": "Track questions per active account-month on the goals dashboard. Assign each owning team a reduction target for its topic: Engineering for csv_import and salesforce_sync, Product for custom_fields and workflow_editor, Finance & Ops for billing_invoices. Review progress monthly.",
+          "drivers": [
+            "csv_import",
+            "custom_fields",
+            "salesforce_sync",
+            "workflow_editor",
+            "billing_invoices"
+          ],
+          "blames_change": ""
+        },
+        {
+          "title": "The new-workflow-editor rollout more than doubled workflow editor questions",
+          "kind": "experiment_hidden_cost",
+          "entity": "new-workflow-editor",
+          "claim": "workflow_editor questions averaged 2.0 per week before the flag (40 over the 20 weeks to 2026-08-10). After the 50% rollout on 2026-08-18 and the 100% rollout on 2026-08-25, they averaged 4.4 per week (31 over 7 weeks), peaking at 8 in the week of 2026-08-31. The workflow_saved/workflow_editor_opened ratio stayed at about 0.49\u20130.50, so the new editor gives no visible usage gain to offset the extra support load. The top answerer handles 49% of these questions.",
+          "recommendation": "Product should review the questions asked since 2026-08-18 and add in-app guidance or fixes for the top confusions. Evaluate future flags on support load as well as usage, and use a holdout group instead of jumping from 50% to 100% within a week.",
+          "drivers": [
+            "workflow_editor"
+          ],
+          "blames_change": "Rolled out flag new-workflow-editor to 100%"
+        },
+        {
+          "title": "CSV import is the most expensive support topic, and questions doubled around CSV import v2",
+          "kind": "feature_questions",
+          "entity": "csv_import",
+          "claim": "csv_import had 83 questions and 2,973 minutes of handling time, the most of any topic, at about 36 minutes per question. Before 2026-05-25 it averaged 1.75 questions per week (14 in 8 weeks). From the week of 2026-06-01 (CSV import v2 was released 2026-06-02) it averaged 3.5 per week (63 in 18 weeks). Import completion (csv_import_completed/started) dipped from about 75\u201379% to 68\u201372% in the weeks right after the release, then recovered to about 75\u201380%.",
+          "recommendation": "Engineering should identify the most common import errors behind these questions. Add validation messages and a downloadable template inside the importer. Publish a CSV import v2 help article so Customer Success stops spending about 36 minutes per question.",
+          "drivers": [
+            "csv_import"
+          ],
+          "blames_change": "Released CSV import v2"
+        },
+        {
+          "title": "Salesforce sync knowledge sits mostly with one person",
+          "kind": "knowledge_risk",
+          "entity": "salesforce_sync",
+          "claim": "One answerer handles 77% of salesforce_sync questions (top_answerer_share 0.77; 40 questions and 1,364 minutes). That is far higher than any other meaningful topic: checklist_builder is next at 0.50, then workflow_editor at 0.49. Salesforce is one of the two core CRMs for Fernwell's target customers.",
+          "recommendation": "Have that answerer write a runbook for v2 troubleshooting. Pair them with at least two Engineering and Customer Success teammates on the next salesforce_sync questions until the top share falls below 50%. Apply the same approach to checklist_builder and workflow_editor.",
+          "drivers": [
+            "salesforce_sync",
+            "checklist_builder",
+            "workflow_editor"
+          ],
+          "blames_change": ""
+        },
+        {
+          "title": "Billing and pricing confusion is a large question load, and average revenue per customer is below list price on every plan",
+          "kind": "pricing_doc_mismatch",
+          "entity": "Pricing and packaging",
+          "claim": "billing_invoices is the most frequent topic, with 88 questions (961 min), and pricing_plans adds 47 (478 min): 135 combined. billing_invoices hit 7 in a week on 2026-07-27, 2026-08-03 and 2026-09-21. Average Stripe MRR per customer is below list on every plan, even though extra seats should push it above:\n- Starter: $76.45 vs $79\n- Growth: $335.53 vs $349\n- Scale: $955.78 vs $990\nEnterprise averages $2,069 per month and is custom priced.",
+          "recommendation": "Finance & Ops and Sales should reconcile Stripe prices against the pricing page. Find out how much of the gap comes from annual discounts and how much from off-list deals. Fix the pricing page so annual pricing and seat overages are explicit. Publish a billing FAQ to cut billing_invoices questions.",
+          "drivers": [
+            "billing_invoices",
+            "pricing_plans"
+          ],
+          "blames_change": ""
+        },
+        {
+          "title": "Custom fields take long to answer and questions are rising",
+          "kind": "feature_questions",
+          "entity": "custom_fields",
+          "claim": "custom_fields had 72 questions and 1,835 minutes of handling time, about 25 minutes each and the second-largest total. Weekly counts rose from 1\u20133 in April to 5\u20137 in some weeks: 6 on 2026-07-13, 5 on 2026-07-20, 5 on 2026-08-17 and 7 on 2026-09-07. No release explains the rise.",
+          "recommendation": "Product should group the custom_fields questions by theme. Ship in-product help or default field templates for the top two themes.",
+          "drivers": [
+            "custom_fields"
+          ],
+          "blames_change": ""
+        },
+        {
+          "title": "Signups dipped in August after campaigns ended, and some campaigns barely produce signups",
+          "kind": "other",
+          "entity": "HubSpot campaigns",
+          "claim": "HubSpot campaign signups were 103 in July, 66 in August and 107 in September. PostHog weekly signed_up fell from about 50\u201365 in May\u2013June to 34\u201339 in most August weeks. Q2 Paid Search ended in June (62 signups) and Partner Webinar Series ended in August (91 signups). Founder Podcast Tour produced only 5 signups and Summer Launch Week only 9. Meanwhile LinkedIn: Onboarding Playbook grew from 13 to 38 per month, and Q3 Retargeting reached 36 in September.",
+          "recommendation": "Plan replacement campaigns before current ones end so signups don't gap. Move budget away from Founder Podcast Tour-style one-offs toward LinkedIn: Onboarding Playbook and Q3 Retargeting. Check that these campaigns' signups activate and retain before scaling them further.",
+          "drivers": [],
+          "blames_change": ""
+        },
+        {
+          "title": "The activation goal cannot be tracked with current reports",
+          "kind": "other",
+          "entity": "Activated account",
+          "claim": "The top FY2026 goal is 65% activation (checklist_launched within 14 days of signup). PostHog reports only aggregate weekly events: 32\u201365 signed_up per week against 386\u2013923 checklist_launched users, mostly from existing accounts. That cannot measure activation by signup cohort or by acquisition source. Retention by source (goal 2) is not reported either.",
+          "recommendation": "Build an account-level cohort report that joins PostHog signed_up and checklist_launched within 14 days with the HubSpot campaign and Stripe MRR. This lets activation and day-90 retention be tracked by acquisition source.",
+          "drivers": [],
+          "blames_change": ""
+        }
+      ]
+    },
+    "grade": {
+      "findings": [
+        {
+          "title": "Salesforce sync v2 broke integration setup: connect rate fell from 69% to 52% and questions spiked",
+          "kind": "other",
+          "entity": "salesforce_sync",
+          "resolved": null,
+          "true": null,
+          "plant": null,
+          "right_cause": null,
+          "cause_note": null,
+          "generic": [],
+          "recommendation": "Engineering (owner) should find where v2 setups drop off between setup_started and connected and fix it. Instrument time-to-connect to track the 15-minute goal. Rewrite the Salesforce sync setup guide for v2 within the next sprint. Hold any further connector changes until the connect rate is back to about 69%.",
+          "fell_for_trap": false
+        },
+        {
+          "title": "Support questions are growing faster than active users, against the efficient-growth goal",
+          "kind": "other",
+          "entity": "AskRight questions per account",
+          "resolved": null,
+          "true": null,
+          "plant": null,
+          "right_cause": null,
+          "cause_note": null,
+          "generic": [],
+          "recommendation": "Track questions per active account-month on the goals dashboard. Assign each owning team a reduction target for its topic: Engineering for csv_import and salesforce_sync, Product for custom_fields and workflow_editor, Finance & Ops for billing_invoices. Review progress monthly.",
+          "fell_for_trap": false
+        },
+        {
+          "title": "The new-workflow-editor rollout more than doubled workflow editor questions",
+          "kind": "experiment_hidden_cost",
+          "entity": "new-workflow-editor",
+          "resolved": null,
+          "true": null,
+          "plant": null,
+          "right_cause": null,
+          "cause_note": null,
+          "generic": [],
+          "recommendation": "Product should review the questions asked since 2026-08-18 and add in-app guidance or fixes for the top confusions. Evaluate future flags on support load as well as usage, and use a holdout group instead of jumping from 50% to 100% within a week.",
+          "fell_for_trap": false
+        },
+        {
+          "title": "CSV import is the most expensive support topic, and questions doubled around CSV import v2",
+          "kind": "feature_questions",
+          "entity": "csv_import",
+          "resolved": "csv_import",
+          "true": false,
+          "plant": null,
+          "right_cause": null,
+          "cause_note": null,
+          "generic": [],
+          "recommendation": "Engineering should identify the most common import errors behind these questions. Add validation messages and a downloadable template inside the importer. Publish a CSV import v2 help article so Customer Success stops spending about 36 minutes per question.",
+          "fell_for_trap": false
+        },
+        {
+          "title": "Salesforce sync knowledge sits mostly with one person",
+          "kind": "knowledge_risk",
+          "entity": "salesforce_sync",
+          "resolved": "salesforce_sync",
+          "true": true,
+          "plant": "P1",
+          "right_cause": false,
+          "cause_note": "doesn't name Salesforce sync, setup guide",
+          "generic": [],
+          "recommendation": "Have that answerer write a runbook for v2 troubleshooting. Pair them with at least two Engineering and Customer Success teammates on the next salesforce_sync questions until the top share falls below 50%. Apply the same approach to checklist_builder and workflow_editor.",
+          "fell_for_trap": false
+        },
+        {
+          "title": "Billing and pricing confusion is a large question load, and average revenue per customer is below list price on every plan",
+          "kind": "pricing_doc_mismatch",
+          "entity": "Pricing and packaging",
+          "resolved": null,
+          "true": null,
+          "plant": null,
+          "right_cause": null,
+          "cause_note": null,
+          "generic": [],
+          "recommendation": "Finance & Ops and Sales should reconcile Stripe prices against the pricing page. Find out how much of the gap comes from annual discounts and how much from off-list deals. Fix the pricing page so annual pricing and seat overages are explicit. Publish a billing FAQ to cut billing_invoices questions.",
+          "fell_for_trap": false
+        },
+        {
+          "title": "Custom fields take long to answer and questions are rising",
+          "kind": "feature_questions",
+          "entity": "custom_fields",
+          "resolved": "custom_fields",
+          "true": null,
+          "plant": null,
+          "right_cause": null,
+          "cause_note": null,
+          "generic": [],
+          "recommendation": "Product should group the custom_fields questions by theme. Ship in-product help or default field templates for the top two themes.",
+          "fell_for_trap": false
+        },
+        {
+          "title": "Signups dipped in August after campaigns ended, and some campaigns barely produce signups",
+          "kind": "other",
+          "entity": "HubSpot campaigns",
+          "resolved": null,
+          "true": null,
+          "plant": null,
+          "right_cause": null,
+          "cause_note": null,
+          "generic": [],
+          "recommendation": "Plan replacement campaigns before current ones end so signups don't gap. Move budget away from Founder Podcast Tour-style one-offs toward LinkedIn: Onboarding Playbook and Q3 Retargeting. Check that these campaigns' signups activate and retain before scaling them further.",
+          "fell_for_trap": false
+        },
+        {
+          "title": "The activation goal cannot be tracked with current reports",
+          "kind": "other",
+          "entity": "Activated account",
+          "resolved": null,
+          "true": null,
+          "plant": null,
+          "right_cause": null,
+          "cause_note": null,
+          "generic": [],
+          "recommendation": "Build an account-level cohort report that joins PostHog signed_up and checklist_launched within 14 days with the HubSpot campaign and Stripe MRR. This lets activation and day-90 retention be tracked by acquisition source.",
+          "fell_for_trap": false
+        }
+      ]
+    },
+    "system": "You are a senior business analyst at a B2B SaaS company. You have the reports each of the company's tools produces on its own. Find the most important problems in the business and say what to do about each. Use only the data given: no outside benchmarks."
+  },
+  "invar": {
+    "model": "on",
+    "findings": [
+      {
+        "detector": "contradiction",
+        "insight_type": "context_contradiction",
+        "title": "\"Pricing and packaging\" disagrees with Stripe on the Growth plan",
+        "statement": "The \"Pricing and packaging\" doc (owner: Head of Sales) disagrees with Stripe on the Growth plan: seats included: doc says 10, Stripe has 5; annual discount: doc says 20%, Stripe has 15%. The plan carries $134.2K MRR, so quotes from the doc won't match invoices.",
+        "label": "fact",
+        "entities": {
+          "plan": "growth",
+          "doc": "pricing_and_packaging",
+          "fields": [
+            "annual_discount_pct",
+            "seats_included"
+          ]
+        },
+        "metrics": {
+          "differences": {
+            "seats_included": {
+              "doc": 10,
+              "stripe": 5
+            },
+            "annual_discount_pct": {
+              "doc": 20.0,
+              "stripe": 15
+            }
+          },
+          "mrr_cents": 13421001
+        },
+        "evidence": [
+          {
+            "kind": "context_doc",
+            "ref": "pricing_and_packaging"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_fe0de58c74",
+            "metric": "sql:stripe_plans"
+          }
+        ],
+        "recommendation": {
+          "action": "Decide which Growth terms are right (seats included: doc says 10, Stripe has 5; annual discount: doc says 20%, Stripe has 15%). If Stripe is, correct \"Pricing and packaging\" (Head of Sales); if the doc is, change the Growth price in Stripe. Until then, quote Growth from Stripe.",
+          "owner_team": "Head of Sales",
+          "target_metric": "doc matches Stripe",
+          "baseline": 2,
+          "baseline_text": "2 differences",
+          "target": 0,
+          "target_text": "no differences",
+          "impact_text": "400 Growth customers carrying $134.2K MRR"
+        },
+        "impact_mrr_cents": 13421001,
+        "strength": 0.7,
+        "affects": [
+          "pricing",
+          "knowledge"
+        ],
+        "angles": {
+          "usage": "clear",
+          "revenue": "signal",
+          "cost": "clear",
+          "acquisition": "clear",
+          "team_load": "clear",
+          "knowledge": "signal",
+          "goals": "clear"
+        },
+        "goal_aligned": false,
+        "narrative": "Quotes for the Growth plan won't match invoices, because the \"Pricing and packaging\" doc disagrees with Stripe. The doc says 10 seats included and a 20% annual discount, while Stripe has 5 seats and 15%. The plan carries $134.2K MRR, so decide which terms are right and fix the doc or Stripe to match, and quote Growth from Stripe until then.",
+        "p_value": 0.0,
+        "caps": [],
+        "reasoning": [
+          {
+            "check": "Which one do customers see?",
+            "supports": true,
+            "result": "Stripe's: 400 Growth customers are billed on its terms; anyone quoting from the doc promises something else."
+          },
+          {
+            "check": "Was the doc read exactly?",
+            "supports": true,
+            "result": "Yes: the prices come from a table in the doc."
+          },
+          {
+            "check": "When was the doc last reviewed?",
+            "supports": true,
+            "result": "Jun 30, 2026."
+          }
+        ],
+        "confidence": 1.0,
+        "tier": "auto",
+        "confidence_notes": [
+          "q = 0 across 4 candidates tested in pricing and deals"
+        ],
+        "finding_id": "f_e0b6b44372",
+        "score": 256.444
+      },
+      {
+        "detector": "silent_regression",
+        "insight_type": "silent_regression",
+        "title": "Workflow editor: questions up 4.3x after a change, usage flat",
+        "statement": "After the new-workflow-editor rollout on Aug 18, Workflow editor usage per active user stayed flat (3.19 to 3.21) but questions about it rose from 1.6 to 7.0 a week and stayed there for two weeks. The accounts asking carry $8.4K MRR.",
+        "label": "correlation",
+        "entities": {
+          "topic": "workflow_editor",
+          "feature": "workflow_editor",
+          "flag": "new-workflow-editor",
+          "change": "the new-workflow-editor rollout",
+          "date": "2026-08-18"
+        },
+        "metrics": {
+          "questions_per_week_before": 1.62,
+          "questions_per_week_after": 7.0,
+          "ratio": 4.31,
+          "extra_questions": 10.8,
+          "dispersion": 1.0,
+          "week_before": 1,
+          "weekly_after": [
+            8,
+            3,
+            12
+          ],
+          "usage_per_user_before": 3.194,
+          "usage_per_user_after": 3.213,
+          "mrr_cents": 835300,
+          "accounts_asking": 13
+        },
+        "evidence": [
+          {
+            "kind": "metric_query",
+            "ref": "q_4a70709905",
+            "metric": "sql:weekly_questions:workflow_editor:2026-08-18"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_ca7b2ebae9",
+            "metric": "sql:weekly_questions_all:2026-08-18"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_64dc514c3b",
+            "metric": "feature_usage_per_user"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_02fe591d8b",
+            "metric": "feature_usage_per_user"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_bc94fed143",
+            "metric": "sql:feature_users:workflow_editor"
+          }
+        ],
+        "recommendation": {
+          "action": "Read this fortnight's Workflow editor questions against what the new-workflow-editor rollout changed; if the change is behind them, turn the flag down while you fix it; update the Workflow editor help docs. Done when questions are back near 2 a week.",
+          "owner_team": "Product",
+          "target_metric": "Workflow editor questions per week",
+          "baseline": 7.0,
+          "baseline_text": "7.0 questions a week",
+          "target": 1.62,
+          "target_text": "1.6 a week (before the change)",
+          "impact_text": "About 2 hours of the team's time a week, from 13 accounts carrying $8.4K MRR"
+        },
+        "impact_mrr_cents": 835300,
+        "strength": 0.862,
+        "affects": [
+          "support_load",
+          "feature_questions"
+        ],
+        "angles": {
+          "usage": "signal",
+          "revenue": "clear",
+          "cost": "clear",
+          "acquisition": "clear",
+          "team_load": "signal",
+          "knowledge": "clear",
+          "goals": "clear"
+        },
+        "goal_aligned": false,
+        "narrative": "Since the new-workflow-editor rollout on Aug 18, questions about the Workflow editor are up 4.3x while usage has stayed flat. Usage per active user held steady (3.19 to 3.21), but questions rose from 1.6 to 7.0 a week and stayed there for two weeks. The accounts asking carry $8.4K MRR.",
+        "p_value": 0.000621602656882454,
+        "caps": [],
+        "reasoning": [
+          {
+            "check": "Did people use it less?",
+            "supports": true,
+            "result": "No: usage per active user went from 3.19 to 3.21."
+          },
+          {
+            "check": "Is it a short bump after a release?",
+            "supports": true,
+            "result": "No: after the first 5 days it held at 7.0 a week for two weeks, against 1.6 before."
+          },
+          {
+            "check": "Were questions already rising?",
+            "supports": true,
+            "result": "No: the weeks before the change were flat."
+          },
+          {
+            "check": "Does the change touch Workflow editor?",
+            "supports": true,
+            "result": "Yes: the new-workflow-editor rollout names it."
+          },
+          {
+            "check": "Is it a few accounts?",
+            "supports": true,
+            "result": "13 accounts asked about it in the three weeks after the change."
+          }
+        ],
+        "confidence": 0.969,
+        "tier": "auto",
+        "confidence_notes": [
+          "q = 0.031 across 50 candidates tested in releases and reliability"
+        ],
+        "finding_id": "f_7697279dc9",
+        "score": 76.345
+      },
+      {
+        "detector": "campaign_quality",
+        "insight_type": "campaign_quality",
+        "title": "Partner Webinar Series: 3.3x as much to support; too early to say whether they stay",
+        "statement": "Customers from Partner Webinar Series keep 99% of revenue at day 90 (everyone else: 93%) and ask 3.3x as many questions per account-month as accounts on the same plans (0.23 vs 0.07). That's about 31 extra questions, about 10 hours of the team's time, over 6 months. They carry $24.5K MRR.",
+        "label": "fact",
+        "entities": {
+          "campaign": "partner_webinar_series",
+          "campaign_name": "Partner Webinar Series"
+        },
+        "metrics": {
+          "revenue_retention": 0.991,
+          "revenue_retention_others": 0.934,
+          "questions_per_account_month": 0.227,
+          "questions_per_account_month_others": 0.073,
+          "questions_per_account_month_same_plans": 0.069,
+          "load_ratio": 3.3,
+          "load_ratio_unadjusted": 3.11,
+          "accounts": 91,
+          "retention_cohort": 30,
+          "min_retention_cohort": 15,
+          "mrr_cents": 2453684,
+          "retention_days": 90,
+          "p_retention_not_worse": 0.22039992329543873,
+          "retention_claimed": false,
+          "extra_questions": 30.6,
+          "extra_hours": 10.4,
+          "top3_accounts_share": 0.176,
+          "drivers": []
+        },
+        "evidence": [
+          {
+            "kind": "metric_query",
+            "ref": "q_0207c773cb",
+            "metric": "revenue_retention"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_f809d68101",
+            "metric": "questions_per_account_month"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_fa1697a6e0",
+            "metric": "questions_per_account_month"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_2d711d1072",
+            "metric": "sql:campaign_mrr:partner_webinar_series"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_6af941e831",
+            "metric": "sql:topic_mix:campaign:partner_webinar_series"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_6b773b4267",
+            "metric": "sql:top_accounts:campaign:partner_webinar_series"
+          }
+        ],
+        "recommendation": {
+          "action": "Customers from Partner Webinar Series ask more about everything, not one topic: check what the campaign promises against the first questions its accounts ask, before shifting more budget to it.",
+          "owner_team": "Marketing",
+          "target_metric": "questions per account-month",
+          "baseline": 0.227,
+          "baseline_text": "0.23 questions per account-month",
+          "target": 0.069,
+          "target_text": "0.07, the level of other accounts on the same plans",
+          "impact_text": "About 2 hours of the team's time a month above what the same plans need",
+          "drivers": []
+        },
+        "impact_mrr_cents": 2453684,
+        "strength": 0.818,
+        "affects": [
+          "support_load",
+          "revenue_retention",
+          "acquisition"
+        ],
+        "angles": {
+          "usage": "clear",
+          "revenue": "signal",
+          "cost": "signal",
+          "acquisition": "signal",
+          "team_load": "signal",
+          "knowledge": "clear",
+          "goals": "signal"
+        },
+        "goal_aligned": true,
+        "narrative": "Partner Webinar Series customers take 3.3x as much support, and it is too early to say whether they stay. They ask 0.23 questions per account-month against 0.07 for accounts on the same plans, about 31 extra questions or about 10 hours of the team's time over 6 months, across $24.5K MRR. They keep 99% of revenue at day 90 versus 93% for everyone else, so before shifting more budget to the campaign, check what it promises against the first questions its accounts ask.",
+        "p_value": 3.4787733790690676e-05,
+        "caps": [],
+        "reasoning": [
+          {
+            "check": "Is it just the plans this campaign brings?",
+            "supports": true,
+            "result": "No. Against accounts on the same plans they still ask 3.3x as much (3.1x before adjusting for plan)."
+          },
+          {
+            "check": "Do these customers stay?",
+            "supports": false,
+            "result": "Too early to say: 99% vs 93% at day 90 on 30 accounts."
+          },
+          {
+            "check": "Is it a handful of accounts?",
+            "supports": true,
+            "result": "No: the 3 busiest accounts ask 18% of its 51 questions."
+          },
+          {
+            "check": "What do they ask about?",
+            "supports": false,
+            "result": "No topic stands out: they ask more about everything."
+          }
+        ],
+        "confidence": 1.0,
+        "tier": "auto",
+        "confidence_notes": [
+          "q = 0.00021 across 6 candidates tested in acquisition and growth"
+        ],
+        "finding_id": "f_ab29baf6ef",
+        "score": 160.17
+      },
+      {
+        "detector": "campaign_quality",
+        "insight_type": "campaign_quality",
+        "title": "Q3 Retargeting: 2.0x as much to support; too early to say whether they stay",
+        "statement": "Customers from Q3 Retargeting ask 2.0x as many questions per account-month as accounts on the same plans (0.14 vs 0.07). That's about 4 extra questions, about 2 hours of the team's time, over 6 months. They carry $10.2K MRR.",
+        "label": "fact",
+        "entities": {
+          "campaign": "q3_retargeting",
+          "campaign_name": "Q3 Retargeting"
+        },
+        "metrics": {
+          "revenue_retention": null,
+          "revenue_retention_others": 0.938,
+          "questions_per_account_month": 0.14,
+          "questions_per_account_month_others": 0.084,
+          "questions_per_account_month_same_plans": 0.069,
+          "load_ratio": 2.0,
+          "load_ratio_unadjusted": 1.66,
+          "accounts": 69,
+          "retention_cohort": 0,
+          "min_retention_cohort": 15,
+          "mrr_cents": 1020535,
+          "retention_days": 90,
+          "p_retention_not_worse": 1.0,
+          "retention_claimed": false,
+          "extra_questions": 4.1,
+          "extra_hours": 2.5,
+          "top3_accounts_share": 0.5,
+          "drivers": []
+        },
+        "evidence": [
+          {
+            "kind": "metric_query",
+            "ref": "q_0207c773cb",
+            "metric": "revenue_retention"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_f809d68101",
+            "metric": "questions_per_account_month"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_fa1697a6e0",
+            "metric": "questions_per_account_month"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_3272c35eb0",
+            "metric": "sql:campaign_mrr:q3_retargeting"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_41040bf5db",
+            "metric": "sql:topic_mix:campaign:q3_retargeting"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_47effb4522",
+            "metric": "sql:top_accounts:campaign:q3_retargeting"
+          }
+        ],
+        "recommendation": {
+          "action": "Start with the 3 accounts from Q3 Retargeting that ask the most (50% of its questions): find what they're stuck on before changing the campaign.",
+          "owner_team": "Marketing",
+          "target_metric": "questions per account-month",
+          "baseline": 0.14,
+          "baseline_text": "0.14 questions per account-month",
+          "target": 0.069,
+          "target_text": "0.07, the level of other accounts on the same plans",
+          "impact_text": "Under an hour of the team's time a month above what the same plans need",
+          "drivers": []
+        },
+        "impact_mrr_cents": 1020535,
+        "strength": 0.512,
+        "affects": [
+          "support_load",
+          "revenue_retention",
+          "acquisition"
+        ],
+        "angles": {
+          "usage": "clear",
+          "revenue": "signal",
+          "cost": "signal",
+          "acquisition": "signal",
+          "team_load": "signal",
+          "knowledge": "clear",
+          "goals": "signal"
+        },
+        "goal_aligned": true,
+        "narrative": null,
+        "p_value": 0.25388754248108547,
+        "caps": [],
+        "reasoning": [
+          {
+            "check": "Is it just the plans this campaign brings?",
+            "supports": true,
+            "result": "No. Against accounts on the same plans they still ask 2.0x as much (1.7x before adjusting for plan)."
+          },
+          {
+            "check": "Do these customers stay?",
+            "supports": false,
+            "result": "Too early to say: only 0 of its accounts are past day 90, and INVAR needs 15 to compare retention."
+          },
+          {
+            "check": "Is it a handful of accounts?",
+            "supports": false,
+            "result": "Partly: 3 accounts ask 50% of its 10 questions, so look at them first."
+          },
+          {
+            "check": "What do they ask about?",
+            "supports": false,
+            "result": "No topic stands out: they ask more about everything."
+          },
+          {
+            "check": "Anything already explained elsewhere?",
+            "supports": true,
+            "result": "They also ask more about Salesforce sync, which has its own finding."
+          }
+        ],
+        "confidence": 0.238,
+        "tier": "review",
+        "confidence_notes": [
+          "q = 0.76 across 6 candidates tested in acquisition and growth"
+        ],
+        "finding_id": "f_0f1bda0bc9",
+        "score": 15.388
+      },
+      {
+        "detector": "cost_to_serve",
+        "insight_type": "true_cost_to_serve",
+        "title": "Growth plan takes 58% of support time for 21% of revenue",
+        "statement": "The Growth plan brings 21% of MRR ($134.2K) but takes 58% of the team's question-handling time: about 10 hours a month more than its share of revenue. Its accounts ask more about CSV import.",
+        "label": "fact",
+        "entities": {
+          "plan": "growth",
+          "topics": [
+            "csv_import"
+          ]
+        },
+        "metrics": {
+          "handling_share": 0.58,
+          "mrr_share": 0.211,
+          "mrr_cents": 13421001,
+          "handling_minutes": 5608.7,
+          "question_share": 0.523,
+          "account_share": 0.299,
+          "questions_per_account_vs_others": 1.74,
+          "minutes_per_question": 25.5,
+          "minutes_per_question_others": 20.2,
+          "excess_hours_per_month": 9.9,
+          "top3_accounts_share": 0.05,
+          "drivers": [
+            {
+              "topic": "csv_import",
+              "share": 0.241,
+              "share_others": 0.104,
+              "ratio": 2.31,
+              "questions": 53,
+              "p": 0.0058624840537303885
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "kind": "metric_query",
+            "ref": "q_28e177884e",
+            "metric": "mrr"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_02db8d13fb",
+            "metric": "handling_share"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_4bfd099bc4",
+            "metric": "sql:topic_mix:plan:growth"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_ad9511204e",
+            "metric": "sql:top_accounts:plan:growth"
+          }
+        ],
+        "recommendation": {
+          "action": "Add self-serve help for CSV import, where Growth accounts ask far more than other plans; then find why Growth questions take 1.3x as long to handle (25 vs 20 min) and write a runbook for them.",
+          "owner_team": "Customer Success",
+          "target_metric": "Growth share of handling time",
+          "baseline": 0.58,
+          "baseline_text": "58% of handling time",
+          "target": 0.263,
+          "target_text": "26% or less (within 1.25x its revenue)",
+          "impact_text": "About 10 hours of the team's time a month",
+          "drivers": [
+            "csv_import"
+          ]
+        },
+        "impact_mrr_cents": 13421001,
+        "strength": 0.925,
+        "affects": [
+          "support_load",
+          "margin"
+        ],
+        "angles": {
+          "usage": "clear",
+          "revenue": "signal",
+          "cost": "signal",
+          "acquisition": "clear",
+          "team_load": "signal",
+          "knowledge": "clear",
+          "goals": "signal"
+        },
+        "goal_aligned": true,
+        "narrative": "The Growth plan takes far more support time than its share of revenue. It brings in 21% of MRR ($134.2K) but takes 58% of the team's question-handling time, about 10 hours a month more than its share of revenue. Growth accounts ask more about CSV import, so self-serve help there is the clearest place to start.",
+        "p_value": 7.84625134861581e-27,
+        "caps": [],
+        "reasoning": [
+          {
+            "check": "More questions, or longer ones?",
+            "supports": true,
+            "result": "52% of all questions come from its accounts (30% of accounts), and each takes 25 min to handle vs 20 min for other plans."
+          },
+          {
+            "check": "Is it a handful of accounts?",
+            "supports": true,
+            "result": "No: the 3 busiest accounts ask 5% of its 220 questions."
+          },
+          {
+            "check": "What do they ask about?",
+            "supports": true,
+            "result": "More than other plans about CSV import: CSV import 24% of its questions vs 10%."
+          }
+        ],
+        "confidence": 1.0,
+        "tier": "auto",
+        "confidence_notes": [
+          "q = 1.3e-25 across 16 candidates tested in support cost and team knowledge"
+        ],
+        "finding_id": "f_efd9f0bcb1",
+        "score": 423.59
+      },
+      {
+        "detector": "knowledge_risk",
+        "insight_type": "revenue_at_knowledge_risk",
+        "title": "Salesforce sync: revenue depends on 1 person's knowledge; accounts that start setup activate less since the release",
+        "statement": "77% of 35 answered Salesforce sync questions go to 1 person. Accounts using Salesforce sync carry $90.3K MRR. Since Salesforce sync v2 (Jul 14), accounts that start Salesforce sync setup activate at 25%, vs 58% for those that don't (and 64% before the release). 38 questions about it since then. The \"Salesforce sync setup guide\" doc was last reviewed Feb 15, before that release.",
+        "label": "correlation",
+        "entities": {
+          "topic": "salesforce_sync",
+          "answerer": "1 person"
+        },
+        "metrics": {
+          "answered_questions": 35,
+          "top_answerer_share": 0.771,
+          "answerers": 5,
+          "mrr_exposed_cents": 9028144,
+          "accounts_exposed": 377,
+          "release": "Salesforce sync v2",
+          "release_date": "2026-07-14",
+          "activation_started_setup_after": 0.248,
+          "activation_not_started_after": 0.584,
+          "activation_started_setup_before": 0.64,
+          "accounts_started_setup_after": 129,
+          "questions_since_release": 38,
+          "doc_reviewed": "2026-02-15",
+          "second_answerer_share": 0.114,
+          "top_answerer_hours_per_month": 2.4
+        },
+        "evidence": [
+          {
+            "kind": "metric_query",
+            "ref": "q_31125154a0",
+            "metric": "sql:answerer_concentration"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_4733f581f6",
+            "metric": "sql:mrr_exposed:salesforce_sync"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_402c5cdcdb",
+            "metric": "activation_rate",
+            "note": "signups since the release"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_ff96f8f62b",
+            "metric": "activation_rate",
+            "note": "signups before the release"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_cc07fb752d",
+            "metric": "sql:questions_after:salesforce_sync"
+          },
+          {
+            "kind": "context_doc",
+            "ref": "salesforce_sync_setup_guide"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_0fec735f8e",
+            "metric": "sql:answerers:salesforce_sync"
+          }
+        ],
+        "recommendation": {
+          "action": "Fix the Salesforce sync setup step that changed in Salesforce sync v2; update \"Salesforce sync setup guide\" (last reviewed Feb 15); have the person who answers 77% of Salesforce sync questions walk a second person through the next ten, so answers don't depend on one person.",
+          "owner_team": "Engineering",
+          "target_metric": "activation of accounts that start setup",
+          "baseline": 0.248,
+          "baseline_text": "25% activation",
+          "target": 0.64,
+          "target_text": "64% activation (the rate before the release)",
+          "impact_text": "$90.3K MRR from accounts that use Salesforce sync; about 2 hours of one person's time a month"
+        },
+        "impact_mrr_cents": 9028144,
+        "strength": 1.0,
+        "affects": [
+          "support_load",
+          "knowledge",
+          "activation"
+        ],
+        "angles": {
+          "usage": "signal",
+          "revenue": "signal",
+          "cost": "clear",
+          "acquisition": "clear",
+          "team_load": "signal",
+          "knowledge": "signal",
+          "goals": "signal"
+        },
+        "goal_aligned": true,
+        "narrative": "Answers about Salesforce sync rest with 1 person, and since the Salesforce sync v2 release, accounts that start its setup activate at a lower rate. Since Jul 14, accounts that start Salesforce sync setup activate at 25%, vs 58% for those that don't (and 64% before the release). That period also brought 38 questions about it, while the \"Salesforce sync setup guide\" was last reviewed Feb 15, before the release. 77% of 35 answered Salesforce sync questions go to 1 person, and accounts using Salesforce sync carry $90.3K MRR.",
+        "p_value": 0.0009391127387061678,
+        "caps": [],
+        "reasoning": [
+          {
+            "check": "Is there a backup?",
+            "supports": true,
+            "result": "Not really: the next person answers 11% of them."
+          },
+          {
+            "check": "How much of that person's time is it?",
+            "supports": true,
+            "result": "About 2 hours a month answering Salesforce sync questions."
+          },
+          {
+            "check": "Is it setup, or did activation fall for everyone?",
+            "supports": true,
+            "result": "Setup: since the release, accounts that start Salesforce sync setup activate at 25% vs 58% for those that don't, and 64% for those that started it before the release."
+          },
+          {
+            "check": "Is the help doc current?",
+            "supports": true,
+            "result": "No: \"Salesforce sync setup guide\" was last reviewed Feb 15, before the release."
+          }
+        ],
+        "confidence": 0.995,
+        "tier": "auto",
+        "confidence_notes": [
+          "q = 0.005 across 16 candidates tested in support cost and team knowledge"
+        ],
+        "finding_id": "f_e8eeec614c",
+        "score": 373.71
+      },
+      {
+        "detector": "cost_to_serve",
+        "insight_type": "true_cost_to_serve",
+        "title": "Starter plan takes 11% of support time for 6% of revenue",
+        "statement": "The Starter plan brings 6% of MRR ($36.9K) but takes 11% of the team's question-handling time: about 1 hour a month more than its share of revenue.",
+        "label": "fact",
+        "entities": {
+          "plan": "starter",
+          "topics": []
+        },
+        "metrics": {
+          "handling_share": 0.112,
+          "mrr_share": 0.058,
+          "mrr_cents": 3692668,
+          "handling_minutes": 1077.8,
+          "question_share": 0.131,
+          "account_share": 0.438,
+          "questions_per_account_vs_others": 0.3,
+          "minutes_per_question": 19.6,
+          "minutes_per_question_others": 23.5,
+          "excess_hours_per_month": 1.4,
+          "top3_accounts_share": 0.073,
+          "drivers": []
+        },
+        "evidence": [
+          {
+            "kind": "metric_query",
+            "ref": "q_28e177884e",
+            "metric": "mrr"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_02db8d13fb",
+            "metric": "handling_share"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_49a5f62492",
+            "metric": "sql:topic_mix:plan:starter"
+          },
+          {
+            "kind": "metric_query",
+            "ref": "q_5ee5464d5c",
+            "metric": "sql:top_accounts:plan:starter"
+          }
+        ],
+        "recommendation": {
+          "action": "Review what the Starter plan includes or its price: its accounts simply ask more than its revenue covers.",
+          "owner_team": "Customer Success",
+          "target_metric": "Starter share of handling time",
+          "baseline": 0.112,
+          "baseline_text": "11% of handling time",
+          "target": 0.072,
+          "target_text": "7% or less (within 1.25x its revenue)",
+          "impact_text": "About 1 hour of the team's time a month",
+          "drivers": []
+        },
+        "impact_mrr_cents": 3692668,
+        "strength": 0.134,
+        "affects": [
+          "support_load",
+          "margin"
+        ],
+        "angles": {
+          "usage": "clear",
+          "revenue": "signal",
+          "cost": "signal",
+          "acquisition": "clear",
+          "team_load": "signal",
+          "knowledge": "clear",
+          "goals": "signal"
+        },
+        "goal_aligned": true,
+        "narrative": "The Starter plan takes nearly twice its share of support time compared with its share of revenue. It brings in 6% of MRR ($36.9K) but uses 11% of the team's question-handling time, about 1 hour a month more than its revenue share. Review what the plan includes or what it costs, since its accounts ask more than their revenue covers.",
+        "p_value": 0.4223844525366801,
+        "caps": [],
+        "reasoning": [
+          {
+            "check": "More questions, or longer ones?",
+            "supports": true,
+            "result": "13% of all questions come from its accounts (44% of accounts), and each takes 20 min to handle vs 23 min for other plans."
+          },
+          {
+            "check": "Is it a handful of accounts?",
+            "supports": true,
+            "result": "No: the 3 busiest accounts ask 7% of its 55 questions."
+          },
+          {
+            "check": "What do they ask about?",
+            "supports": false,
+            "result": "Nothing in particular: its question mix looks like other plans'."
+          },
+          {
+            "check": "Anything already explained elsewhere?",
+            "supports": true,
+            "result": "Its accounts also ask more about Salesforce sync, which has its own finding."
+          }
+        ],
+        "confidence": 0.0,
+        "tier": "review",
+        "confidence_notes": [
+          "q = 1 across 16 candidates tested in support cost and team knowledge"
+        ],
+        "finding_id": "f_555a29b94a",
+        "score": 0.0
+      }
+    ],
+    "narrative": {
+      "written": 7,
+      "kept": 6,
+      "rejected": {
+        "numbers": 1
+      }
+    },
+    "grade": {
+      "findings": [
+        {
+          "plant": "P3",
+          "type": "true_cost_to_serve",
+          "title": "Growth plan takes 58% of support time for 21% of revenue",
+          "action": "Add self-serve help for CSV import, where Growth accounts ask far more than other plans; then find why Growth questions take 1.3x as long to handle (25 vs 20 min) and write a runbook for them.",
+          "right_cause": true,
+          "cause_note": "names ['csv_import'] of planted ['csv_import', 'custom_fields']",
+          "measurable": true,
+          "generic": [],
+          "checks": 3,
+          "owner": "Customer Success"
+        },
+        {
+          "plant": "P1",
+          "type": "revenue_at_knowledge_risk",
+          "title": "Salesforce sync: revenue depends on 1 person's knowledge; accounts that start setup activate less since the release",
+          "action": "Fix the Salesforce sync setup step that changed in Salesforce sync v2; update \"Salesforce sync setup guide\" (last reviewed Feb 15); have the person who answers 77% of Salesforce sync questions walk a second person through the next ten, so answers don't depend on one person.",
+          "right_cause": true,
+          "cause_note": "names Salesforce sync, setup guide",
+          "measurable": true,
+          "generic": [],
+          "checks": 4,
+          "owner": "Engineering"
+        },
+        {
+          "plant": "P5",
+          "type": "context_contradiction",
+          "title": "\"Pricing and packaging\" disagrees with Stripe on the Growth plan",
+          "action": "Decide which Growth terms are right (seats included: doc says 10, Stripe has 5; annual discount: doc says 20%, Stripe has 15%). If Stripe is, correct \"Pricing and packaging\" (Head of Sales); if the doc is, change the Growth price in Stripe. Until then, quote Growth from Stripe.",
+          "right_cause": true,
+          "cause_note": "names Growth",
+          "measurable": true,
+          "generic": [],
+          "checks": 3,
+          "owner": "Head of Sales"
+        },
+        {
+          "plant": "P2",
+          "type": "campaign_quality",
+          "title": "Partner Webinar Series: 3.3x as much to support; too early to say whether they stay",
+          "action": "Customers from Partner Webinar Series ask more about everything, not one topic: check what the campaign promises against the first questions its accounts ask, before shifting more budget to it.",
+          "right_cause": true,
+          "cause_note": "rightly names no single topic",
+          "measurable": true,
+          "generic": [],
+          "checks": 4,
+          "owner": "Marketing"
+        },
+        {
+          "plant": "P4",
+          "type": "silent_regression",
+          "title": "Workflow editor: questions up 4.3x after a change, usage flat",
+          "action": "Read this fortnight's Workflow editor questions against what the new-workflow-editor rollout changed; if the change is behind them, turn the flag down while you fix it; update the Workflow editor help docs. Done when questions are back near 2 a week.",
+          "right_cause": true,
+          "cause_note": "names new-workflow-editor",
+          "measurable": true,
+          "generic": [],
+          "checks": 5,
+          "owner": "Product"
+        }
+      ],
+      "trap": null
+    },
+    "found": {
+      "P5": {
+        "rank": 1,
+        "title": "\"Pricing and packaging\" disagrees with Stripe on the Growth plan"
+      },
+      "P4": {
+        "rank": 2,
+        "title": "Workflow editor: questions up 4.3x after a change, usage flat"
+      },
+      "P2": {
+        "rank": 3,
+        "title": "Partner Webinar Series: 3.3x as much to support; too early to say whether they stay"
+      },
+      "P3": {
+        "rank": 5,
+        "title": "Growth plan takes 58% of support time for 21% of revenue"
+      },
+      "P1": {
+        "rank": 6,
+        "title": "Salesforce sync: revenue depends on 1 person's knowledge; accounts that start setup activate less since the release"
+      }
+    },
+    "false_findings": 0,
+    "unmatched": [],
+    "distractor_hits": []
+  },
+  "answer_key": {
+    "plants": [
+      {
+        "id": "P1",
+        "type": "revenue_at_knowledge_risk",
+        "also": [
+          "activation_drop_cause",
+          "confusion_vs_failure"
+        ],
+        "entities": {
+          "topic": "salesforce_sync",
+          "feature": "salesforce_sync",
+          "release": "Salesforce sync v2"
+        },
+        "direction": "activation_down_and_single_answerer",
+        "expected_finding": "Accounts that start Salesforce sync setup after Salesforce sync v2 activate far less; the topic's questions depend on 1 person.",
+        "requires_sources": [
+          "posthog",
+          "askright",
+          "stripe"
+        ],
+        "prompted_question": "Why did new-account activation drop after the start of Q3?",
+        "prompted_spec": {
+          "metric": "activation",
+          "period_start": "2026-07-01",
+          "entity": null
+        },
+        "realized": {
+          "activation_tried_after_release": 0.254,
+          "activation_tried_before_release": 0.632,
+          "activation_not_tried_after_release": 0.593,
+          "activation_all_before_release": 0.599,
+          "activation_all_after_release": 0.485,
+          "n_tried_after_release": 138,
+          "topic_questions_after_release": 38,
+          "topic_questions_from_cs_after_release": 33,
+          "top_answerer_share_after_release": 0.788,
+          "single_answerer_is": "1 person",
+          "mrr_linked_accounts_cents": 1122418,
+          "mrr_integration_users_cents": 21405288
+        },
+        "_private": {
+          "expert_id": "emp_006"
+        },
+        "status": {
+          "material": true,
+          "visible": true
+        }
+      },
+      {
+        "id": "P2",
+        "type": "campaign_quality",
+        "entities": {
+          "campaign": "partner_webinar_series",
+          "campaign_name": "Partner Webinar Series"
+        },
+        "direction": "retention_ok_support_load_high",
+        "expected_finding": "Partner Webinar Series customers retain well but generate several times more questions per account.",
+        "requires_sources": [
+          "hubspot",
+          "stripe",
+          "askright"
+        ],
+        "prompted_spec": {
+          "metric": "revenue_retention",
+          "period_start": null,
+          "entity": null
+        },
+        "prompted_question": "Which acquisition sources bring customers still paying at day 90?",
+        "realized": {
+          "day90_rr_campaign": 0.992,
+          "day90_rr_others": 0.917,
+          "n_campaign_accounts_day90": 35,
+          "questions_per_account_month_campaign": 0.2211,
+          "questions_per_account_month_others": 0.0713,
+          "n_campaign_accounts": 113
+        },
+        "status": {
+          "material": true,
+          "visible": true
+        }
+      },
+      {
+        "id": "P3",
+        "type": "true_cost_to_serve",
+        "entities": {
+          "plan": "growth",
+          "topics": [
+            "csv_import",
+            "custom_fields"
+          ]
+        },
+        "direction": "support_share_exceeds_revenue_share",
+        "expected_finding": "The Growth plan takes a far larger share of support time than of revenue.",
+        "requires_sources": [
+          "stripe",
+          "askright"
+        ],
+        "prompted_spec": {
+          "metric": "support_load",
+          "period_start": null,
+          "entity": "Growth"
+        },
+        "prompted_question": "Is the Growth plan profitable to serve?",
+        "realized": {
+          "mrr_share": 0.211,
+          "handling_share": 0.587,
+          "handling_share_by_plan": {
+            "enterprise": 0.124,
+            "growth": 0.587,
+            "scale": 0.167,
+            "starter": 0.122
+          },
+          "mrr_share_by_plan": {
+            "enterprise": 0.367,
+            "growth": 0.211,
+            "scale": 0.365,
+            "starter": 0.058
+          },
+          "top_topics": {
+            "csv_import": 57,
+            "custom_fields": 44,
+            "workflow_editor": 32
+          }
+        },
+        "status": {
+          "material": true,
+          "visible": true
+        }
+      },
+      {
+        "id": "P4",
+        "type": "silent_regression",
+        "entities": {
+          "flag": "new-workflow-editor",
+          "feature": "workflow_editor",
+          "topic": "workflow_editor"
+        },
+        "date": "2026-08-18",
+        "direction": "usage_flat_questions_up",
+        "expected_finding": "Rolling out new-workflow-editor left Workflow editor usage flat but multiplied internal questions about it.",
+        "requires_sources": [
+          "posthog",
+          "askright"
+        ],
+        "prompted_spec": {
+          "metric": "feature_questions",
+          "period_start": "2026-08-01",
+          "entity": "Workflow editor"
+        },
+        "prompted_question": "Did anything change for Workflow editor in August?",
+        "realized": {
+          "feature_events_per_active_user_pre": 3.194,
+          "feature_events_per_active_user_post": 3.213,
+          "wau_pre": 5594,
+          "wau_post": 5652,
+          "questions_per_week_before_rollout": 2.01,
+          "questions_per_week_during_spike": 7.67
+        },
+        "status": {
+          "material": true,
+          "visible": true
+        }
+      },
+      {
+        "id": "P5",
+        "type": "context_contradiction",
+        "entities": {
+          "plan": "growth",
+          "doc": "pricing_and_packaging",
+          "fields": [
+            "seats_included",
+            "annual_discount_pct"
+          ]
+        },
+        "direction": "doc_disagrees_with_stripe",
+        "expected_finding": "The pricing doc disagrees with Stripe on the Growth plan.",
+        "requires_sources": [
+          "context",
+          "stripe"
+        ],
+        "prompted_spec": {
+          "metric": "pricing",
+          "period_start": null,
+          "entity": null
+        },
+        "prompted_question": "Does our pricing documentation match what we bill?",
+        "realized": {
+          "seats_included": {
+            "doc": 10,
+            "stripe": 5
+          },
+          "annual_discount_pct": {
+            "doc": 20,
+            "stripe": 15
+          }
+        },
+        "status": {
+          "material": true,
+          "visible": true
+        }
+      }
+    ],
+    "distractors": [
+      {
+        "id": "D1",
+        "type": "seasonality",
+        "must_not_report": {
+          "cause": "signup volume dip",
+          "month": 8
+        },
+        "note": "Signup volume dips in the summer month; activation *rate* is unaffected.",
+        "realized": {
+          "signups_by_month": {
+            "4": 207,
+            "5": 253,
+            "6": 229,
+            "7": 236,
+            "8": 152,
+            "9": 223
+          }
+        }
+      },
+      {
+        "id": "D2",
+        "type": "small_cohort",
+        "must_not_report": {
+          "campaign": "founder_podcast_tour"
+        },
+        "note": "Tiny campaign with noisy retention; fails a minimum-cohort control.",
+        "realized": {
+          "n_accounts": 7,
+          "n_day90": 3,
+          "day90_rr": 1.0
+        }
+      },
+      {
+        "id": "D3",
+        "type": "plan_mix",
+        "must_not_report": {
+          "cause": "plan mix shift as the main activation driver"
+        },
+        "note": "More Starter signups in Q3 explain a small part of the activation change.",
+        "realized": {
+          "starter_share_before": 0.444,
+          "starter_share_after": 0.592
+        }
+      },
+      {
+        "id": "D4",
+        "type": "transient_release",
+        "must_not_report": {
+          "release": "CSV import v2",
+          "topic": "csv_import"
+        },
+        "note": "A release bumps questions for a few days, then recovers. Not a regression.",
+        "realized": {
+          "questions_in_bump": 7,
+          "questions_next_3_weeks": 10
+        }
+      },
+      {
+        "id": "D5",
+        "type": "busy_but_healthy_topic",
+        "must_not_report": {
+          "topic": "billing_invoices",
+          "as": "knowledge risk"
+        },
+        "note": "High volume, documented, many answerers.",
+        "realized": {
+          "questions": 88,
+          "top_answerer_share": 0.256,
+          "answerers": 6
+        }
+      }
+    ]
+  }
+}

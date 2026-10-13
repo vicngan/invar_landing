@@ -1,0 +1,803 @@
+## Stripe: MRR and customers by plan, now
+plan,mrr_usd,customers
+enterprise,233760.0,113
+scale,232254.0,243
+growth,134210.01,400
+starter,36926.68,483
+
+
+## HubSpot: new signups by campaign and month
+campaign,month,signups
+CS Leaders Newsletter,2026-04,16
+CS Leaders Newsletter,2026-05,17
+CS Leaders Newsletter,2026-06,8
+CS Leaders Newsletter,2026-07,16
+CS Leaders Newsletter,2026-08,9
+CS Leaders Newsletter,2026-09,12
+Founder Podcast Tour,2026-05,3
+Founder Podcast Tour,2026-06,2
+G2 Review Push,2026-04,17
+G2 Review Push,2026-05,22
+G2 Review Push,2026-06,19
+G2 Review Push,2026-07,15
+G2 Review Push,2026-08,16
+G2 Review Push,2026-09,21
+LinkedIn: Onboarding Playbook,2026-04,13
+LinkedIn: Onboarding Playbook,2026-05,27
+LinkedIn: Onboarding Playbook,2026-06,13
+LinkedIn: Onboarding Playbook,2026-07,31
+LinkedIn: Onboarding Playbook,2026-08,17
+LinkedIn: Onboarding Playbook,2026-09,38
+Partner Webinar Series,2026-04,17
+Partner Webinar Series,2026-05,24
+Partner Webinar Series,2026-06,18
+Partner Webinar Series,2026-07,20
+Partner Webinar Series,2026-08,12
+Q2 Paid Search,2026-04,19
+Q2 Paid Search,2026-05,22
+Q2 Paid Search,2026-06,21
+Q3 Retargeting,2026-07,21
+Q3 Retargeting,2026-08,12
+Q3 Retargeting,2026-09,36
+Summer Launch Week,2026-06,9
+
+
+## AskRight: internal questions by topic and week
+week,topic,questions
+2026-03-30,billing_invoices,2
+2026-03-30,csv_import,1
+2026-03-30,custom_fields,2
+2026-03-30,onboarding_process,1
+2026-03-30,workflow_editor,1
+2026-04-06,csv_import,2
+2026-04-06,custom_fields,1
+2026-04-06,hubspot_sync,1
+2026-04-06,onboarding_process,3
+2026-04-06,pricing_plans,1
+2026-04-06,reporting,2
+2026-04-06,workflow_editor,2
+2026-04-13,billing_invoices,3
+2026-04-13,csv_import,3
+2026-04-13,custom_fields,3
+2026-04-13,hubspot_sync,1
+2026-04-13,onboarding_process,1
+2026-04-13,pricing_plans,1
+2026-04-13,reporting,1
+2026-04-13,sso_permissions,1
+2026-04-13,workflow_editor,1
+2026-04-20,api_webhooks,1
+2026-04-20,checklist_builder,3
+2026-04-20,csv_import,1
+2026-04-20,custom_fields,3
+2026-04-20,onboarding_process,3
+2026-04-20,reporting,2
+2026-04-20,slack_alerts,1
+2026-04-20,sso_permissions,2
+2026-04-20,workflow_editor,4
+2026-04-27,billing_invoices,2
+2026-04-27,csv_import,2
+2026-04-27,custom_fields,2
+2026-04-27,hubspot_sync,1
+2026-04-27,onboarding_process,3
+2026-04-27,pricing_plans,3
+2026-04-27,reporting,3
+2026-04-27,sso_permissions,1
+2026-04-27,workflow_editor,3
+2026-05-04,api_webhooks,1
+2026-05-04,billing_invoices,2
+2026-05-04,checklist_builder,2
+2026-05-04,csv_import,2
+2026-05-04,custom_fields,3
+2026-05-04,hubspot_sync,1
+2026-05-04,onboarding_process,2
+2026-05-04,pricing_plans,1
+2026-05-04,reporting,1
+2026-05-04,workflow_editor,5
+2026-05-11,billing_invoices,4
+2026-05-11,checklist_builder,1
+2026-05-11,csv_import,1
+2026-05-11,custom_fields,2
+2026-05-11,onboarding_process,1
+2026-05-11,reporting,2
+2026-05-11,workflow_editor,3
+2026-05-18,api_webhooks,2
+2026-05-18,billing_invoices,3
+2026-05-18,csv_import,2
+2026-05-18,custom_fields,2
+2026-05-18,pricing_plans,2
+2026-05-18,reporting,2
+2026-05-18,sso_permissions,3
+2026-05-18,workflow_editor,2
+2026-05-25,api_webhooks,2
+2026-05-25,billing_invoices,6
+2026-05-25,csv_import,6
+2026-05-25,custom_fields,2
+2026-05-25,onboarding_process,2
+2026-05-25,pricing_plans,1
+2026-05-25,reporting,1
+2026-06-01,api_webhooks,2
+2026-06-01,billing_invoices,3
+2026-06-01,csv_import,7
+2026-06-01,custom_fields,2
+2026-06-01,hubspot_sync,1
+2026-06-01,pricing_plans,1
+2026-06-01,reporting,1
+2026-06-01,workflow_editor,3
+2026-06-08,api_webhooks,1
+2026-06-08,billing_invoices,2
+2026-06-08,checklist_builder,4
+2026-06-08,csv_import,5
+2026-06-08,custom_fields,2
+2026-06-08,onboarding_process,5
+2026-06-08,pricing_plans,1
+2026-06-08,reporting,2
+2026-06-08,sso_permissions,2
+2026-06-08,workflow_editor,1
+2026-06-15,billing_invoices,5
+2026-06-15,checklist_builder,2
+2026-06-15,csv_import,4
+2026-06-15,custom_fields,1
+2026-06-15,pricing_plans,3
+2026-06-15,reporting,3
+2026-06-15,sso_permissions,1
+2026-06-15,workflow_editor,1
+2026-06-22,api_webhooks,1
+2026-06-22,billing_invoices,3
+2026-06-22,checklist_builder,1
+2026-06-22,csv_import,1
+2026-06-22,custom_fields,2
+2026-06-22,onboarding_process,1
+2026-06-22,pricing_plans,6
+2026-06-22,reporting,1
+2026-06-22,sso_permissions,1
+2026-06-22,workflow_editor,3
+2026-06-29,api_webhooks,3
+2026-06-29,billing_invoices,4
+2026-06-29,checklist_builder,2
+2026-06-29,csv_import,1
+2026-06-29,custom_fields,2
+2026-06-29,onboarding_process,2
+2026-06-29,reporting,2
+2026-06-29,sso_permissions,1
+2026-06-29,workflow_editor,1
+2026-07-06,billing_invoices,2
+2026-07-06,checklist_builder,2
+2026-07-06,csv_import,6
+2026-07-06,custom_fields,3
+2026-07-06,pricing_plans,3
+2026-07-06,reporting,4
+2026-07-06,salesforce_sync,1
+2026-07-06,workflow_editor,1
+2026-07-13,billing_invoices,3
+2026-07-13,checklist_builder,3
+2026-07-13,csv_import,1
+2026-07-13,custom_fields,6
+2026-07-13,pricing_plans,1
+2026-07-13,reporting,1
+2026-07-13,salesforce_sync,1
+2026-07-13,workflow_editor,1
+2026-07-20,api_webhooks,1
+2026-07-20,billing_invoices,2
+2026-07-20,csv_import,4
+2026-07-20,custom_fields,5
+2026-07-20,onboarding_process,4
+2026-07-20,pricing_plans,2
+2026-07-20,salesforce_sync,1
+2026-07-20,sso_permissions,5
+2026-07-27,api_webhooks,3
+2026-07-27,billing_invoices,7
+2026-07-27,csv_import,2
+2026-07-27,custom_fields,4
+2026-07-27,onboarding_process,2
+2026-07-27,pricing_plans,3
+2026-07-27,reporting,1
+2026-07-27,salesforce_sync,1
+2026-07-27,sso_permissions,1
+2026-07-27,workflow_editor,5
+2026-08-03,api_webhooks,1
+2026-08-03,billing_invoices,7
+2026-08-03,csv_import,8
+2026-08-03,custom_fields,1
+2026-08-03,onboarding_process,3
+2026-08-03,pricing_plans,3
+2026-08-03,reporting,3
+2026-08-03,salesforce_sync,9
+2026-08-03,workflow_editor,2
+2026-08-10,api_webhooks,3
+2026-08-10,billing_invoices,4
+2026-08-10,checklist_builder,2
+2026-08-10,csv_import,2
+2026-08-10,custom_fields,3
+2026-08-10,hubspot_sync,1
+2026-08-10,onboarding_process,2
+2026-08-10,pricing_plans,4
+2026-08-10,reporting,2
+2026-08-10,salesforce_sync,7
+2026-08-10,sso_permissions,1
+2026-08-10,workflow_editor,1
+2026-08-17,billing_invoices,5
+2026-08-17,checklist_builder,2
+2026-08-17,csv_import,4
+2026-08-17,custom_fields,5
+2026-08-17,onboarding_process,2
+2026-08-17,pricing_plans,1
+2026-08-17,reporting,2
+2026-08-17,salesforce_sync,1
+2026-08-17,sso_permissions,2
+2026-08-17,workflow_editor,4
+2026-08-24,api_webhooks,1
+2026-08-24,billing_invoices,1
+2026-08-24,checklist_builder,1
+2026-08-24,csv_import,4
+2026-08-24,custom_fields,3
+2026-08-24,onboarding_process,2
+2026-08-24,pricing_plans,2
+2026-08-24,reporting,1
+2026-08-24,salesforce_sync,3
+2026-08-24,sso_permissions,1
+2026-08-24,workflow_editor,6
+2026-08-31,api_webhooks,1
+2026-08-31,billing_invoices,3
+2026-08-31,checklist_builder,1
+2026-08-31,csv_import,6
+2026-08-31,custom_fields,1
+2026-08-31,onboarding_process,6
+2026-08-31,pricing_plans,1
+2026-08-31,reporting,3
+2026-08-31,salesforce_sync,2
+2026-08-31,workflow_editor,8
+2026-09-07,checklist_builder,3
+2026-09-07,csv_import,4
+2026-09-07,custom_fields,7
+2026-09-07,hubspot_sync,1
+2026-09-07,pricing_plans,1
+2026-09-07,reporting,1
+2026-09-07,salesforce_sync,3
+2026-09-07,workflow_editor,5
+2026-09-14,billing_invoices,3
+2026-09-14,checklist_builder,2
+2026-09-14,csv_import,4
+2026-09-14,custom_fields,4
+2026-09-14,onboarding_process,2
+2026-09-14,pricing_plans,4
+2026-09-14,reporting,4
+2026-09-14,salesforce_sync,2
+2026-09-14,workflow_editor,4
+2026-09-21,billing_invoices,7
+2026-09-21,custom_fields,1
+2026-09-21,onboarding_process,3
+2026-09-21,pricing_plans,2
+2026-09-21,reporting,2
+2026-09-21,salesforce_sync,4
+2026-09-21,sso_permissions,1
+2026-09-21,workflow_editor,1
+2026-09-28,api_webhooks,2
+2026-09-28,billing_invoices,5
+2026-09-28,onboarding_process,3
+2026-09-28,reporting,2
+2026-09-28,salesforce_sync,5
+2026-09-28,sso_permissions,1
+2026-09-28,workflow_editor,3
+
+
+## AskRight: handling time and answerers by topic
+topic,questions,minutes,top_answerer_share,answerers
+billing_invoices,88,961.0,0.2558139534883721,6
+csv_import,83,2973.0,0.37037037037037035,4
+custom_fields,72,1835.0,0.29411764705882354,4
+workflow_editor,71,1233.0,0.4925373134328358,4
+onboarding_process,53,719.0,0.40816326530612246,5
+reporting,49,827.0,0.425531914893617,5
+pricing_plans,47,478.0,0.4444444444444444,4
+salesforce_sync,40,1364.0,0.7714285714285715,5
+checklist_builder,31,401.0,0.5,4
+api_webhooks,25,775.0,0.34782608695652173,4
+sso_permissions,24,723.0,0.45454545454545453,4
+hubspot_sync,7,230.0,0.2857142857142857,4
+slack_alerts,1,12.0,1.0,1
+
+
+## PostHog: feature events by week
+week,event,events,users
+2026-03-30,checklist_builder_opened,1224,920
+2026-03-30,checklist_created,929,757
+2026-03-30,checklist_launched,427,386
+2026-03-30,checklist_viewed,3548,1667
+2026-03-30,csv_import_completed,487,434
+2026-03-30,csv_import_started,602,514
+2026-03-30,custom_field_created,430,383
+2026-03-30,integration_connected,9,7
+2026-03-30,integration_setup_started,29,19
+2026-03-30,report_viewed,2141,1331
+2026-03-30,signed_up,32,32
+2026-03-30,task_completed,2765,1508
+2026-03-30,teammate_invited,294,274
+2026-03-30,workflow_editor_opened,1854,1192
+2026-03-30,workflow_saved,926,728
+2026-04-06,checklist_builder_opened,1770,1242
+2026-04-06,checklist_created,1414,1086
+2026-04-06,checklist_launched,679,590
+2026-04-06,checklist_viewed,5497,2269
+2026-04-06,csv_import_completed,684,606
+2026-04-06,csv_import_started,889,737
+2026-04-06,custom_field_created,663,576
+2026-04-06,integration_connected,36,32
+2026-04-06,integration_setup_started,52,43
+2026-04-06,report_viewed,3018,1735
+2026-04-06,signed_up,48,48
+2026-04-06,task_completed,4133,2011
+2026-04-06,teammate_invited,440,401
+2026-04-06,workflow_editor_opened,2730,1637
+2026-04-06,workflow_saved,1357,1038
+2026-04-13,checklist_builder_opened,1872,1325
+2026-04-13,checklist_created,1349,1061
+2026-04-13,checklist_launched,647,584
+2026-04-13,checklist_viewed,5350,2265
+2026-04-13,csv_import_completed,674,600
+2026-04-13,csv_import_started,911,756
+2026-04-13,custom_field_created,736,629
+2026-04-13,integration_connected,35,26
+2026-04-13,integration_setup_started,41,30
+2026-04-13,report_viewed,3193,1831
+2026-04-13,signed_up,36,36
+2026-04-13,task_completed,4114,2094
+2026-04-13,teammate_invited,460,412
+2026-04-13,workflow_editor_opened,2781,1680
+2026-04-13,workflow_saved,1365,1037
+2026-04-20,checklist_builder_opened,1943,1359
+2026-04-20,checklist_created,1535,1148
+2026-04-20,checklist_launched,717,620
+2026-04-20,checklist_viewed,5854,2435
+2026-04-20,csv_import_completed,741,638
+2026-04-20,csv_import_started,939,767
+2026-04-20,custom_field_created,721,609
+2026-04-20,integration_connected,18,16
+2026-04-20,integration_setup_started,31,25
+2026-04-20,report_viewed,3483,1961
+2026-04-20,signed_up,50,50
+2026-04-20,task_completed,4255,2138
+2026-04-20,teammate_invited,497,456
+2026-04-20,workflow_editor_opened,2885,1755
+2026-04-20,workflow_saved,1462,1094
+2026-04-27,checklist_builder_opened,1929,1364
+2026-04-27,checklist_created,1553,1209
+2026-04-27,checklist_launched,769,667
+2026-04-27,checklist_viewed,5947,2510
+2026-04-27,csv_import_completed,721,615
+2026-04-27,csv_import_started,952,800
+2026-04-27,custom_field_created,744,655
+2026-04-27,integration_connected,33,29
+2026-04-27,integration_setup_started,52,40
+2026-04-27,report_viewed,3445,1972
+2026-04-27,signed_up,60,60
+2026-04-27,task_completed,4394,2192
+2026-04-27,teammate_invited,495,448
+2026-04-27,workflow_editor_opened,2989,1778
+2026-04-27,workflow_saved,1492,1146
+2026-05-04,checklist_builder_opened,1975,1416
+2026-05-04,checklist_created,1565,1210
+2026-05-04,checklist_launched,750,666
+2026-05-04,checklist_viewed,6235,2616
+2026-05-04,csv_import_completed,787,679
+2026-05-04,csv_import_started,1106,913
+2026-05-04,custom_field_created,757,664
+2026-05-04,integration_connected,49,44
+2026-05-04,integration_setup_started,69,56
+2026-05-04,report_viewed,3682,2080
+2026-05-04,signed_up,57,57
+2026-05-04,task_completed,4642,2300
+2026-05-04,teammate_invited,527,478
+2026-05-04,workflow_editor_opened,3133,1895
+2026-05-04,workflow_saved,1584,1185
+2026-05-11,checklist_builder_opened,2090,1491
+2026-05-11,checklist_created,1690,1274
+2026-05-11,checklist_launched,781,667
+2026-05-11,checklist_viewed,6300,2693
+2026-05-11,csv_import_completed,820,715
+2026-05-11,csv_import_started,1070,887
+2026-05-11,custom_field_created,774,663
+2026-05-11,integration_connected,46,40
+2026-05-11,integration_setup_started,60,46
+2026-05-11,report_viewed,3619,2098
+2026-05-11,signed_up,63,63
+2026-05-11,task_completed,4790,2390
+2026-05-11,teammate_invited,536,480
+2026-05-11,workflow_editor_opened,3223,1973
+2026-05-11,workflow_saved,1586,1218
+2026-05-18,checklist_builder_opened,2228,1569
+2026-05-18,checklist_created,1682,1281
+2026-05-18,checklist_launched,827,705
+2026-05-18,checklist_viewed,6891,2817
+2026-05-18,csv_import_completed,833,705
+2026-05-18,csv_import_started,1103,918
+2026-05-18,custom_field_created,863,732
+2026-05-18,integration_connected,34,30
+2026-05-18,integration_setup_started,51,40
+2026-05-18,report_viewed,3824,2173
+2026-05-18,signed_up,49,49
+2026-05-18,task_completed,4929,2442
+2026-05-18,teammate_invited,540,489
+2026-05-18,workflow_editor_opened,3308,2002
+2026-05-18,workflow_saved,1746,1312
+2026-05-25,checklist_builder_opened,2253,1543
+2026-05-25,checklist_created,1766,1353
+2026-05-25,checklist_launched,849,735
+2026-05-25,checklist_viewed,6760,2831
+2026-05-25,csv_import_completed,818,715
+2026-05-25,csv_import_started,1090,898
+2026-05-25,custom_field_created,801,699
+2026-05-25,integration_connected,47,36
+2026-05-25,integration_setup_started,71,49
+2026-05-25,report_viewed,3863,2199
+2026-05-25,signed_up,65,65
+2026-05-25,task_completed,5071,2491
+2026-05-25,teammate_invited,559,503
+2026-05-25,workflow_editor_opened,3374,2071
+2026-05-25,workflow_saved,1733,1311
+2026-06-01,checklist_builder_opened,2290,1633
+2026-06-01,checklist_created,1808,1382
+2026-06-01,checklist_launched,919,796
+2026-06-01,checklist_viewed,6976,2906
+2026-06-01,csv_import_completed,784,686
+2026-06-01,csv_import_started,1158,967
+2026-06-01,custom_field_created,845,733
+2026-06-01,integration_connected,47,38
+2026-06-01,integration_setup_started,61,44
+2026-06-01,report_viewed,4054,2294
+2026-06-01,signed_up,58,58
+2026-06-01,task_completed,5209,2581
+2026-06-01,teammate_invited,582,520
+2026-06-01,workflow_editor_opened,3463,2117
+2026-06-01,workflow_saved,1751,1342
+2026-06-08,checklist_builder_opened,2373,1671
+2026-06-08,checklist_created,1802,1374
+2026-06-08,checklist_launched,872,762
+2026-06-08,checklist_viewed,7093,2955
+2026-06-08,csv_import_completed,861,748
+2026-06-08,csv_import_started,1207,989
+2026-06-08,custom_field_created,875,760
+2026-06-08,integration_connected,37,31
+2026-06-08,integration_setup_started,49,39
+2026-06-08,report_viewed,4205,2356
+2026-06-08,signed_up,39,39
+2026-06-08,task_completed,5381,2654
+2026-06-08,teammate_invited,587,525
+2026-06-08,workflow_editor_opened,3499,2116
+2026-06-08,workflow_saved,1795,1342
+2026-06-15,checklist_builder_opened,2383,1696
+2026-06-15,checklist_created,1792,1372
+2026-06-15,checklist_launched,902,770
+2026-06-15,checklist_viewed,7134,3007
+2026-06-15,csv_import_completed,861,754
+2026-06-15,csv_import_started,1169,968
+2026-06-15,custom_field_created,946,813
+2026-06-15,integration_connected,27,21
+2026-06-15,integration_setup_started,40,31
+2026-06-15,report_viewed,4227,2348
+2026-06-15,signed_up,59,59
+2026-06-15,task_completed,5406,2666
+2026-06-15,teammate_invited,597,546
+2026-06-15,workflow_editor_opened,3573,2166
+2026-06-15,workflow_saved,1813,1360
+2026-06-22,checklist_builder_opened,2608,1836
+2026-06-22,checklist_created,1956,1465
+2026-06-22,checklist_launched,983,846
+2026-06-22,checklist_viewed,7562,3132
+2026-06-22,csv_import_completed,891,772
+2026-06-22,csv_import_started,1242,1032
+2026-06-22,custom_field_created,977,834
+2026-06-22,integration_connected,49,40
+2026-06-22,integration_setup_started,66,46
+2026-06-22,report_viewed,4503,2477
+2026-06-22,signed_up,55,55
+2026-06-22,task_completed,5662,2791
+2026-06-22,teammate_invited,655,592
+2026-06-22,workflow_editor_opened,3851,2293
+2026-06-22,workflow_saved,1902,1457
+2026-06-29,checklist_builder_opened,2512,1784
+2026-06-29,checklist_created,1990,1517
+2026-06-29,checklist_launched,984,853
+2026-06-29,checklist_viewed,7515,3191
+2026-06-29,csv_import_completed,914,811
+2026-06-29,csv_import_started,1252,1055
+2026-06-29,custom_field_created,999,870
+2026-06-29,integration_connected,37,31
+2026-06-29,integration_setup_started,57,44
+2026-06-29,report_viewed,4400,2504
+2026-06-29,signed_up,51,51
+2026-06-29,task_completed,5703,2832
+2026-06-29,teammate_invited,628,574
+2026-06-29,workflow_editor_opened,3739,2274
+2026-06-29,workflow_saved,1880,1441
+2026-07-06,checklist_builder_opened,2556,1834
+2026-07-06,checklist_created,1909,1445
+2026-07-06,checklist_launched,933,792
+2026-07-06,checklist_viewed,7560,3234
+2026-07-06,csv_import_completed,942,793
+2026-07-06,csv_import_started,1341,1095
+2026-07-06,custom_field_created,968,826
+2026-07-06,integration_connected,27,20
+2026-07-06,integration_setup_started,42,30
+2026-07-06,report_viewed,4413,2517
+2026-07-06,signed_up,48,48
+2026-07-06,task_completed,5718,2863
+2026-07-06,teammate_invited,649,580
+2026-07-06,workflow_editor_opened,3695,2256
+2026-07-06,workflow_saved,1934,1448
+2026-07-13,checklist_builder_opened,2595,1813
+2026-07-13,checklist_created,1914,1472
+2026-07-13,checklist_launched,918,801
+2026-07-13,checklist_viewed,7568,3230
+2026-07-13,csv_import_completed,960,824
+2026-07-13,csv_import_started,1244,1064
+2026-07-13,custom_field_created,960,826
+2026-07-13,integration_connected,25,24
+2026-07-13,integration_setup_started,47,38
+2026-07-13,report_viewed,4548,2518
+2026-07-13,signed_up,49,49
+2026-07-13,task_completed,5737,2900
+2026-07-13,teammate_invited,652,585
+2026-07-13,workflow_editor_opened,3885,2321
+2026-07-13,workflow_saved,1922,1482
+2026-07-20,checklist_builder_opened,2778,1874
+2026-07-20,checklist_created,1949,1514
+2026-07-20,checklist_launched,986,863
+2026-07-20,checklist_viewed,7773,3279
+2026-07-20,csv_import_completed,982,862
+2026-07-20,csv_import_started,1333,1084
+2026-07-20,custom_field_created,969,847
+2026-07-20,integration_connected,22,19
+2026-07-20,integration_setup_started,62,41
+2026-07-20,report_viewed,4386,2554
+2026-07-20,signed_up,54,54
+2026-07-20,task_completed,5825,2944
+2026-07-20,teammate_invited,634,576
+2026-07-20,workflow_editor_opened,3933,2399
+2026-07-20,workflow_saved,1926,1472
+2026-07-27,checklist_builder_opened,2667,1859
+2026-07-27,checklist_created,2067,1566
+2026-07-27,checklist_launched,993,856
+2026-07-27,checklist_viewed,7982,3394
+2026-07-27,csv_import_completed,983,835
+2026-07-27,csv_import_started,1290,1088
+2026-07-27,custom_field_created,1051,887
+2026-07-27,integration_connected,33,29
+2026-07-27,integration_setup_started,62,46
+2026-07-27,report_viewed,4554,2665
+2026-07-27,signed_up,53,53
+2026-07-27,task_completed,5986,2934
+2026-07-27,teammate_invited,685,613
+2026-07-27,workflow_editor_opened,3888,2368
+2026-07-27,workflow_saved,1991,1530
+2026-08-03,checklist_builder_opened,2621,1837
+2026-08-03,checklist_created,1970,1532
+2026-08-03,checklist_launched,948,830
+2026-08-03,checklist_viewed,7964,3386
+2026-08-03,csv_import_completed,1024,890
+2026-08-03,csv_import_started,1295,1094
+2026-08-03,custom_field_created,1043,909
+2026-08-03,integration_connected,22,19
+2026-08-03,integration_setup_started,36,30
+2026-08-03,report_viewed,4624,2605
+2026-08-03,signed_up,34,34
+2026-08-03,task_completed,5868,2922
+2026-08-03,teammate_invited,671,602
+2026-08-03,workflow_editor_opened,4034,2451
+2026-08-03,workflow_saved,2023,1513
+2026-08-10,checklist_builder_opened,2716,1915
+2026-08-10,checklist_created,2026,1574
+2026-08-10,checklist_launched,982,866
+2026-08-10,checklist_viewed,7934,3379
+2026-08-10,csv_import_completed,997,855
+2026-08-10,csv_import_started,1323,1101
+2026-08-10,custom_field_created,1010,879
+2026-08-10,integration_connected,18,14
+2026-08-10,integration_setup_started,34,25
+2026-08-10,report_viewed,4522,2601
+2026-08-10,signed_up,39,39
+2026-08-10,task_completed,5717,2967
+2026-08-10,teammate_invited,695,641
+2026-08-10,workflow_editor_opened,3938,2439
+2026-08-10,workflow_saved,1996,1502
+2026-08-17,checklist_builder_opened,2663,1888
+2026-08-17,checklist_created,2004,1542
+2026-08-17,checklist_launched,1023,899
+2026-08-17,checklist_viewed,8080,3426
+2026-08-17,csv_import_completed,1006,881
+2026-08-17,csv_import_started,1241,1058
+2026-08-17,custom_field_created,1012,877
+2026-08-17,integration_connected,27,23
+2026-08-17,integration_setup_started,46,33
+2026-08-17,report_viewed,4706,2706
+2026-08-17,signed_up,38,38
+2026-08-17,task_completed,5932,3025
+2026-08-17,teammate_invited,676,600
+2026-08-17,workflow_editor_opened,3960,2433
+2026-08-17,workflow_saved,1974,1517
+2026-08-24,checklist_builder_opened,2748,1896
+2026-08-24,checklist_created,2048,1549
+2026-08-24,checklist_launched,1002,862
+2026-08-24,checklist_viewed,8128,3417
+2026-08-24,csv_import_completed,1030,881
+2026-08-24,csv_import_started,1305,1094
+2026-08-24,custom_field_created,1010,885
+2026-08-24,integration_connected,16,16
+2026-08-24,integration_setup_started,37,26
+2026-08-24,report_viewed,4786,2692
+2026-08-24,signed_up,34,34
+2026-08-24,task_completed,6149,3050
+2026-08-24,teammate_invited,654,600
+2026-08-24,workflow_editor_opened,4082,2451
+2026-08-24,workflow_saved,2020,1562
+2026-08-31,checklist_builder_opened,2640,1880
+2026-08-31,checklist_created,2004,1542
+2026-08-31,checklist_launched,983,857
+2026-08-31,checklist_viewed,7994,3433
+2026-08-31,csv_import_completed,1057,909
+2026-08-31,csv_import_started,1349,1109
+2026-08-31,custom_field_created,1002,891
+2026-08-31,integration_connected,30,27
+2026-08-31,integration_setup_started,58,41
+2026-08-31,report_viewed,4676,2658
+2026-08-31,signed_up,50,50
+2026-08-31,task_completed,6111,3030
+2026-08-31,teammate_invited,680,626
+2026-08-31,workflow_editor_opened,4097,2481
+2026-08-31,workflow_saved,1985,1547
+2026-09-07,checklist_builder_opened,2750,1938
+2026-09-07,checklist_created,2163,1616
+2026-09-07,checklist_launched,1065,920
+2026-09-07,checklist_viewed,8381,3517
+2026-09-07,csv_import_completed,1045,928
+2026-09-07,csv_import_started,1367,1142
+2026-09-07,custom_field_created,1058,927
+2026-09-07,integration_connected,41,33
+2026-09-07,integration_setup_started,68,49
+2026-09-07,report_viewed,4706,2704
+2026-09-07,signed_up,59,59
+2026-09-07,task_completed,6269,3120
+2026-09-07,teammate_invited,727,656
+2026-09-07,workflow_editor_opened,4187,2529
+2026-09-07,workflow_saved,2095,1588
+2026-09-14,checklist_builder_opened,2657,1879
+2026-09-14,checklist_created,2094,1629
+2026-09-14,checklist_launched,993,874
+2026-09-14,checklist_viewed,8181,3486
+2026-09-14,csv_import_completed,1104,935
+2026-09-14,csv_import_started,1382,1141
+2026-09-14,custom_field_created,1130,970
+2026-09-14,integration_connected,23,22
+2026-09-14,integration_setup_started,53,44
+2026-09-14,report_viewed,4799,2761
+2026-09-14,signed_up,54,54
+2026-09-14,task_completed,6240,3096
+2026-09-14,teammate_invited,673,623
+2026-09-14,workflow_editor_opened,4143,2517
+2026-09-14,workflow_saved,2075,1593
+2026-09-21,checklist_builder_opened,2799,1979
+2026-09-21,checklist_created,2173,1636
+2026-09-21,checklist_launched,1077,923
+2026-09-21,checklist_viewed,8265,3561
+2026-09-21,csv_import_completed,1025,889
+2026-09-21,csv_import_started,1360,1141
+2026-09-21,custom_field_created,1044,903
+2026-09-21,integration_connected,24,21
+2026-09-21,integration_setup_started,41,33
+2026-09-21,report_viewed,4871,2772
+2026-09-21,signed_up,34,34
+2026-09-21,task_completed,6189,3120
+2026-09-21,teammate_invited,732,660
+2026-09-21,workflow_editor_opened,4275,2586
+2026-09-21,workflow_saved,2179,1654
+2026-09-28,checklist_builder_opened,1239,984
+2026-09-28,checklist_created,991,813
+2026-09-28,checklist_launched,491,442
+2026-09-28,checklist_viewed,3766,2012
+2026-09-28,csv_import_completed,484,440
+2026-09-28,csv_import_started,604,537
+2026-09-28,custom_field_created,453,420
+2026-09-28,integration_connected,6,5
+2026-09-28,integration_setup_started,13,12
+2026-09-28,report_viewed,2108,1465
+2026-09-28,signed_up,32,32
+2026-09-28,task_completed,2795,1730
+2026-09-28,teammate_invited,307,290
+2026-09-28,workflow_editor_opened,1859,1309
+2026-09-28,workflow_saved,884,739
+
+
+## PostHog: releases and flag rollouts
+date,content
+2026-05-12,Released new reporting filters
+2026-06-02,Released CSV import v2
+2026-07-14,Released Salesforce sync v2
+2026-08-18,Rolled out flag new-workflow-editor to 50%
+2026-08-25,Rolled out flag new-workflow-editor to 100%
+2026-09-08,Released checklist templates gallery
+
+
+## Doc: Metric definitions
+# Metric definitions
+
+These definitions are the source of truth for every dashboard and report.
+
+| Metric | Definition |
+|---|---|
+| **Activated account** | An account whose users launch their first checklist (`checklist_launched`) within **14 days** of signup (`signed_up`). |
+| **Activation rate** | Activated accounts / accounts that signed up in the period, counting only signups at least 14 days old. |
+| **MRR** | Monthly recurring revenue from active subscriptions. Annual plans count as 1/12 of the annual price. |
+| **Day-90 revenue retention** | For accounts whose first payment was at least 90 days ago: MRR 90 days after first payment / MRR at first payment, summed over the cohort. |
+| **Questions per account** | Internal questions about a customer account (asked to AskRight) per active account-month. |
+| **Handling time** | Minutes a teammate spends answering a question, from the AskRight log. |
+| **Acquisition source** | The HubSpot campaign that created the company, else its original source (organic, outbound, referral). |
+
+
+## Doc: Fernwell mission and FY2026 goals
+# Fernwell: mission and FY2026 goals
+
+**Mission.** Help B2B software teams get every new customer to value in their first two weeks.
+
+**Who we serve.** Customer success and onboarding teams at B2B SaaS companies with 20 to 500
+employees, usually running a CRM (Salesforce or HubSpot) and Slack.
+
+## FY2026 goals
+
+1. **Activation.** Raise new-account activation to **65%** by the end of Q4 (see metric definitions).
+2. **Retention.** Keep day-90 revenue retention at or above **95%** for every acquisition source.
+3. **Efficient growth.** Grow MRR 40% while keeping support questions per account flat or lower.
+4. **Integrations.** Make CRM sync the reason customers choose us: setup in under 15 minutes.
+
+## How we decide
+
+When goals conflict, activation comes first: customers who never activate never renew.
+
+
+## Doc: Pricing and packaging
+# Pricing and packaging
+
+Use this page when quoting. Prices are per workspace.
+
+| Plan | Price | Seats included | Annual discount |
+|---|---|---|---|
+| Starter | $79/month | 2 | 15% |
+| Growth | $349/month | 10 | 20% |
+| Scale | $990/month | 15 | 15% |
+| Enterprise | Custom (annual) | 50 | 15% |
+
+Extra seats are $15 per seat per month on every plan. Enterprise includes SSO, a dedicated CSM
+and a 99.9% uptime SLA. Integrations (Salesforce, HubSpot, Slack) are included on every plan.
+
+
+## Doc: Salesforce sync setup guide
+# Salesforce sync setup guide
+
+_Applies to the original Salesforce sync connector._
+
+1. In Fernwell, open **Settings → Integrations** and choose **Salesforce sync**.
+2. Sign in with an admin account and approve the requested permissions.
+3. On **Object sync**, keep the default mapping (Accounts → Customers, Contacts → Users).
+4. Click **Start sync**. The first sync finishes in about 10 minutes.
+
+**Troubleshooting.** If the first sync fails, reconnect the integration from step 1.
+
+
+## Doc: Team ownership
+# Team ownership
+
+Who owns each area. Ask the owning team first; the fallback team routes anything unclear.
+
+| Area | Owning team | Fallback |
+|---|---|---|
+| Salesforce sync | Engineering | Customer Success |
+| HubSpot sync | Engineering | Customer Success |
+| CSV import | Engineering | Customer Success |
+| Custom fields | Product | Customer Success |
+| Workflow editor | Product | Customer Success |
+| Checklist builder | Product | Customer Success |
+| API and webhooks | Engineering | Customer Success |
+| SSO and permissions | Engineering | Customer Success |
+| Reporting | Product | Customer Success |
+| Slack alerts | Engineering | Customer Success |
+| Billing and invoices | Finance & Ops | Customer Success |
+| Pricing and plans | Sales | Customer Success |
+| Customer onboarding process | Customer Success | Customer Success |

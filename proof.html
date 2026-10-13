@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Case file: Fernwell. Five problems planted in a fictional company's data, five red herrings. Plain Claude and INVAR got the same data. Find them yourself, then see who did.">
+<title>The Fernwell Case · INVAR</title>
+<link rel="icon" type="image/svg+xml" href="./invar-mark.svg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Caveat:wght@500&amp;display=swap">
+<style>
+:root{
+  --bg:#F4F1EA; --panel:#F8F5EF; --surface:#FFFDF8; --sunk:#EFEBE3; --line:#E6E1D6; --line2:#DDD7CB;
+  --ink:#15171C; --body:#3A3A40; --muted:#5A5850; --faint:#6B675E;
+  --accent:#FF6A3D; --accent-ink:#8A3A12; --accent-soft:#FFE1D4; --note:#FFE2D3;
+  --ok:#1F6B45; --ok-soft:#DCEFE3; --bad:#9A2B12; --bad-soft:#FBE0D6; --half:#7A5A08; --half-soft:#F6EBC8;
+  --display:'Space Grotesk',Arial,sans-serif; --sans:'IBM Plex Sans',Arial,sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+[id]{scroll-margin-top:96px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;padding-bottom:32px}
+a{color:var(--ink)} a:hover{color:#C2410C}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid #C2410C;outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:1.5px;color:var(--accent-ink);margin:0}
+.pill{display:inline-flex;padding:8px 16px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-family:var(--mono);font-size:12px;letter-spacing:1.5px;color:#4A4A52}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-1px}
+h1{font-size:clamp(40px,5.4vw,72px);font-weight:600;line-height:1.04;letter-spacing:-2px}
+h2{font-size:clamp(32px,4vw,52px);font-weight:500;line-height:1.08;letter-spacing:-1.5px}
+h3{font-size:22px;font-weight:600;line-height:1.25;letter-spacing:-.3px}
+.lede{font-size:20px;color:var(--body);max-width:700px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:14px;border:none;cursor:pointer;font-family:var(--sans);font-size:16px;font-weight:600;text-decoration:none;color:var(--ink);background:var(--accent)}
+.btn.ghost{background:var(--surface);border:1px solid var(--line2)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.dots{background-image:radial-gradient(rgba(21,23,28,0.10) 1px,transparent 1.2px);background-size:16px 16px}
+section,section.wrap{padding-top:120px}
+.step{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.step b{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px}
+.grid{display:grid;gap:16px}
+.mono{font-family:var(--mono)}
+.small{font-size:14px;color:var(--muted)}
+.tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11.5px;letter-spacing:1px;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.tag.ok{background:var(--ok-soft);color:var(--ok)} .tag.bad{background:var(--bad-soft);color:var(--bad)}
+.tag.half{background:var(--half-soft);color:var(--half)} .tag.ink{background:var(--ink);color:var(--bg)}
+.tag.soft{background:var(--accent-soft);color:var(--accent-ink)}
+
+/* header */
+header{position:sticky;top:0;z-index:10;background:rgba(244,241,234,.94);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:12px;max-width:1376px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);min-height:44px}
+.brand span{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:3px}
+.brand{flex:none}
+.tabbar{flex:1 1 auto;min-width:0;display:flex;overflow-x:auto;scrollbar-width:none}
+.tabbar::-webkit-scrollbar{display:none}
+.tabs{display:flex;gap:4px;margin:0 auto;padding:5px;background:var(--sunk);border-radius:999px}
+.tabs a{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;white-space:nowrap;text-decoration:none;font-size:15px;font-weight:500;color:#4A4A52;transition:background .2s,color .2s}
+.tabs a:hover{background:#E2DCCF;color:var(--ink)}
+.tabs a[aria-current=page]{background:var(--ink);color:var(--bg);font-weight:600}
+.back{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;text-decoration:none;color:#4A4A52}
+
+/* hero */
+.hero{position:relative;max-width:1376px;margin:24px auto 0;border-radius:36px;border:1px solid var(--line);background-color:var(--panel);padding:96px 32px 88px;overflow:hidden}
+.hero-inner{max-width:880px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center}
+.stamp{display:inline-block;border:2px solid var(--accent-ink);color:var(--accent-ink);font-family:var(--mono);font-size:13px;letter-spacing:3px;padding:6px 14px;border-radius:6px;transform:rotate(-3deg)}
+.sticky{position:absolute;width:196px;padding:22px 18px 24px;background:var(--note);border-radius:6px;box-shadow:0 1px 2px rgba(21,23,28,.06),0 24px 40px -16px rgba(21,23,28,.3);font-family:'Caveat',cursive;font-size:23px;line-height:1.15;text-align:left}
+.sticky::before{content:"";position:absolute;top:-9px;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:var(--accent);box-shadow:0 3px 6px rgba(21,23,28,.3)}
+.sticky.l{left:36px;top:64px;transform:rotate(-5deg)}
+.sticky.r{right:36px;bottom:56px;transform:rotate(4deg);background:var(--surface);border:1px solid var(--line)}
+@media (max-width:1399px){.sticky{display:none}}
+.facts{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:36px}
+
+/* brief */
+.brief{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+.goal{display:flex;gap:14px;padding:16px 0;border-top:1px solid var(--line)}
+.goal:first-of-type{border-top:none}
+.goal .n{flex:none;font-family:var(--mono);font-size:13px;color:var(--accent-ink);padding-top:3px}
+
+/* evidence */
+.locker{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:12px}
+.exhibit{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;transition:transform .2s,box-shadow .2s}
+.exhibit:hover{transform:translateY(-3px);box-shadow:0 20px 34px -22px rgba(21,23,28,.35);color:var(--ink)}
+.exhibit .src{font-family:var(--mono);font-size:11.5px;letter-spacing:1px;color:var(--accent-ink)}
+.exhibit .t{font-weight:600;font-size:15.5px;line-height:1.35}
+.exhibit .f{font-family:var(--mono);font-size:12px;color:var(--faint);margin-top:auto}
+
+/* leads */
+.leads{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:14px}
+.lead{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 22px 18px;display:flex;flex-direction:column;gap:14px}
+.lead .num{font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--faint)}
+.lead .clue{font-family:var(--display);font-size:19px;font-weight:500;line-height:1.3;margin:0}
+.lead .src{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.choice{display:flex;gap:8px;margin-top:auto}
+.revealed .choice{margin-top:0}
+.choice button{flex:1;min-height:44px;border-radius:12px;border:1px solid var(--line2);background:var(--panel);font-family:var(--sans);font-size:14.5px;font-weight:500;color:#4A4A52;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.choice button:hover{border-color:var(--ink);color:var(--ink)}
+.choice button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.choice button.herring[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.verdict{display:none;border-top:1px dashed var(--line2);padding-top:14px;flex-direction:column;gap:10px}
+.revealed .verdict{display:flex;flex:1 1 auto}
+.verdict .who{margin-top:auto;padding-top:4px}
+.revealed .choice button{cursor:default}
+.verdict .truth{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.verdict p{margin:0;font-size:15px;color:var(--body)}
+.who{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center;font-size:14px}
+.who > span{min-width:0}
+.who .tag{white-space:normal}
+.who .k{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.you{position:absolute;top:18px;right:18px}
+.bar{position:sticky;bottom:16px;z-index:5;margin-top:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--ink);color:var(--bg);border-radius:18px;padding:14px 14px 14px 22px;box-shadow:0 24px 40px -20px rgba(21,23,28,.5)}
+.bar .btn{min-height:46px}
+.bar a{color:#C9C4B8;font-size:14px}
+
+/* reveal */
+.score{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.score .card{display:flex;flex-direction:column;gap:6px}
+.score .big{font-family:var(--display);font-size:64px;font-weight:600;line-height:1;letter-spacing:-2px}
+.score .dark{background:var(--ink);color:var(--bg);border:none}
+.score .dark .small{color:#C9C4B8}
+.quote{margin:0;padding:28px 32px;border-left:4px solid var(--accent);background:var(--surface);border-radius:0 20px 20px 0;font-family:var(--display);font-size:24px;line-height:1.35;font-weight:500}
+.quote cite{display:block;margin-top:12px;font-family:var(--mono);font-size:12.5px;font-style:normal;color:var(--faint);letter-spacing:.5px}
+.case{border:1px solid var(--line);border-radius:24px;background:var(--surface);overflow:hidden}
+.case-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;padding:22px 26px;border-bottom:1px solid var(--line);background:var(--panel)}
+.case{display:block}
+details.case + details.case{margin-top:0}
+details.case > summary.case-head{padding:22px 26px;font-weight:inherit;font-size:inherit;align-items:center;flex-wrap:nowrap}
+details.case > summary.case-head::after{content:none}
+details.case:not([open]) > summary.case-head{border-bottom:none}
+details.case > summary.case-head:hover{background:var(--sunk)}
+.case-score{flex:none;display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.case-score .k{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--faint)}
+.chev{flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line2);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;color:var(--accent-ink);transition:transform .25s}
+details.case[open] .chev{transform:rotate(180deg)}
+@media (max-width:760px){details.case > summary.case-head{flex-wrap:wrap;padding:18px}.case-score{flex:1 1 100%;justify-content:flex-start}.case-score .chev{margin-left:auto}}
+.case-head .why{margin:6px 0 0;font-size:15px;color:var(--muted);max-width:720px}
+.sides{display:grid;grid-template-columns:1fr 1fr}
+.side{padding:22px 26px 26px;display:flex;flex-direction:column;gap:10px}
+.side + .side{border-left:1px solid var(--line)}
+.side .who-h{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.side .who-h b{font-family:var(--mono);font-size:12px;letter-spacing:1.2px;color:var(--faint);font-weight:500}
+.side .ft{font-weight:600;font-size:16px;line-height:1.35;margin:0}
+.side .st{margin:0;font-size:15px;color:var(--body)}
+.side .rec{margin:0;font-size:14.5px;color:var(--muted)}
+.side .rec b{color:var(--ink);font-weight:600}
+.side.empty .st{font-style:italic;color:var(--faint)}
+.checks{margin:4px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.checks li{font-size:14px;color:var(--body);padding-left:22px;position:relative}
+.checks li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:600}
+.checks li b{font-weight:600;color:var(--ink)}
+details{border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+details + details{margin-top:12px}
+summary{cursor:pointer;padding:20px 24px;font-weight:600;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--mono);font-size:20px;color:var(--accent-ink)}
+details[open] summary::after{content:"–"}
+.full{padding:0 24px 22px;display:flex;flex-direction:column;gap:14px}
+.full article{border-top:1px solid var(--line);padding-top:14px}
+.full h4{margin:0 0 6px;font-size:16px;font-family:var(--sans);font-weight:600}
+.full p{margin:4px 0;font-size:15px;color:var(--body);white-space:pre-line}
+.fine{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:16px}
+.fine .card{display:flex;flex-direction:column}
+.fine .card p{margin:8px 0 0;font-size:15px;color:var(--body)}
+.fine .card p.foot{margin-top:auto;padding-top:16px}
+.fine ul{margin:8px 0 0;padding-left:18px;font-size:15px;color:var(--body)}
+pre.prompt{white-space:pre-wrap;font-family:var(--mono);font-size:12.5px;background:var(--sunk);border-radius:12px;padding:14px;margin:10px 0 0;color:var(--body)}
+/* exhibit viewer */
+dialog.viewer{width:min(1040px,calc(100vw - 32px));max-height:calc(100vh - 48px);max-height:calc(100dvh - 48px);padding:0;border:none;border-radius:24px;background:var(--surface);color:var(--ink);box-shadow:0 40px 80px -30px rgba(21,23,28,.55);overflow:hidden}
+dialog.viewer[open]{display:flex;flex-direction:column}
+dialog.viewer::backdrop{background:rgba(21,23,28,.55);backdrop-filter:blur(3px)}
+@media (prefers-reduced-motion:no-preference){dialog.viewer[open]{animation:pop .28s cubic-bezier(.2,.9,.3,1.2)}dialog.viewer[open]::backdrop{animation:fade .25s ease}}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.97)}}
+.v-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:22px 24px 18px;border-bottom:1px solid var(--line);background:var(--panel)}
+.v-head h3{margin-top:6px}
+.v-head .meta{margin:6px 0 0;font-family:var(--mono);font-size:12px;color:var(--faint)}
+.v-x{flex:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line2);background:var(--surface);cursor:pointer;font-size:22px;line-height:1;color:var(--ink)}
+.v-body{flex:1 1 auto;overflow:auto;min-height:120px}
+.v-body table{border-collapse:collapse;width:100%;font-size:14px}
+.v-body th{position:sticky;top:0;background:var(--surface);text-align:left;font-family:var(--mono);font-size:12px;letter-spacing:.5px;color:var(--accent-ink);font-weight:500;padding:12px 16px;border-bottom:1px solid var(--line2);white-space:nowrap}
+.v-body td{padding:9px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
+.v-body td.num{text-align:right;font-family:var(--mono);font-size:13px}
+.v-body tbody tr:hover{background:var(--panel)}
+.v-doc{padding:28px 32px 32px;max-width:760px}
+.v-doc h1{font-size:30px;letter-spacing:-.8px;margin:0 0 14px}
+.v-doc h2{font-size:21px;letter-spacing:-.3px;margin:26px 0 8px}
+.v-doc p,.v-doc li{font-size:16px;color:var(--body)}
+.v-doc p{margin:10px 0}
+.v-doc ol,.v-doc ul{padding-left:22px}
+.v-doc code{font-family:var(--mono);font-size:13.5px;background:var(--sunk);padding:1px 6px;border-radius:6px}
+.v-scroll{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:12px}
+.v-doc table{border:none}
+.v-doc td{white-space:normal}
+.v-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 20px;border-top:1px solid var(--line);background:var(--panel)}
+.v-nav{display:flex;gap:8px}
+.v-nav button{min-height:44px;padding:0 16px;border-radius:12px;border:1px solid var(--line2);background:var(--surface);font-family:var(--sans);font-size:14.5px;font-weight:500;color:var(--ink);cursor:pointer}
+.v-nav button:disabled{opacity:.4;cursor:default}
+.v-foot .btn{min-height:44px;font-size:15px}
+@media (max-width:760px){.v-doc{padding:20px}.v-head{padding:18px 16px 14px}.v-foot .btn{flex:1;justify-content:center}}
+
+/* sealed answers + reveal */
+body.locked #reveal, body.locked #method{display:none}
+body:not(.locked) #sealed{display:none}
+.envelope{position:relative;max-width:760px;margin:0 auto;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:64px 32px 56px;overflow:hidden;box-shadow:0 40px 70px -46px rgba(21,23,28,.45)}
+.envelope::before{content:"";position:absolute;inset:0 0 auto 0;height:120px;background:linear-gradient(160deg,var(--sunk) 50%,transparent 50.4%),linear-gradient(200deg,var(--sunk) 50%,transparent 50.4%);background-size:50% 100%,50% 100%;background-position:left top,right top;background-repeat:no-repeat;opacity:.9}
+.seal{position:relative;width:96px;height:96px;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FF8A63,var(--accent) 45%,#C2410C);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -8px rgba(194,65,12,.7),inset 0 -4px 8px rgba(0,0,0,.18)}
+.seal img{width:26px;height:46px;filter:brightness(0) invert(1);opacity:.9}
+.envelope h2{margin-top:28px}
+.envelope p{margin:16px auto 0;max-width:520px;color:var(--body);font-size:18px}
+@media (prefers-reduced-motion:no-preference){.seal{animation:pulse 2.4s ease-in-out infinite}}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.curtain{position:fixed;inset:0;z-index:50;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;pointer-events:none;transition:opacity .45s ease}
+.curtain.on{opacity:1;pointer-events:auto}
+.curtain .stamp{border-color:var(--accent);color:var(--accent);font-size:clamp(28px,6vw,64px);letter-spacing:8px;padding:14px 30px;border-width:5px;border-radius:12px;opacity:0;transform:scale(2.6) rotate(-14deg)}
+.curtain.on .stamp{animation:slam .5s cubic-bezier(.2,1.4,.4,1) .35s forwards}
+.curtain p{margin:0;font-family:var(--mono);font-size:14px;letter-spacing:2px;color:#C9C4B8;opacity:0}
+.curtain.on p{animation:fade .5s ease .95s forwards}
+@keyframes slam{to{opacity:1;transform:scale(1) rotate(-6deg)}}
+@keyframes fade{to{opacity:1}}
+.play .rise{opacity:0;transform:translateY(28px);animation:rise .7s cubic-bezier(.2,.7,.3,1) forwards;animation-delay:var(--d,0s)}
+@keyframes rise{to{opacity:1;transform:none}}
+.revealed .verdict{animation:fade .5s ease both;animation-delay:var(--d,0s);opacity:0}
+@media (prefers-reduced-motion:reduce){.play .rise,.revealed .verdict{animation:none;opacity:1;transform:none}}
+.cta{margin:120px auto 0;max-width:1376px;border-radius:36px;background:var(--ink);color:var(--bg);padding:88px 32px;text-align:center}
+.cta p{color:#C9C4B8}
+nav[aria-label=Footer] a:hover{color:#C2410C}
+.loading{color:var(--faint);font-style:italic}
+
+@media (max-width:860px){
+  .brief,.score{grid-template-columns:1fr}
+  .sides{grid-template-columns:1fr}
+  .side + .side{border-left:none;border-top:1px solid var(--line)}
+}
+@media (max-width:760px){
+  .pad{padding-left:16px !important;padding-right:16px !important}
+  .wrap{padding:0 16px}
+  .hero{padding:72px 16px 64px;border-radius:24px;margin:12px 8px 0}
+  section,section.wrap{padding-top:88px}
+  .hidecta{display:none !important}
+  .leads{grid-template-columns:1fr}
+  .quote{font-size:20px;padding:22px}
+  .cta{border-radius:24px;margin:80px 8px 0;padding:64px 20px}
+  .score .big{font-size:52px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.exhibit{transition:none}}
+</style>
+</head>
+<body class="locked">
+<dialog class="viewer" id="viewer" aria-labelledby="vTitle">
+  <div class="v-head">
+    <div><p class="eyebrow" id="vLabel"></p><h3 id="vTitle"></h3><p class="meta" id="vMeta"></p></div>
+    <button class="v-x" type="button" id="vClose" aria-label="Close">×</button>
+  </div>
+  <div class="v-body" id="vBody"></div>
+  <div class="v-foot">
+    <div class="v-nav"><button type="button" id="vPrev">← Previous</button><button type="button" id="vNext">Next →</button></div>
+    <a class="btn ghost" id="vDownload" href="#" download>Download this file</a>
+  </div>
+</dialog>
+<div class="curtain" id="curtain" aria-hidden="true"><span class="stamp">CASE CLOSED</span><p>OPENING THE FILE…</p></div>
+
+<header>
+<div class="wrap">
+  <a class="brand" href="./" aria-label="INVAR home">
+    <img src="./invar-mark.svg" width="20" height="35" alt="">
+    <span>INVAR</span>
+  </a>
+  <nav class="tabbar" aria-label="Site">
+    <div class="tabs">
+      <a href="./">Overview</a>
+      <a href="./#how">How it works</a>
+      <a href="./#ask">AskRight</a>
+      <a href="./#insights">Insights</a>
+      <a href="./#trust">Trust</a>
+      <a href="./proof.html" aria-current="page">Case file</a>
+    </div>
+  </nav>
+  <a class="btn hidecta" href="./#pilot" style="min-height:44px;border-radius:999px;font-size:15px;padding:0 20px;flex:none">Join the pilot</a>
+</div>
+</header>
+
+<main>
+<div class="hero dots">
+  <div class="sticky l">Same model on both sides. The only difference is INVAR.</div>
+  <div class="sticky r">Fernwell isn't real. Its problems are, and so are the red herrings.</div>
+  <div class="hero-inner">
+    <span class="stamp">CASE FILE · FERNWELL</span>
+    <h1 style="margin-top:28px">Five problems are hiding in this company. Can you find them?</h1>
+    <p class="lede" style="margin:26px 0 0">Fernwell is a fictional B2B software company we built. We planted five real problems in its data, plus five red herrings that look like problems but aren't. Then we gave the same data to plain Claude and to INVAR. Try it yourself first.</p>
+    <div style="margin-top:36px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px">
+      <a class="btn" href="#evidence">Open the evidence</a>
+      <a class="btn ghost" href="#reveal" data-reveal>Skip to the reveal</a>
+    </div>
+    <div class="facts">
+      <span class="pill">5 PLANTED PROBLEMS</span>
+      <span class="pill">5 RED HERRINGS</span>
+      <span class="pill">STRIPE · HUBSPOT · POSTHOG · SLACK · DOCS</span>
+    </div>
+  </div>
+</div>
+
+<!-- 1. BRIEF -->
+<section class="wrap" id="brief">
+  <div class="step"><b>1</b><p class="eyebrow">THE BRIEF</p></div>
+  <div class="brief">
+    <div>
+      <h2>What Fernwell is trying to do</h2>
+      <p class="lede" style="margin-top:18px">Fernwell sells onboarding software to customer success teams: 1,239 customers and $637K in monthly recurring revenue. Its leadership wrote down four goals for the year. A problem matters if it stands in the way of one of them.</p>
+      <p class="small" style="margin-top:16px">From Fernwell's own doc, <a href="case/fernwell-2026-10-13/clues/doc-fernwell-mission-and-fy2026-goals.md" data-exhibit="6">Mission and FY2026 goals</a>. The data covers April to September 2026.</p>
+    </div>
+    <div class="card">
+      <div class="goal"><span class="n">01</span><div><b>Activation.</b> Raise new-account activation to 65% by the end of Q4.</div></div>
+      <div class="goal"><span class="n">02</span><div><b>Retention.</b> Keep day-90 revenue retention at or above 95% for every acquisition source.</div></div>
+      <div class="goal"><span class="n">03</span><div><b>Efficient growth.</b> Grow revenue 40% while keeping support questions per account flat or lower.</div></div>
+      <div class="goal"><span class="n">04</span><div><b>Integrations.</b> Make CRM sync the reason customers choose Fernwell: setup in under 15 minutes.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. EVIDENCE -->
+<section class="wrap" id="evidence">
+  <div class="step"><b>2</b><p class="eyebrow">THE EVIDENCE</p></div>
+  <h2>Every report each tool gives you on its own</h2>
+  <p class="lede" style="margin-top:18px">This is what a team can export from Stripe, HubSpot, PostHog and its Slack question log separately, plus five company docs. No records are joined across tools. It is exactly what plain Claude was given.</p>
+  <div class="locker" id="locker" style="margin-top:32px"></div>
+  <p style="margin-top:20px"><a class="btn ghost" href="case/fernwell-2026-10-13/clues/all-exports.md" download>Download all of it in one file</a></p>
+</section>
+
+<!-- 3. LEADS -->
+<section class="wrap" id="leads">
+  <div class="step"><b>3</b><p class="eyebrow">YOUR CALL</p></div>
+  <h2>Ten leads. Five are real.</h2>
+  <p class="lede" style="margin-top:18px">Each lead is true in the data. Some point at a real problem; others are red herrings: seasonal noise, a tiny sample, a dip that recovers on its own. Mark each one, then reveal.</p>
+  <div class="leads" id="leadGrid" style="margin-top:32px"></div>
+  <div class="bar" role="region" aria-label="Progress">
+    <span id="progress" aria-live="polite">0 of 10 leads marked</span>
+    <span style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <a href="#reveal" id="skipLink" data-reveal>Skip to the reveal</a>
+      <button class="btn" id="revealBtn" type="button" data-reveal>Reveal the answers</button>
+    </span>
+  </div>
+</section>
+
+<!-- 4 (sealed). Shown until the reveal -->
+<section class="wrap" id="sealed">
+  <div class="envelope">
+    <div class="seal"><img src="./invar-mark.svg" alt=""></div>
+    <p class="eyebrow" style="margin-top:28px">EVIDENCE BAG · SEALED</p>
+    <h2>Two investigators worked this case.</h2>
+    <p>Plain Claude and INVAR each filed their findings. Make your calls on the leads, then break the seal to see who solved it.</p>
+    <button class="btn" type="button" data-reveal style="margin-top:32px">Break the seal</button>
+  </div>
+</section>
+
+<!-- 4. REVEAL -->
+<section class="wrap" id="reveal">
+  <div class="step rise"><b>4</b><p class="eyebrow">THE REVEAL</p></div>
+  <h2 class="rise" id="revealTitle" tabindex="-1" style="--d:.08s;outline:none">Same data. Same model. Two answers.</h2>
+  <p class="lede rise" style="margin-top:18px;--d:.16s">Both sides ran on Claude Opus 5.5. Plain Claude got the reports above and was asked for the most important problems and what to do. INVAR read the same company's data and joined the records across tools first.</p>
+  <div id="yourScore" class="rise" style="margin-top:24px;--d:.24s"></div>
+  <div class="score" style="margin-top:28px">
+    <div class="card rise" style="--d:.4s">
+      <p class="eyebrow" style="color:var(--faint)">PLAIN CLAUDE</p>
+      <span class="big"><span class="count" data-to="2">2</span> <span style="font-size:28px;color:var(--faint)">of 5</span></span>
+      <span>planted problems found</span>
+      <span class="small">9 findings: 3 on the 2 problems it found, 2 red herrings, 4 others. <a href="#full">See how each one counts</a></span>
+    </div>
+    <div class="card dark rise" style="--d:.55s">
+      <p class="eyebrow" style="color:#FF8A63">INVAR</p>
+      <span class="big"><span class="count" data-to="5">5</span> <span style="font-size:28px;color:#C9C4B8">of 5</span></span>
+      <span>planted problems found</span>
+      <span class="small">7 findings: the 5 planted problems, plus 2 smaller real ones it flagged for review. 0 false, 0 red herrings. <a href="#full" style="color:#C9C4B8">See all 7</a></span>
+    </div>
+  </div>
+
+  <div class="rise" style="margin-top:56px;display:grid;gap:22px;--d:.8s">
+    <h3 style="font-size:28px">Plain Claude is good at what one tool can show.</h3>
+    <p class="lede" style="margin:0">It caught the Salesforce sync trouble and the workflow editor rollout, because each shows up in a single export. It missed the three that only appear when records are joined: which plan the busy accounts are on, which campaign brought them, what the billing system actually charges. It said as much itself:</p>
+    <blockquote class="quote">“That cannot measure activation by signup cohort or by acquisition source.”<cite>PLAIN CLAUDE, FINDING 9 · RECOMMENDING SOMEONE BUILD THE JOINED VIEW INVAR STARTS FROM</cite></blockquote>
+  </div>
+
+  <div style="margin-top:56px">
+    <h3 style="font-size:28px">Problem by problem</h3>
+    <p class="small" style="margin-top:8px">Both sides are quoted word for word from the run file. Nothing is edited. Open a problem to compare the answers.</p>
+  </div>
+  <div id="cases" style="margin-top:24px;display:grid;gap:18px"><p class="loading">Loading the run…</p></div>
+
+  <div style="margin-top:56px" id="full">
+    <h3 style="font-size:28px">Read both answers in full</h3>
+    <p class="small" style="margin:8px 0 20px;max-width:760px">Every finding, in the order each side ranked them, labelled by how it counts. Five problems were planted, but both sides were free to report anything else they saw. INVAR's two extras are real patterns in the data that nobody planted, which it marked "needs review" at low confidence. Plain Claude's other findings describe the data rather than name a problem the answer key can check.</p>
+    <details><summary id="claudeSum">Plain Claude's full answer</summary><div class="full" id="claudeFull"></div></details>
+    <details><summary id="invarSum">INVAR's full report</summary><div class="full" id="invarFull"></div></details>
+  </div>
+</section>
+
+<!-- 5. FINE PRINT -->
+<section class="wrap" id="method">
+  <div class="step"><b>5</b><p class="eyebrow">HOW WE RAN IT</p></div>
+  <h2>The fine print, in plain sight</h2>
+  <div class="fine" style="margin-top:28px">
+    <div class="card">
+      <h3>What each side got</h3>
+      <p><b>Plain Claude</b> (<span class="mono" id="mClaude">claude-opus-5-5</span>) got the exports above and this instruction:</p>
+      <pre class="prompt" id="sysPrompt"></pre>
+      <p>It was asked for up to 10 problems, most important first, each with its numbers and a specific recommendation.</p>
+      <p><b>INVAR</b> read the same company's records, joined them across tools, and worded its findings with the same model. Its numbers come from the data, never from the model: a sentence with a number the data doesn't support is dropped.</p>
+    </div>
+    <div class="card">
+      <h3>How we scored it</h3>
+      <p>Each finding was checked against Fernwell's answer key, which was written when the data was generated. Our automatic grader credited plain Claude with 1 of 5, because it filed the workflow editor finding under a different label. We read every answer and credit 2. Pricing counts as a miss: Claude saw prices running below list, but never found that the doc and the billing system disagree.</p>
+      <p class="foot">Run on <span id="runAt">13 Oct 2026</span>, code <span class="mono" id="commit"></span>. <a href="case/fernwell-2026-10-13/run.json">Download the raw run file</a>.</p>
+    </div>
+    <div class="card">
+      <h3>What this doesn't prove</h3>
+      <p>Fernwell is the company we built INVAR on, so INVAR has seen it before. It isn't a blind test. A fair one uses a company nobody on the team has looked at.</p>
+      <p>We run those too: worlds written by a separate agent, scored once, with the pass bar signed beforehand. Across four of them INVAR found 18 of 20 planted problems (95% interval roughly 70–97%). It has failed some harder tests: experiments with hidden costs are caught only about 60% of the time.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <p class="eyebrow" style="color:#FF8A63">YOUR COMPANY, NEXT</p>
+  <h2 style="margin-top:20px;color:var(--bg)">Run the same investigation on your own data.</h2>
+  <p style="margin:20px auto 0;max-width:620px;font-size:19px">A free 30-day pilot on one question that matters to you. Connected in under 15 minutes, read-only, deleted within 5 days when it ends.</p>
+  <a class="btn" href="./#pilot" style="margin-top:32px">Join the pilot</a>
+</div>
+</main>
+
+<p style="max-width:1376px;margin:40px auto 0;padding:0 32px;text-align:center;font-size:14px;color:var(--faint)" class="pad">Fernwell is a fictional company. Its people, customers and numbers are generated.</p>
+<footer class="pad" style="max-width: 1376px; margin: 0 auto; padding: 72px 32px 8px">
+<div style="padding-top: 44px; border-top: 1px solid #DDD7CB; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 40px">
+<div style="flex: 1 1 0; min-width: 160px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px"><svg width="18" height="31" viewBox="0 0 158.34 278.43" aria-hidden="true"><path fill="#15171C" fill-rule="evenodd" d="M91.14 275.96 C77.51 273.16 65.80 262.88 57.10 246.07 C46.76 226.11 45.64 206.88 53.00 175.84 C54.61 169.08 57.19 160.22 58.28 157.77 C59.37 155.30 59.18 155.08 52.96 151.52 C40.86 144.58 29.56 139.98 15.52 136.26 C8.96 134.52 6.04 133.24 4.27 131.32 C0.00 126.68 1.52 119.42 7.33 116.71 C12.31 114.39 17.90 114.79 29.22 118.25 C47.14 123.73 65.64 133.23 78.27 143.44 C94.55 156.60 110.59 182.51 117.98 207.60 C122.67 223.52 122.91 251.26 118.47 262.81 C114.58 272.92 103.13 278.43 91.14 275.96 Z M99.27 255.01 C100.09 254.19 100.33 253.39 100.95 249.60 C101.67 245.16 101.59 230.50 100.82 225.17 C98.56 209.51 92.94 195.78 82.07 179.37 C77.22 172.05 77.27 172.05 75.56 178.97 C70.56 199.24 69.55 213.22 72.28 224.00 C75.32 235.97 84.58 250.06 92.20 254.28 C95.27 255.99 98.01 256.27 99.27 255.01 Z M81.48 143.34 C80.26 142.67 75.02 134.06 74.84 132.39 C74.66 130.84 75.35 130.16 80.59 126.68 C87.43 122.14 87.43 122.14 91.42 131.51 C93.57 136.56 93.56 136.61 88.35 140.40 C83.54 143.89 82.95 144.14 81.48 143.34 Z M113.64 141.52 C109.21 139.97 102.42 134.58 97.44 128.64 C93.21 123.60 90.55 119.67 82.40 106.47 C79.14 101.18 75.93 96.00 75.28 94.97 C64.88 78.45 57.70 56.00 57.66 39.84 C57.62 23.28 62.78 12.99 74.47 6.37 C84.48 0.70 98.53 0.00 114.27 4.38 C133.62 9.77 149.85 20.96 154.52 32.14 C158.34 41.25 156.69 51.81 149.56 63.97 C145.38 71.12 143.17 74.04 132.06 87.22 C123.76 97.05 121.84 99.18 120.56 100.00 C113.43 104.53 104.34 99.51 104.43 91.10 C104.47 86.96 104.41 87.05 114.83 75.13 C128.09 59.96 133.48 52.66 135.91 46.60 C136.90 44.13 136.95 40.60 136.03 39.10 C132.49 33.33 121.71 27.06 109.77 23.84 C96.11 20.16 88.32 20.75 82.77 25.88 C77.14 31.10 77.40 44.04 83.52 62.47 C87.02 73.00 88.32 75.60 100.65 96.72 C112.28 116.65 113.68 119.27 116.76 126.97 C120.49 136.27 120.76 138.71 118.30 140.78 C116.89 141.97 115.54 142.18 113.64 141.52 Z M84.78 136.56 C86.95 135.11 87.16 134.39 86.07 132.22 C85.27 130.62 84.54 130.36 83.20 131.19 C81.05 132.52 80.84 133.26 82.04 135.22 C83.14 137.00 83.70 137.28 84.78 136.56 Z"></path></svg><span style="font-family: 'Space Grotesk', Arial, sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 3px">INVAR</span></div>
+</div>
+<nav aria-label="Footer" style="flex: 0 1 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 32px; font-size: 16px">
+<a href="./#how" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none">How it works</a>
+<a href="./#trust" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none">Trust</a>
+<a href="./#ask" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none">AskRight</a>
+<a href="./proof.html" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none">Case file</a>
+<a href="mailto:security@invarhq.com" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none">Security</a>
+<a href="./#pilot" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none">Pilot</a>
+<a href="mailto:victoria@invarhq.com" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none">Contact</a>
+</nav>
+<div style="flex: 1 1 0; min-width: 160px; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 4px 20px; font-size: 14px; color: #5A5850"><span>© 2026 INVAR</span><!-- Privacy and Terms links hidden until those pages exist --></div>
+</div>
+</footer>
+
+<script>
+(function () {
+  // On narrow screens, scroll the tab bar so the current page's tab is visible.
+  var nav = document.querySelector('.tabbar'), here = document.querySelector('.tabs a[aria-current=page]');
+  if (nav && here && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = here.offsetLeft;
+
+  var BASE = 'case/fernwell-2026-10-13/';
+
+  var EXHIBITS = [
+    ['STRIPE', 'Revenue and customers by plan', 'stripe-mrr-and-customers-by-plan-now.csv'],
+    ['HUBSPOT', 'New signups by campaign and month', 'hubspot-new-signups-by-campaign-and-month.csv'],
+    ['POSTHOG', 'Feature usage by week', 'posthog-feature-events-by-week.csv'],
+    ['POSTHOG', 'Releases and flag rollouts', 'posthog-releases-and-flag-rollouts.csv'],
+    ['SLACK · ASKRIGHT', 'Internal questions by topic and week', 'askright-internal-questions-by-topic-and-week.csv'],
+    ['SLACK · ASKRIGHT', 'Handling time and who answers, by topic', 'askright-handling-time-and-answerers-by-topic.csv'],
+    ['DOC', 'Mission and FY2026 goals', 'doc-fernwell-mission-and-fy2026-goals.md'],
+    ['DOC', 'Pricing and packaging', 'doc-pricing-and-packaging.md'],
+    ['DOC', 'Salesforce sync setup guide', 'doc-salesforce-sync-setup-guide.md'],
+    ['DOC', 'Metric definitions', 'doc-metric-definitions.md'],
+    ['DOC', 'Team ownership', 'doc-team-ownership.md']
+  ];
+
+  // The ten leads. `real` comes from Fernwell's answer key (plants P1-P5, red herrings D1-D5).
+  // `claude` and `invar`: what each side did with it in the frozen run, read by hand.
+  var LEADS = [
+    { id: 'P1', src: 'PostHog · Slack', real: true,
+      clue: 'Salesforce sync questions jumped after Salesforce sync v2 shipped on Jul 14.',
+      truth: 'Accounts that start Salesforce setup since v2 activate at 25%, against 58% for those that don\'t. One person answers 77% of the questions, and the setup guide predates the release.',
+      claude: ['ok', 'Found it'], invar: ['ok', 'Found it, with $90.3K MRR at stake'] },
+    { id: 'D1', src: 'HubSpot', real: false,
+      clue: 'Signups fell to 152 in August, down from 236 in July.',
+      truth: 'A summer dip. Signups recover in September and the activation rate doesn\'t move.',
+      claude: ['bad', 'Reported it as a problem'], invar: ['ok', 'Left it out'] },
+    { id: 'P3', src: 'Stripe · Slack', real: true,
+      clue: 'CSV import and custom fields take more of the team\'s time than any other topic.',
+      truth: 'The Growth plan brings 21% of revenue but takes 58% of question-handling time. Seeing that means joining each question to the paying account behind it.',
+      claude: ['bad', 'Missed: saw the topics, not the plan'], invar: ['ok', 'Found it'] },
+    { id: 'D4', src: 'PostHog · Slack', real: false,
+      clue: 'CSV import questions spiked right after CSV import v2 shipped on Jun 2.',
+      truth: 'A short bump after a release that settled on its own. Not a regression.',
+      claude: ['bad', 'Reported it as a problem'], invar: ['ok', 'Left it out'] },
+    { id: 'P5', src: 'Docs · Stripe', real: true,
+      clue: 'The pricing doc says the Growth plan includes 10 seats and a 20% annual discount.',
+      truth: 'Stripe bills Growth with 5 seats and a 15% discount. Anyone quoting from the doc quotes the wrong price.',
+      claude: ['half', 'Missed: saw prices below list, not why'], invar: ['ok', 'Found it, field by field'] },
+    { id: 'D2', src: 'HubSpot · Stripe', real: false,
+      clue: 'Every Founder Podcast Tour customer is still paying at day 90.',
+      truth: 'Only 3 of its 7 accounts are past day 90. Too few to say anything.',
+      claude: ['ok', 'Didn\'t claim it'], invar: ['ok', 'Didn\'t claim it'] },
+    { id: 'P2', src: 'HubSpot · Stripe · Slack', real: true,
+      clue: 'Partner Webinar Series customers keep 99% of their revenue at day 90.',
+      truth: 'They also ask 3.3x as many questions per account as customers on the same plans. Great retention, expensive to serve.',
+      claude: ['bad', 'Missed: only saw signup counts'], invar: ['ok', 'Found it'] },
+    { id: 'D5', src: 'Slack', real: false,
+      clue: 'Billing and invoices is the most-asked topic: 88 questions.',
+      truth: 'Busy but healthy: it\'s documented and six people answer it.',
+      claude: ['ok', 'Not called a risk'], invar: ['ok', 'Left it out'] },
+    { id: 'P4', src: 'PostHog · Slack', real: true,
+      clue: 'The new workflow editor rolled out Aug 18–25. Usage per user stayed flat.',
+      truth: 'Questions about it rose about 4x after the rollout, with no gain in use. A silent regression.',
+      claude: ['ok', 'Found it'], invar: ['ok', 'Found it'] },
+    { id: 'D3', src: 'HubSpot · PostHog', real: false,
+      clue: 'More Q3 signups chose the Starter plan: 59%, up from 44%.',
+      truth: 'True, but it explains only a small part of the activation change. The main cause is the Salesforce setup problem (lead 1).',
+      claude: ['ok', 'Didn\'t blame it'], invar: ['ok', 'Didn\'t blame it'] }
+  ];
+
+  // Which findings in the run answer each planted problem (indexes into each side's list).
+  var CASES = [
+    { id: 'P1', name: 'Salesforce setup broke, and one person holds the fix', joins: 'PostHog + Slack + Stripe + Docs',
+      claude: [0, 4], claudeTag: ['ok', 'FOUND'], invar: 'P1' },
+    { id: 'P3', name: 'The Growth plan costs more to serve than it brings in', joins: 'Stripe + Slack, joined by account',
+      claude: [], claudeNote: 'Not in its answer. It ranked topics by handling time (finding 4: CSV import) but couldn\'t tie the questions to the plan paying for them.', claudeTag: ['bad', 'MISSED'], invar: 'P3' },
+    { id: 'P2', name: 'A campaign that retains well but costs 3.3x to support', joins: 'HubSpot + Stripe + Slack, joined by account',
+      claude: [], claudeNote: 'Not in its answer. It discussed the campaign only by signup counts (finding 8).', claudeTag: ['bad', 'MISSED'], invar: 'P2' },
+    { id: 'P5', name: 'The pricing doc and the billing system disagree', joins: 'Docs + Stripe',
+      claude: [5], claudeTag: ['half', 'CLOSE, NOT FOUND'], invar: 'P5' },
+    { id: 'P4', name: 'A rollout that quietly multiplied questions', joins: 'PostHog + Slack',
+      claude: [2], claudeTag: ['ok', 'FOUND'], invar: 'P4' }
+  ];
+
+  var picks = {};
+  var revealed = false;
+
+  function el(tag, attrs, html) {
+    var e = document.createElement(tag);
+    for (var k in attrs || {}) e.setAttribute(k, attrs[k]);
+    if (html != null) e.innerHTML = html;
+    return e;
+  }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function tag(kind, text) { return '<span class="tag ' + kind + '">' + esc(text) + '</span>'; }
+
+  // Evidence locker
+  var locker = document.getElementById('locker');
+  EXHIBITS.forEach(function (x, i) {
+    locker.appendChild(el('a', { 'class': 'exhibit', href: BASE + 'clues/' + x[2], 'data-exhibit': i },
+      '<span class="src">EXHIBIT ' + String.fromCharCode(65 + i) + ' · ' + esc(x[0]) + '</span>' +
+      '<span class="t">' + esc(x[1]) + '</span><span class="f">' + esc(x[2]) + '</span>'));
+  });
+
+  // Exhibit viewer: opens a file in a pop-up instead of downloading it.
+  function parseCSV(text) {
+    var rows = [], row = [], cell = '', q = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (q) {
+        if (ch === '"' && text[i + 1] === '"') { cell += '"'; i++; }
+        else if (ch === '"') q = false;
+        else cell += ch;
+      } else if (ch === '"') q = true;
+      else if (ch === ',') { row.push(cell); cell = ''; }
+      else if (ch === '\n') { row.push(cell); rows.push(row); row = []; cell = ''; }
+      else if (ch !== '\r') cell += ch;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+  function isNum(v) { return v !== '' && !isNaN(+v); }
+  function tableHTML(rows) {
+    var head = rows[0], body = rows.slice(1);
+    return '<table><thead><tr>' + head.map(function (h) { return '<th scope="col">' + esc(h) + '</th>'; }).join('') +
+      '</tr></thead><tbody>' + body.map(function (r) {
+        return '<tr>' + r.map(function (c) { return '<td' + (isNum(c) ? ' class="num"' : '') + '>' + inline(c) + '</td>'; }).join('') + '</tr>';
+      }).join('') + '</tbody></table>';
+  }
+  function inline(t) {
+    return esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/`(.+?)`/g, '<code>$1</code>')
+      .replace(/(^|\s)_(.+?)_(?=\s|$|[.,])/g, '$1<em>$2</em>');
+  }
+  function mdHTML(md) {
+    var out = [], lines = md.split('\n'), i = 0, para = [];
+    function flush() { if (para.length) { out.push('<p>' + inline(para.join(' ')) + '</p>'); para = []; } }
+    while (i < lines.length) {
+      var l = lines[i];
+      if (!l.trim()) { flush(); i++; continue; }
+      var h = /^(#{1,3}) (.*)/.exec(l);
+      if (h && h[1].length === 1 && !out.length) { i++; continue; }  // the viewer header already shows the title
+      if (h) { flush(); out.push(h[1].length === 1 ? '<h1>' + inline(h[2]) + '</h1>' : '<h2>' + inline(h[2]) + '</h2>'); i++; continue; }
+      if (/^\|/.test(l)) {
+        flush();
+        var t = [];
+        while (i < lines.length && /^\|/.test(lines[i])) {
+          if (!/^\|[\s|:-]+\|$/.test(lines[i])) t.push(lines[i].replace(/^\||\|$/g, '').split('|').map(function (c) { return c.trim(); }));
+          i++;
+        }
+        out.push('<div class="v-scroll">' + tableHTML(t) + '</div>'); continue;
+      }
+      if (/^\d+\. /.test(l)) {
+        flush();
+        var items = [];
+        while (i < lines.length && /^\d+\. /.test(lines[i])) { items.push('<li>' + inline(lines[i].replace(/^\d+\. /, '')) + '</li>'); i++; }
+        out.push('<ol>' + items.join('') + '</ol>'); continue;
+      }
+      if (/^[-*] /.test(l)) {
+        flush();
+        var li = [];
+        while (i < lines.length && /^[-*] /.test(lines[i])) { li.push('<li>' + inline(lines[i].slice(2)) + '</li>'); i++; }
+        out.push('<ul>' + li.join('') + '</ul>'); continue;
+      }
+      para.push(l.trim()); i++;
+    }
+    flush();
+    return '<div class="v-doc">' + out.join('') + '</div>';
+  }
+
+  var viewer = document.getElementById('viewer'), vBody = document.getElementById('vBody'), cur = 0, opener = null;
+  function show(i) {
+    cur = i;
+    var x = EXHIBITS[i], url = BASE + 'clues/' + x[2];
+    document.getElementById('vLabel').textContent = 'EXHIBIT ' + String.fromCharCode(65 + i) + ' · ' + x[0];
+    document.getElementById('vTitle').textContent = x[1];
+    document.getElementById('vMeta').textContent = x[2];
+    document.getElementById('vDownload').setAttribute('href', url);
+    document.getElementById('vPrev').disabled = i === 0;
+    document.getElementById('vNext').disabled = i === EXHIBITS.length - 1;
+    vBody.innerHTML = '<p class="loading" style="padding:24px">Opening the exhibit…</p>';
+    vBody.scrollTop = 0;
+    fetch(url).then(function (r) { return r.text(); }).then(function (text) {
+      if (cur !== i) return;
+      if (/\.csv$/.test(x[2])) {
+        var rows = parseCSV(text.trim());
+        document.getElementById('vMeta').textContent = x[2] + ' · ' + (rows.length - 1) + ' rows';
+        vBody.innerHTML = tableHTML(rows);
+      } else {
+        vBody.innerHTML = mdHTML(text);
+      }
+    }).catch(function () {
+      vBody.innerHTML = '<p class="loading" style="padding:24px">Couldn\'t open it here. <a href="' + url + '">Open the file directly</a>.</p>';
+    });
+  }
+  document.querySelectorAll('[data-exhibit]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (!viewer.showModal) return;          // very old browsers: follow the link
+      e.preventDefault();
+      opener = a;
+      show(+a.getAttribute('data-exhibit'));
+      viewer.showModal();
+    });
+  });
+  document.getElementById('vClose').addEventListener('click', function () { viewer.close(); });
+  document.getElementById('vPrev').addEventListener('click', function () { if (cur > 0) show(cur - 1); });
+  document.getElementById('vNext').addEventListener('click', function () { if (cur < EXHIBITS.length - 1) show(cur + 1); });
+  viewer.addEventListener('click', function (e) { if (e.target === viewer) viewer.close(); });  // backdrop
+  viewer.addEventListener('close', function () { if (opener) opener.focus(); });
+  viewer.addEventListener('keydown', function (e) {
+    if (vBody.contains(e.target)) return;   // let arrow keys scroll the table
+    if (e.key === 'ArrowLeft' && cur > 0) show(cur - 1);
+    if (e.key === 'ArrowRight' && cur < EXHIBITS.length - 1) show(cur + 1);
+  });
+
+  // Leads
+  var grid = document.getElementById('leadGrid');
+  LEADS.forEach(function (l, i) {
+    var card = el('article', { 'class': 'lead', id: 'lead-' + l.id, 'aria-labelledby': 'clue-' + l.id });
+    card.innerHTML =
+      '<span class="num">LEAD ' + String(i + 1).padStart(2, '0') + '</span>' +
+      '<p class="clue" id="clue-' + l.id + '">' + esc(l.clue) + '</p>' +
+      '<span class="src">' + esc(l.src) + '</span>' +
+      '<div class="choice" role="group" aria-label="Your call on lead ' + (i + 1) + '">' +
+        '<button type="button" data-v="real" aria-pressed="false">Real problem</button>' +
+        '<button type="button" class="herring" data-v="herring" aria-pressed="false">Red herring</button>' +
+      '</div>' +
+      '<div class="verdict">' +
+        '<div class="truth">' + (l.real ? tag('ink', 'REAL PROBLEM') : tag('soft', 'RED HERRING')) + '</div>' +
+        '<p>' + esc(l.truth) + '</p>' +
+        '<div class="who"><span class="k">PLAIN CLAUDE</span><span>' + tag(l.claude[0], l.claude[1]) + '</span>' +
+        '<span class="k">INVAR</span><span>' + tag(l.invar[0], l.invar[1]) + '</span></div>' +
+      '</div>';
+    card.querySelectorAll('.choice button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (revealed) return;
+        picks[l.id] = b.getAttribute('data-v');
+        card.querySelectorAll('.choice button').forEach(function (o) {
+          o.setAttribute('aria-pressed', String(o === b));
+        });
+        update();
+      });
+    });
+    grid.appendChild(card);
+  });
+
+  var progress = document.getElementById('progress');
+  function update() {
+    var n = Object.keys(picks).length;
+    progress.textContent = revealed ? 'Answers revealed' : n + ' of 10 leads marked';
+  }
+
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function countUp() {
+    document.querySelectorAll('.count').forEach(function (c, i) {
+      var to = +c.getAttribute('data-to');
+      if (calm) { c.textContent = to; return; }
+      c.textContent = '0';
+      var n = 0, t = setInterval(function () {
+        c.textContent = String(++n);
+        if (n >= to) clearInterval(t);
+      }, 160);
+    });
+  }
+
+  function showReveal() {
+    var sec = document.getElementById('reveal');
+    sec.classList.add('play');
+    // problem-by-problem cards rise one after another as the reveal opens
+    document.querySelectorAll('#cases .case').forEach(function (c, i) {
+      c.classList.add('rise'); c.style.setProperty('--d', (1 + i * 0.15) + 's');
+    });
+    window.scrollTo({ top: sec.offsetTop - 70, behavior: 'auto' });
+    document.getElementById('revealTitle').focus({ preventScroll: true });
+    setTimeout(countUp, calm ? 0 : 500);
+  }
+
+  function reveal(e) {
+    if (e) e.preventDefault();
+    if (revealed) { window.scrollTo({ top: document.getElementById('reveal').offsetTop - 70, behavior: calm ? 'auto' : 'smooth' }); return; }
+    revealed = true;
+    var right = 0, marked = 0;
+    LEADS.forEach(function (l) {
+      var card = document.getElementById('lead-' + l.id);
+      card.classList.add('revealed');
+      card.querySelector('.verdict').style.setProperty('--d', (LEADS.indexOf(l) * 0.08) + 's');
+      if (picks[l.id]) {
+        marked++;
+        var ok = (picks[l.id] === 'real') === l.real;
+        if (ok) right++;
+        card.insertAdjacentHTML('beforeend', '<span class="you">' + tag(ok ? 'ok' : 'bad', ok ? 'YOU: RIGHT' : 'YOU: WRONG') + '</span>');
+      }
+      card.querySelectorAll('.choice button').forEach(function (b) { b.disabled = true; });
+    });
+    document.querySelector('.bar').style.display = 'none';
+    update();
+    var ys = document.getElementById('yourScore');
+    ys.innerHTML = marked
+      ? '<div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span><b>You: ' + right + ' of ' + marked + '</b> leads called right.</span><span class="small">Plain Claude called 5 of 10 right. INVAR called 10 of 10. <a href="#leads">See each lead\'s verdict</a></span></div>'
+      : '';
+
+    document.body.classList.remove('locked');
+    if (calm) { showReveal(); return; }
+    var curtain = document.getElementById('curtain');
+    curtain.classList.add('on');
+    setTimeout(function () {
+      showReveal();                       // behind the curtain
+      curtain.classList.remove('on');    // then lift it
+    }, 1900);
+  }
+  document.querySelectorAll('[data-reveal]').forEach(function (b) { b.addEventListener('click', reveal); });
+
+  // The frozen run, quoted word for word.
+  fetch(BASE + 'run.json').then(function (r) { return r.json(); }).then(function (run) {
+    var cf = run.claude_alone.report.findings;
+    var inv = run.invar.findings;
+    var byPlant = {};
+    (run.invar.grade.findings || []).forEach(function (g) {
+      var f = inv.filter(function (x) { return x.title === g.title; })[0];
+      if (f) byPlant[g.plant] = f;
+    });
+
+    document.getElementById('sysPrompt').textContent = run.claude_alone.system;
+    document.getElementById('mClaude').textContent = run.claude_alone.model;
+    document.getElementById('commit').textContent = run.commit;
+    var d = new Date(run.run_at);
+    document.getElementById('runAt').textContent = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    function claudeBlock(f, i) {
+      return '<p class="ft">' + (i + 1) + '. ' + esc(f.title) + '</p>' +
+        '<p class="st">' + esc(f.claim) + '</p>' +
+        '<p class="rec"><b>Recommends:</b> ' + esc(f.recommendation) + '</p>';
+    }
+    function invarBlock(f) {
+      var checks = (f.reasoning || []).map(function (c) {
+        return '<li><b>' + esc(c.check) + '</b> ' + esc(c.result) + '</li>';
+      }).join('');
+      var r = f.recommendation || {};
+      return '<p class="ft">' + esc(f.title) + '</p>' +
+        '<p class="st">' + esc(f.statement) + '</p>' +
+        (checks ? '<p class="rec" style="margin-top:4px"><b>Leads it checked before saying so:</b></p><ul class="checks">' + checks + '</ul>' : '') +
+        '<p class="rec"><b>Recommends' + (r.owner_team ? ' (' + esc(r.owner_team) + ')' : '') + ':</b> ' + esc(r.action) + '</p>' +
+        (r.baseline_text ? '<p class="rec"><b>Done when:</b> ' + esc(r.baseline_text) + ' → ' + esc(r.target_text) + '. ' + esc(r.impact_text || '') + '</p>' : '');
+    }
+
+    var cases = document.getElementById('cases');
+    cases.innerHTML = '';
+    CASES.forEach(function (c) {
+      var left = c.claude.length
+        ? c.claude.map(function (i) { return claudeBlock(cf[i], i); }).join('<hr style="border:none;border-top:1px dashed var(--line2);margin:8px 0">')
+        : '<p class="st">' + esc(c.claudeNote) + '</p>';
+      if (c.claude.length && c.claudeNote) left += '<p class="rec">' + esc(c.claudeNote) + '</p>';
+      var f = byPlant[c.invar];
+      var box = el('details', { 'class': 'case' });
+      if (CASES.indexOf(c) === 0) box.open = true;   // first one open, so people see what's inside
+      box.innerHTML =
+        '<summary class="case-head"><div style="flex:1 1 auto;min-width:0"><p class="eyebrow">' + esc(c.id) + ' · NEEDS ' + esc(c.joins.toUpperCase()) + '</p>' +
+        '<h3 style="margin-top:6px">' + esc(c.name) + '</h3></div>' +
+        '<span class="case-score"><span class="k">CLAUDE</span>' + tag(c.claudeTag[0], c.claudeTag[1]) + '<span class="k" style="margin-left:6px">INVAR</span>' + tag('ok', 'FOUND') +
+        '<span class="chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"></path></svg></span></span></summary>' +
+        '<div class="sides">' +
+          '<div class="side' + (c.claude.length ? '' : ' empty') + '"><div class="who-h"><b>PLAIN CLAUDE</b>' + tag(c.claudeTag[0], c.claudeTag[1]) + '</div>' + left + '</div>' +
+          '<div class="side"><div class="who-h"><b>INVAR</b>' + tag('ok', 'FOUND') + '</div>' + (f ? invarBlock(f) : '') + '</div>' +
+        '</div>';
+      cases.appendChild(box);
+    });
+
+    // How each of plain Claude's findings counts, read by hand against the answer key.
+    var CLAUDE_AS = [
+      ['ok', 'PLANTED · P1 SALESFORCE'], ['soft', 'NOT PLANTED · DESCRIBES THE DATA'], ['ok', 'PLANTED · P4 WORKFLOW EDITOR'],
+      ['bad', 'RED HERRING · CSV IMPORT V2'], ['ok', 'PLANTED · P1 SALESFORCE'], ['half', 'CLOSE TO P5 · COUNTED AS A MISS'],
+      ['soft', 'NOT PLANTED · DESCRIBES THE DATA'], ['bad', 'RED HERRING · AUGUST SIGNUP DIP'], ['soft', 'NOT PLANTED · ASKS FOR A JOINED VIEW']
+    ];
+    var cfull = document.getElementById('claudeFull');
+    cf.forEach(function (f, i) {
+      var as = CLAUDE_AS[i] || ['soft', 'NOT PLANTED'];
+      cfull.appendChild(el('article', {}, '<div style="display:flex;justify-content:flex-end;margin-bottom:6px">' + tag(as[0], as[1]) + '</div>' +
+        claudeBlock(f, i).replace('class="ft"', 'class="ft" style="margin-bottom:4px"')));
+    });
+    document.getElementById('claudeSum').firstChild.nodeValue = 'Plain Claude\'s full answer: ' + cf.length + ' findings (2 of 5 planted problems)';
+
+    var ifull = document.getElementById('invarFull');
+    inv.forEach(function (f, i) {
+      var tier = f.tier === 'auto' ? tag('ok', 'CONFIDENCE ' + Math.round(f.confidence * 100) + '%') : tag('half', 'NEEDS REVIEW · ' + Math.round(f.confidence * 100) + '%');
+      var plant = Object.keys(byPlant).filter(function (k) { return byPlant[k] === f; })[0];
+      var NAMES = { P1: 'SALESFORCE', P2: 'WEBINAR CAMPAIGN', P3: 'GROWTH PLAN', P4: 'WORKFLOW EDITOR', P5: 'PRICING DOC' };
+      var as = plant ? tag('ok', 'PLANTED · ' + plant + ' ' + NAMES[plant]) : tag('soft', 'NOT PLANTED · TRUE IN THE DATA');
+      ifull.appendChild(el('article', {}, '<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><span class="mono small">' + (i + 1) + '</span><span style="display:flex;gap:6px;flex-wrap:wrap">' + as + tier + '</span></div>' + invarBlock(f)));
+    });
+    document.getElementById('invarSum').firstChild.nodeValue = 'INVAR\'s full report: ' + inv.length + ' findings (5 planted + 2 smaller real ones)';
+  }).catch(function () {
+    document.getElementById('cases').innerHTML = '<p class="loading">Couldn\'t load the run file. <a href="' + BASE + 'run.json">Open it directly</a>.</p>';
+  });
+})();
+</script>
+</body>
+</html>
