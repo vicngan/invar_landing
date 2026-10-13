@@ -585,6 +585,7 @@ class Component extends DCLogic {
     var go = function (id) {
       return function () {
         self.setState({ tab: id });
+        try { history.replaceState(null, '', id === 'home' ? window.location.pathname : '#' + id); } catch (e) {}
         try { window.scrollTo(0, 0); } catch (e) {}
       };
     };
